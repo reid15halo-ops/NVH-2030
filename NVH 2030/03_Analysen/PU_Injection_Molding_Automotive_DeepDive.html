@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PU Injection / RIM Molding Automotive – Deep-Dive Analysis</title>
+<style>
+:root{
+  --atn-green:#B8C400; --atn-dark-green:#99CC00; --atn-pale-green:#EAEDB2; --atn-lightest-green:#EDF0BF;
+  --atn-black:#000; --atn-white:#FFF; --atn-dark-grey:#666; --atn-med-grey:#858585;
+  --atn-light-grey:#DCDCDC; --atn-vlight-grey:#F4F4F4; --atn-orange:#E86A10; --atn-light-orange:#F1A670; --atn-light-blue:#69BBFF;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:Arial,Calibri,sans-serif;background:var(--atn-white);color:var(--atn-black);line-height:1.55;font-size:12px;}
+@media print{
+  body{font-size:9.5px;}
+  .page-break{page-break-before:always;}
+  .hero{padding:25px 30px !important;}
+  .container{padding:12px 25px !important;}
+  .card,.score-card,.kn-block,table{break-inside:avoid;}
+}
+.classification{font-size:10px;font-style:italic;color:var(--atn-orange);font-weight:400;letter-spacing:1px;}
+.hero{background:linear-gradient(135deg,#1a1a1a 0%,#2d2d2d 60%,#3a3a3a 100%);color:#FFF;padding:45px 65px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-40%;right:-15%;width:500px;height:500px;background:radial-gradient(circle,rgba(184,196,0,.12) 0%,transparent 70%);border-radius:50%;}
+.hero-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;}
+.hero-tag{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--atn-green);margin-bottom:8px;}
+.hero h1{font-size:28px;font-weight:700;line-height:1.2;margin-bottom:10px;}
+.hero h1 span{color:var(--atn-green);}
+.hero-sub{font-size:13px;opacity:.85;max-width:780px;margin-bottom:16px;}
+.hero-meta{display:flex;gap:14px;font-size:10px;opacity:.6;flex-wrap:wrap;}
+.vbadge{display:inline-block;background:var(--atn-green);color:#000;padding:2px 8px;border-radius:3px;font-size:9px;font-weight:700;margin-left:6px;vertical-align:middle;}
+
+.key-numbers{display:grid;grid-template-columns:repeat(6,1fr);background:#FFF;border-radius:8px;box-shadow:0 3px 16px rgba(0,0,0,.07);margin:-28px 45px 22px;position:relative;z-index:10;overflow:hidden;border:1px solid var(--atn-light-grey);}
+.kn{padding:16px 10px;text-align:center;border-right:1px solid var(--atn-light-grey);}
+.kn:last-child{border-right:none;}
+.kn .v{font-size:20px;font-weight:700;color:#000;line-height:1;margin-bottom:3px;}
+.kn .v span{color:var(--atn-green);}
+.kn .l{font-size:8.5px;color:var(--atn-dark-grey);text-transform:uppercase;letter-spacing:.6px;}
+
+.container{max-width:1080px;margin:0 auto;padding:22px 45px;}
+
+.toc{background:var(--atn-vlight-grey);border:1px solid var(--atn-light-grey);border-radius:8px;padding:18px 24px;margin-bottom:22px;}
+.toc h3{font-size:13px;font-weight:700;color:var(--atn-green);margin-bottom:10px;}
+.toc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;}
+.toc a{font-size:10px;color:var(--atn-dark-grey);text-decoration:none;padding:4px 8px;border-radius:4px;display:block;}
+.toc a:hover{background:var(--atn-lightest-green);color:#000;}
+.toc a .tn{color:var(--atn-green);font-weight:700;margin-right:4px;}
+
+.sh{margin-bottom:18px;}
+.sh .tag{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--atn-green);margin-bottom:4px;}
+.sh h2{font-size:20px;font-weight:700;color:var(--atn-green);}
+.sh p{color:var(--atn-dark-grey);margin-top:3px;font-size:11.5px;}
+
+.box{border-radius:6px;padding:18px 22px;margin-bottom:20px;}
+.box h3{font-size:13px;font-weight:700;margin-bottom:8px;}
+.box-warn{background:#FFF5EB;border-left:4px solid var(--atn-orange);}
+.box-warn h3{color:var(--atn-orange);}
+.box-info{background:#F4FBFF;border-left:4px solid var(--atn-light-blue);}
+.box-info h3{color:#1e7bbd;}
+.box-green{background:var(--atn-lightest-green);border-left:4px solid var(--atn-green);}
+.box-green h3{color:var(--atn-green);}
+
+.card{background:#FFF;border:1px solid var(--atn-light-grey);border-left:4px solid var(--atn-green);border-radius:6px;padding:16px 20px;margin-bottom:14px;}
+.card h3{font-size:13px;font-weight:700;color:#000;margin-bottom:6px;}
+.card p{font-size:11px;color:#333;margin-bottom:6px;}
+.card .src{font-size:9.5px;color:var(--atn-dark-grey);font-style:italic;}
+
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;}
+
+table{width:100%;border-collapse:collapse;margin-bottom:18px;font-size:10.5px;}
+thead th{background:var(--atn-green);color:#000;padding:9px 10px;text-align:left;font-weight:700;font-size:10.5px;border:1px solid var(--atn-dark-green);}
+tbody td{padding:7px 10px;border:1px solid var(--atn-light-grey);vertical-align:top;}
+tbody tr:nth-child(even){background:var(--atn-vlight-grey);}
+tbody tr:hover{background:var(--atn-lightest-green);}
+
+.score-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:18px;}
+.score-card{background:#FFF;border:1px solid var(--atn-light-grey);border-radius:6px;padding:14px 18px;}
+.score-card .head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;}
+.score-card .name{font-size:12.5px;font-weight:700;color:#000;}
+.score-card .score{font-size:20px;font-weight:700;color:var(--atn-green);}
+.score-card .desc{font-size:10.5px;color:#333;margin-bottom:6px;}
+.score-card .meta{font-size:9.5px;color:var(--atn-dark-grey);}
+
+.conf-high{color:#2d8c2d;font-weight:700;}
+.conf-med{color:#cc8800;font-weight:700;}
+.conf-low{color:var(--atn-orange);font-weight:700;}
+
+.tier-1,.tier-2,.tier-3,.tier-4{display:inline-block;font-size:8.5px;font-weight:700;padding:1px 6px;border-radius:3px;margin-right:4px;vertical-align:middle;}
+.tier-1{background:#2d8c2d;color:#FFF;}
+.tier-2{background:var(--atn-green);color:#000;}
+.tier-3{background:#cc8800;color:#FFF;}
+.tier-4{background:var(--atn-orange);color:#FFF;}
+
+.bullet{margin-left:18px;margin-bottom:6px;font-size:11px;}
+.bullet li{margin-bottom:4px;}
+.section{margin-bottom:32px;}
+
+.flow{display:flex;align-items:stretch;gap:8px;margin-bottom:18px;flex-wrap:wrap;}
+.flow-step{flex:1;min-width:140px;background:#FFF;border:1px solid var(--atn-light-grey);border-top:4px solid var(--atn-green);border-radius:4px;padding:12px 10px;text-align:center;}
+.flow-step .n{font-size:9px;color:var(--atn-green);font-weight:700;letter-spacing:1px;}
+.flow-step .t{font-size:11px;font-weight:700;margin:4px 0;}
+.flow-step .d{font-size:9.5px;color:var(--atn-dark-grey);}
+.arrow{align-self:center;color:var(--atn-green);font-size:16px;font-weight:700;}
+
+.footer{background:#1a1a1a;color:#AAA;padding:26px 45px;margin-top:40px;font-size:10px;}
+.footer b{color:var(--atn-green);}
+.src-list{font-size:10px;}
+.src-list li{margin-bottom:5px;list-style:none;padding-left:0;}
+.src-list a{color:#1e7bbd;text-decoration:none;}
+.src-list a:hover{text-decoration:underline;}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-top">
+    <div>
+      <div class="hero-tag">NVH 2030 – Deep Research Dossier</div>
+      <div class="classification">- CONFIDENTIAL -</div>
+    </div>
+    <div style="text-align:right;font-size:10px;opacity:.7;">
+      Autoneum Gundernhausen<br>
+      Erstellt: 15.04.2026<br>
+      Autor: J. Glawion (Process Engineering)
+    </div>
+  </div>
+  <h1>PU Injection / RIM Molding <span>im Automobil</span><br>Technologie, Markt, Standortstrategie</h1>
+  <p class="hero-sub">Systematische Bewertung der Polyurethan-Verarbeitung (RIM, Flex-Schaum, Integral-Skin, TPU) als strategische Investitionsentscheidung für Gundernhausen. <b>Strategische Vorgabe: keine Neuinvestition in bestehende PUR-Systeme.</b> Entscheidungsrahmen: PUR-Auslauf auf Bestandsverträge vs. PET-Investition in Halle 3. Adressaten: J. Bernete, D. Bentele.</p>
+  <div class="hero-meta">
+    <span>12 Kapitel</span><span>&bull;</span>
+    <span>28 Primärquellen</span><span>&bull;</span>
+    <span>Konfidenzprüfung Tier 1–4</span><span>&bull;</span>
+    <span>Horizont 2026–2032</span>
+  </div>
+</div>
+
+<div class="key-numbers">
+  <div class="kn"><div class="v">€<span>6,37</span>Mrd</div><div class="l">EU MDI/TDI/PU 2024</div></div>
+  <div class="kn"><div class="v"><span>4,9</span>%</div><div class="l">CAGR EU 2024–2032</div></div>
+  <div class="kn"><div class="v"><span>25</span>%</div><div class="l">Recycling-Content ELVR 2034</div></div>
+  <div class="kn"><div class="v"><span>-40</span>%</div><div class="l">Gewicht PET vs. PU</div></div>
+  <div class="kn"><div class="v"><span>35</span>%</div><div class="l">PU Share NVH-Akustik 2024</div></div>
+  <div class="kn"><div class="v">€<span>1,72</span>/kg</div><div class="l">MDI EU Q1 2026</div></div>
+</div>
+
+<div class="container">
+
+<div class="toc">
+  <h3>INHALT</h3>
+  <div class="toc-grid">
+    <a href="#s1"><span class="tn">01</span>Executive Summary</a>
+    <a href="#s2"><span class="tn">02</span>Technologie-Überblick</a>
+    <a href="#s3"><span class="tn">03</span>Marktlandschaft</a>
+    <a href="#s4"><span class="tn">04</span>Technische Spezifikationen</a>
+    <a href="#s5"><span class="tn">05</span>Kostenanalyse</a>
+    <a href="#s6"><span class="tn">06</span>Anwendungsbewertung</a>
+    <a href="#s7"><span class="tn">07</span>Fallstudien</a>
+    <a href="#s8"><span class="tn">08</span>Infrastruktur</a>
+    <a href="#s9"><span class="tn">09</span>Risiken &amp; Grenzen</a>
+    <a href="#s10"><span class="tn">10</span>Gundernhausen-Fit</a>
+    <a href="#s11"><span class="tn">11</span>Roadmap &amp; Entscheidung</a>
+    <a href="#s12"><span class="tn">12</span>Quellen-Appendix</a>
+  </div>
+</div>
+
+<div class="box box-warn">
+  <h3>TERMINOLOGIE-KLÄRUNG (vor Lesebeginn)</h3>
+  <p style="font-size:11px;">„PU Injection Molding" ist kein Standardbegriff. Dieses Dossier unterscheidet vier Prozesse: <b>(1) PU-RIM</b> (Reaction Injection Molding, Mischkopf, Niederdruck-Werkzeug) – Stoßfänger, Spoiler, Lenkräder; <b>(2) Flex-Schaum-Moulding</b> (Gießen/Carousel) – Sitzpolster, Kopfstützen, NVH-Einleger; <b>(3) Integral-Skin / Self-Skinning</b> – Armlehnen, Schaltknäufe; <b>(4) SRIM/RRIM</b> (reinforced, mit Glasfasermatte) – Strukturbauteile. „Weichmacher in PU" ist chemisch atypisch – PU-Flexibilität entsteht über Weichsegment-Polyole, nicht über Weichmacher-Zusätze. Behandelt werden daher <b>Kettenverlängerer (BDO, MOCA), Polyol-Typen (Polyether vs. Polyester)</b> und Plasticizer-Migration aus angrenzenden PVC-Teilen.</p>
+</div>
+
+<!-- ========== S1 EXECUTIVE SUMMARY ========== -->
+<div class="section" id="s1">
+  <div class="sh"><div class="tag">Kapitel 01</div><h2>Executive Summary</h2><p>Kernbotschaften für Bernete &amp; Bentele.</p></div>
+
+  <div class="card">
+    <h3>1 &nbsp;|&nbsp; PU bleibt bis 2030 das Volumenmaterial, verliert aber an der Premium-Flanke</h3>
+    <p>Der europäische MDI/TDI/Polyurethan-Markt wächst laut Data Bridge mit 4,9 % CAGR bis 2032 auf 9,34 Mrd EUR. Gleichzeitig verschiebt sich der NVH-Mix: PU hält 2024 noch 35 % Marktanteil bei Akustikmaterialien, verliert aber Dashboard-Insulator, Fronttrunk und Unterboden zunehmend an PET-Lösungen (Autoneum Hybrid-Acoustics PET, Flexi-Light PET – 40 % leichter, Mono-Material, vollständig recycelbar).</p>
+    <p class="src">Quellen: Data Bridge (Tier 2), Mordor Intelligence (Tier 2), Autoneum Pressemitteilung 2025 (Tier 1).</p>
+  </div>
+
+  <div class="card">
+    <h3>2 &nbsp;|&nbsp; Moderne PU-Linien sind hochautomatisiert, aber weiterhin kapitalintensiv</h3>
+    <p>KraussMaffei RimStar Smart (Footprint 4,8 m², RFID-Werkzeugerkennung, Closed-Loop-Gießratenregelung) und Hennecke TOPLINE HK mit FOAMATIC/FOAMWARE-Steuerung definieren den 2025er-Standard. Richtpreise für eine komplette Automotive-Carousel-Linie mit Mehrkopf-Dosierung, Robot-Entformung und Trimm-Zelle liegen basierend auf Branchengesprächen bei 2,5–5 Mio EUR (nicht öffentlich dokumentiert – <span class="conf-low">LOW confidence</span>, zwei-Vendor-Quotes nötig). <b>Für Gundernhausen als Markt-Benchmark dokumentiert &mdash; gemäß Standort-Vorgabe nicht Teil des Investitionsplans</b> (siehe Kapitel 5 + 11).</p>
+    <p class="src">Quellen: KraussMaffei RimStar Smart Datasheet (Tier 1), Hennecke K-Messe 2025 (Tier 1).</p>
+  </div>
+
+  <div class="card">
+    <h3>3 &nbsp;|&nbsp; REACH + ELVR verschieben die Geschäftsgrundlage</h3>
+    <p>Seit 24.08.2023 sind Diisocyanat-Schulungen (3 Stufen, Wiederholung alle 5 Jahre) für alle industriellen Anwender &gt; 0,1 % Gew. verpflichtend. Die EU End-of-Life-Vehicles-Regulation fordert 15 % Rezyklat-Kunststoffanteil bis 2030, 25 % bis 2034 – PU-Schaum ist in der Scope-Definition aktiv verhandelt (CLEPA/JRC). Dow/Gruppo Fiori und BASF/Porsche/BEST haben 2025 industrielle PU-Rückgewinnung aus ELV-Strömen demonstriert.</p>
+    <p class="src">Quellen: ISOPA (Tier 1), EU-Kommission ELVR (Tier 1), Dow Press Release 08.2025 (Tier 1), BASF Press Release 09.2025 (Tier 1).</p>
+  </div>
+
+  <div class="card">
+    <h3>4 &nbsp;|&nbsp; Nachhaltige Polyole sind technisch verfügbar, aber noch Nischenvolumen</h3>
+    <p>Covestro Cardyon (bis 20 % CO₂-Inhalt, 5.000 t/a-Anlage Dormagen) und BASF-Bio-Polyol-Ausbau +20 % NA-Kapazität 2025 ebnen den Weg. Cargill BiOH hat 30 %+ Frühanwender in Schaumapplikationen. Für Gundernhausen relevant: Drop-in-Fähigkeit in bestehende PUR-Anlagen ohne Hardware-Umbau ist gegeben, aber Preispremium 15–25 %.</p>
+    <p class="src">Quellen: Covestro Press (Tier 1), NRW.Energy4Climate (Tier 2), FMI Bio-Polyol Report 2025 (Tier 2).</p>
+  </div>
+
+  <div class="card">
+    <h3>5 &nbsp;|&nbsp; Empfehlung für Gundernhausen: PET-Fokus, PUR auslaufen lassen</h3>
+    <p><b>Strategische Vorgabe des Standorts: keine Neuinvestition in bestehende PUR-Systeme.</b> PUR-Linien laufen auf bestehende Verträge (Sitzeinleger, NVH-Schaumteile für ICE-Fahrzeuge) bis EOL &mdash; nur sicherheits- und REACH-getriebene Instandhaltung. Der gesamte Investitionsrahmen fließt in <b>Halle 3: PET-Schaum-Extrusion &amp; Hybrid-Acoustics-PET (2,5–4,0 Mio EUR)</b>. Reine PUR-Reinvestition ist strategisch nicht tragbar (ELVR-Rezyklatziele, OEM-Scorecards, REACH-Isocyanat-Druck); reiner Cut-Over ohne PET-Pfad gefährdet die Standort-Zukunft. Der Entscheidungsbaum in Kapitel 11 fokussiert ausschließlich auf PET-Investition &amp; PUR-Phase-Out.</p>
+    <p class="src">Synthese Kapitel 10 + 11.</p>
+  </div>
+</div>
+
+<!-- ========== S2 TECHNOLOGY OVERVIEW ========== -->
+<div class="section page-break" id="s2">
+  <div class="sh"><div class="tag">Kapitel 02</div><h2>Technologie-Überblick</h2><p>Fünf PU-Verarbeitungsprozesse (4 × Duroplast-PU + 1 × Thermoplast-TPU), TRL, aktueller Stand der Technik.</p></div>
+
+  <div class="box box-warn" style="margin-bottom:14px;">
+    <h3>Terminologie-Klärung: „PU Injection Molding" ist zweideutig</h3>
+    <p style="font-size:11px;">Der Begriff wird in der Praxis für zwei grundverschiedene Technologien verwendet: <b>(a) Duroplast-PU via RIM</b> (reaktive 2K-Chemie auf Niederdruck-RIM-Anlagen &mdash; KraussMaffei RimStar, Hennecke, Cannon) und <b>(b) Thermoplast-TPU via Spritzguss</b> (Granulat auf Standard-Spritzgussmaschinen &mdash; Arburg, Engel, KraussMaffei Injection-Serie). <b>Die Anlagen sind inkompatibel.</b> Gundernhausen-heute (Flex-Schaum-Carousel) lässt sich weder zu RIM noch zu TPU direkt umrüsten &mdash; beide Pfade erfordern neue Maschinen und neue Bediener-Qualifikation.</p>
+  </div>
+
+  <table>
+    <thead><tr><th style="width:18%;">Prozess</th><th style="width:26%;">Chemie &amp; Werkzeug</th><th style="width:28%;">Typische Bauteile</th><th>TRL / Reife</th></tr></thead>
+    <tbody>
+      <tr><td><b>PU-RIM</b><br>(Reaction Injection)<br><em>Duroplast</em></td><td>2K (Polyol + MDI), Mischkopf ca. 150–200 bar, Aluminium- / Stahl-Niederdruckwerkzeug, Mold-Temp 60–80 °C</td><td>Stoßfänger, Spoiler, Kotflügel, IP-Träger, Lenkräder, Skins</td><td>TRL 9 seit Jahrzehnten; 2025 Innovation: <b>Cannon &times; Engel ClearMelt</b> (K 2025) – In-Mold-PUR-Coating direkt auf Thermoplast-Teil, 0,5 mm UV-stabil, Self-Healing, integriert ADAS-Sensorgehäuse</td></tr>
+      <tr><td><b>Flex-Schaum Moulding</b><br><em>Duroplast</em></td><td>Offen-zelliger Schaum, Wasser als Treibmittel, Carousel- oder Power&amp;Free-Linien, 4–12 Mischköpfe, 80–150 Sek. Takt</td><td>Sitzpolster, Kopfstützen, Armlehnen, NVH-Einleger, Dash-Decoupler</td><td>TRL 9; 2025 Innovation: Hennecke <b>TOPLINE HK-MF</b> (6 Komponenten parallel), FOAMATIC-3-Klick-HMI</td></tr>
+      <tr><td><b>Integral-Skin / Self-Skinning</b><br><em>Duroplast</em></td><td>MDI-basiert mit HFC/HFO-Treibmittel, geschäumter Kern + geschlossene dichte Haut in einem Schuss</td><td>Schaltknäufe, Lenkradschalen, Griffe, Crashpads</td><td>TRL 9; Substitution durch TPU-Slush und TPO-Vakuumformung schreitet voran (25 % Gewichtsersparnis gegenüber PVC-Slush)</td></tr>
+      <tr><td><b>SRIM / RRIM</b><br><em>Duroplast</em></td><td>RIM mit Glasfaser-Mat (SRIM) oder Milled Fiber (RRIM), strukturell belastbar</td><td>Bumperträger, Heckklappen-Innenschalen, Strukturteile Nutzfahrzeug</td><td>TRL 8–9; zunehmend verdrängt durch HP-RTM (Hennecke STREAMLINE) mit kürzeren Zykluszeiten für CFK-Strukturen</td></tr>
+      <tr style="background:var(--atn-lightest-green);"><td><b>TPU Spritzguss</b><br>(Thermoplastic PU Injection Moulding)<br><em>Thermoplast</em></td><td>Granulat-Verarbeitung auf Standard-Spritzgussmaschinen (Arburg, Engel, KraussMaffei Injection, Haitian); Zylinder 180–220 °C, Werkzeug 25–60 °C; aromatische (MDI/TDI) oder aliphatische (HDI/IPDI, UV-stabil) Grades; Shore 60A bis 75D</td><td>Airbag-Abdeckungen, IP-Soft-Skins (Slush-Alternative), Kabelmäntel, Schlauchsysteme, Soft-Touch-Überspritzungen, Lenkradschalen, Knöpfe, Folien, Radhausauskleidungen</td><td>TRL 9; <b>recyclebar (Thermoplast)</b> &mdash; strategischer Vorteil unter ELVR. Hauptlieferanten: BASF Elastollan, Covestro Desmopan/Texin, Lubrizol Estane/Pearlthane, Huntsman Irogran/Avalon. <b>Für Gundernhausen: komplett anderer Maschinenpark als Flex-Schaum &mdash; kein Carryover von PU-Know-how jenseits der Chemie-Grundlagen.</b></td></tr>
+    </tbody>
+  </table>
+  <p class="src" style="margin-top:4px;"><span class="tier-2">T2</span> TPU-Marktvolumen in Automotive nicht separat verifiziert &mdash; vor Gate-1-Entscheidung mit BASF/Covestro/Lubrizol Vertrieb kreuzvalidieren.</p>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>Chemie-Hinweis: „Weichmacher" in PU</h3>
+      <p>PU-Weichheit resultiert aus langen Weichsegment-Polyolen (Polyether MW 3.000–6.000 g/mol, Polyester für Öl-/Hydrolysebeständigkeit) und Kettenverlängerern: <b>BDO</b> (1,4-Butandiol, Standard), <b>MOCA</b> (4,4'-Methylen-bis(2-chloranilin), CMR-klassifiziert, REACH-Authorisation). Externe Plasticizer wie DINP/DINCH treten nur aus angrenzenden PVC-Teilen ein (Migration).</p>
+      <p class="src">Tier 2 – Allgemeine PU-Literatur; kritisch für Compliance-Stories.</p>
+    </div>
+    <div class="card">
+      <h3>Katalysator-Trend</h3>
+      <p>Klassisch: Zinn-Katalysatoren (DBTDL) – unter ECHA-SVHC-Review. Verschiebung zu nicht-Zinn-Aminkatalysatoren (Evonik DABCO-Familie, Momentive, Huntsman) bei gleichzeitig niedrigerem Amin-Emissions-Profil (Fogging-relevant für OEMs VDA 278/277).</p>
+      <p class="src">Tier 2 – Evonik Creavis 2025.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ========== S3 MARKET ========== -->
+<div class="section" id="s3">
+  <div class="sh"><div class="tag">Kapitel 03</div><h2>Marktlandschaft</h2><p>Globale und EU-Marktgröße, CAGR, Schlüsselspieler (Ausrüstung + Rohstoff).</p></div>
+
+  <div class="grid-3">
+    <div class="card">
+      <h3>Globale RIM-Marktgröße</h3>
+      <p style="font-size:20px;font-weight:700;color:var(--atn-green);">2,5 &rarr; 4,5 Mrd USD</p>
+      <p>2024 &rarr; 2033, CAGR 7,3 %. Alternativschätzung 10,5 &rarr; 18,2 Mrd USD (CAGR 6,3 %) – divergente Scope-Definition.</p>
+      <p class="src"><span class="tier-2">T2</span>Verified Market Reports, Archive Market Research.</p>
+    </div>
+    <div class="card">
+      <h3>EU MDI/TDI/PU-Markt</h3>
+      <p style="font-size:20px;font-weight:700;color:var(--atn-green);">6,37 &rarr; 9,34 Mrd EUR</p>
+      <p>2024 &rarr; 2032, CAGR 4,90 %. Aktuelle MDI-Preise Q1 2026: 1,87 USD/kg (≈ 1,72 EUR/kg) – Überangebot, schwache Nachfrage.</p>
+      <p class="src"><span class="tier-2">T2</span>Data Bridge Market Research, ChemAnalyst 2025.</p>
+    </div>
+    <div class="card">
+      <h3>Auto-PU-Schaum 2030</h3>
+      <p style="font-size:20px;font-weight:700;color:var(--atn-green);">18,56 Mrd USD</p>
+      <p>Polyurethan-basierte Automotive-Schäume bis 2030, CAGR 5,68 %. Sitze dominieren den Use Case; Innenverkleidung/Headliner weiterhin groß.</p>
+      <p class="src"><span class="tier-2">T2</span>Straits Research, Grand View Research.</p>
+    </div>
+  </div>
+
+  <table>
+    <thead><tr><th>Ausrüstungs-Lieferant</th><th>Hauptreihe</th><th>Positionierung</th><th>Automotive-Relevanz</th></tr></thead>
+    <tbody>
+      <tr><td><b>KraussMaffei</b> (DE/CN, jetzt ChemChina)</td><td>RimStar Classic / Smart / Compact; Output 20 g/s–5.000 g/s</td><td>Marktführer HP-Dosierung; Siemens TP 700 HMI; RFID-Werkzeugerkennung</td><td>Sehr hoch – BMW, Daimler, VW-Referenzen; Gundernhausen-Kontakte bestehend (Laatzen-Trials)</td></tr>
+      <tr><td><b>Hennecke</b> (DE)</td><td>TOPLINE HK, HK-MF (6K), MICROLINE, STREAMLINE HP-RTM</td><td>Über 50 Jahre HP-Dosierung, „Several thousand HK machines" weltweit; FOCUS2030-Strategie</td><td>Sehr hoch – Moulded-Foam-Spezialist, Automotive Roof Liner, Sitzschäume</td></tr>
+      <tr><td><b>Cannon</b> (IT)</td><td>A-Compact, A-Prima; LN-Mischköpfe; Chromafeed Farbdosierung</td><td>ClearMelt-Kooperation mit Engel (K 2025) – In-Mold-PUR-Coating</td><td>Hoch – ADAS-Sensorintegration, Exterior-Kunstoffteile</td></tr>
+      <tr><td><b>FRIMO</b> (DE)</td><td>PURe Tooling, Wet Compression Molding, Prozessintegration</td><td>Tooling-Spezialist inkl. Prototypen &amp; Serien; PURe Liner</td><td>Sehr hoch – IP, Türverkleidung, Sitze, Kopfstützen, Kabelumspritzung</td></tr>
+      <tr><td><b>Engel / Arburg</b></td><td>Thermoplast-Spritzguss + PU-Integration (ClearMelt)</td><td>Hybridisierung Thermoplast &times; PU-Coating</td><td>Wachsend – relevanter bei PU-Ablösung durch TP</td></tr>
+      <tr><td><b>Wanhua Chemical</b> (CN)</td><td>MDI-Rohstoff; Kapazität 2,0 Mt/a, Ausbau auf 4,5 Mt/a bis Q2 2026</td><td>Weltgrößter MDI-Produzent, Coal-to-Aniline-Integration = Kostenvorteil</td><td>Kritisch – EU-Rohstoffpreissetzung; Battery-Thermal-Foam-Fokus für E-Fahrzeuge</td></tr>
+      <tr><td><b>Covestro</b> (DE, jetzt ADNOC)</td><td>Polyole inkl. Cardyon (CO₂), MDI-Produktion</td><td>Nachhaltigkeits-Premium; 5.000 t/a Dormagen</td><td>Hoch – strategischer Lieferant bei Recycled-Content-Zielen</td></tr>
+      <tr><td><b>BASF</b> (DE)</td><td>MDI, Polyole inkl. Bio-Polyole; Performance Materials</td><td>+20 % NA-Biopolyol-Kapazität 2025; Porsche/BEST ELV-Recycling</td><td>Hoch – OEM-Partnerschaften, Kreislauf</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ========== S4 TECH SPECS ========== -->
+<div class="section page-break" id="s4">
+  <div class="sh"><div class="tag">Kapitel 04</div><h2>Technische Spezifikationen</h2><p>Taktzeit, Schließkraft, Mischkopf-Durchsatz, Werkzeug- und Materialkosten.</p></div>
+
+  <table>
+    <thead><tr><th>Parameter</th><th>Flex-Schaum Moulding (Sitze, NVH)</th><th>PU-RIM (Exterior)</th><th>SRIM/RRIM</th></tr></thead>
+    <tbody>
+      <tr><td>Typische Taktzeit</td><td>90–180 s/Teil (Carousel)</td><td>90–240 s</td><td>120–360 s</td></tr>
+      <tr><td>Mischkopf-Durchsatz</td><td>200–800 g/s</td><td>500–2.000 g/s</td><td>1.000–5.000 g/s</td></tr>
+      <tr><td>Werkzeugkosten (Alu)</td><td>25–80 T€</td><td>60–250 T€</td><td>150–600 T€</td></tr>
+      <tr><td>Werkzeug-Lebensdauer</td><td>100–250 T Schuss</td><td>50–150 T Schuss</td><td>20–80 T Schuss</td></tr>
+      <tr><td>Materialkosten MDI-System</td><td>2,80–4,20 €/kg</td><td>3,20–5,50 €/kg</td><td>4,00–7,00 €/kg</td></tr>
+      <tr><td>Teilegewicht typisch</td><td>0,2–3 kg</td><td>0,5–6 kg</td><td>2–10 kg</td></tr>
+      <tr><td>Schließkraft-Niveau</td><td>Niederdruck 20–80 t</td><td>Niederdruck 50–200 t</td><td>200–1.500 t</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:9.5px;color:var(--atn-dark-grey);margin-top:-10px;margin-bottom:18px;">Richtwerte aus Vendor-Katalogen (KraussMaffei, Hennecke, Cannon) und Branchenwissen. Werkzeugpreise aus Rapitypes/Exothermic/FRIMO-Case-Studies abgeleitet. <span class="conf-med">MED confidence</span> – werksspezifische Quotes empfohlen.</p>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>KraussMaffei RimStar Smart (2025er Einstiegsklasse)</h3>
+      <p><b>Footprint:</b> 4,8 m² &bull; <b>HMI:</b> Siemens TP 700 &bull; <b>Closed-Loop:</b> Volumenflussmesser mit Shot-Time-Regelung &bull; <b>Werkzeug-ID:</b> RFID-Interface &bull; <b>Optional:</b> Sensor-geregelte Öl-Kühlung Mischkopf-Hydraulik, Gas-/Treibmittel-Beladung, Farbzudosierung</p>
+      <p class="src"><span class="tier-1">T1</span>KraussMaffei.com, PlasticsMachineryManufacturing.com</p>
+    </div>
+    <div class="card">
+      <h3>Hennecke TOPLINE HK-MF</h3>
+      <p><b>Komponenten:</b> bis 6 reaktive Komponenten im Anlagenverbund &bull; <b>Einsatz:</b> Moulded-Foam-Massenfertigung &bull; <b>Steuerung:</b> FOAMATIC (3-Klick-HMI) + FOAMWARE für Prozess-Digitalisierung &bull; <b>Varianten:</b> TI für Rigid (HK 270/650/1250) – hier NVH-irrelevant, MF für Moulded (Zielgröße für Gundernhausen-Szenarien)</p>
+      <p class="src"><span class="tier-1">T1</span>Hennecke.com, K-Messe 2025 Press Release</p>
+    </div>
+  </div>
+</div>
+
+<!-- ========== S5 COST ========== -->
+<div class="section" id="s5">
+  <div class="sh"><div class="tag">Kapitel 05</div><h2>Kostenanalyse</h2><p>CAPEX pro Linie, OPEX Energie/Material, ROI-Vergleich.</p></div>
+
+  <table>
+    <thead><tr><th>Position</th><th>Moderne PU-Carousel-Linie<br>(12 Stationen, robotisiert)</th><th>PU-RIM-Zelle<br>(IP/Exterior, 1 Mischkopf)</th><th>PET-Schaum-Extrusion + Forming<br>(Vergleich, Halle 3)</th></tr></thead>
+    <tbody>
+      <tr><td>Dosier- &amp; Mischsystem</td><td>0,8–1,4 Mio €</td><td>0,4–0,7 Mio €</td><td>–</td></tr>
+      <tr><td>Carousel / Formträger / Roboter</td><td>1,2–2,0 Mio €</td><td>0,3–0,5 Mio € (Handling)</td><td>0,6–1,0 Mio € (Forming)</td></tr>
+      <tr><td>Extruder / Schaumbildung</td><td>–</td><td>–</td><td>1,5–2,5 Mio € (KraussMaffei Tandem)</td></tr>
+      <tr><td>Trimm-/Fertigungszelle</td><td>0,3–0,6 Mio €</td><td>0,2–0,4 Mio €</td><td>0,3–0,5 Mio €</td></tr>
+      <tr><td>Tankfarm, Ventilation, Absaugung</td><td>0,3–0,5 Mio €</td><td>0,2–0,3 Mio €</td><td>0,1–0,2 Mio €</td></tr>
+      <tr><td><b>CAPEX gesamt (Richtwert)</b></td><td><b>2,6–4,5 Mio €</b></td><td><b>1,1–1,9 Mio €</b></td><td><b>2,5–4,2 Mio €</b></td></tr>
+      <tr><td>Materialkosten je kg Fertigteil</td><td>3,10–4,50 €</td><td>3,50–5,80 €</td><td>2,20–3,00 € (Flake) / 3,00–4,00 € (Virgin)</td></tr>
+      <tr><td>Energie kWh/kg</td><td>1,1–1,6 (Formtemperatur 60–80 °C)</td><td>1,0–1,4</td><td>0,9–1,3 (Extrusion dominiert)</td></tr>
+      <tr><td>Rezyklat-fähig (ELVR-konform)</td><td>Teilweise (Bio-Polyol / chem. Recycling)</td><td>Teilweise</td><td>Ja – Mono-Material PET, &gt;50 % rPET möglich</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:9.5px;color:var(--atn-dark-grey);margin-top:-10px;margin-bottom:18px;">CAPEX-Ranges aggregiert aus Vendor-Datenblättern, Infinity Machinery 2025 (Einstiegs-Foam-Line 45–85 T USD – NICHT Automotive-Grade), FRIMO-/Hennecke-Pressemitteilungen und Branchen-Konsens. <span class="conf-low">LOW-MED confidence</span> – Werkspezifische Angebote verpflichtend vor Investment-Antrag.</p>
+
+  <div class="box box-info">
+    <h3>Energie-Kontext</h3>
+    <p style="font-size:11px;">Harte Datenpunkte zur PU-Primärfertigung sind öffentlich rar. Bestätigt: Glykolyse-basiertes chemisches Recycling verbraucht <b>0,167 kWh/kg Polyol</b> (ACS Omega LCA). Für Primär-Moulding dominiert die Formtemperierung (60–80 °C Formtemperatur, Dauerbetrieb) und das Vakuum/Ventilationssystem – Schätzbereich 1,0–1,6 kWh/kg Fertigteil. <span class="conf-med">MED confidence</span>.</p>
+  </div>
+</div>
+
+<!-- ========== S6 APPLICATIONS ========== -->
+<div class="section page-break" id="s6">
+  <div class="sh"><div class="tag">Kapitel 06</div><h2>Anwendungsbewertung</h2><p>Welche Automotive-Teile brauchen weiterhin PU – welche migrieren.</p></div>
+
+  <table>
+    <thead><tr><th>Bauteil</th><th>Heute PU</th><th>Migrations-Druck 2030</th><th>Ersatzmaterial</th><th>Gundernhausen-Relevanz</th></tr></thead>
+    <tbody>
+      <tr><td>Sitzpolster (Flex-Schaum)</td><td>Standard</td><td>Gering–Mittel</td><td>Bio-Polyol-PU; CO₂-Polyol; langfristig PET-Faserstruktur</td><td>Nicht im Scope GDH</td></tr>
+      <tr><td>Kopfstützen / Armlehnen</td><td>Standard</td><td>Gering</td><td>PU bleibt (kein ernsthafter Ersatz)</td><td>Möglich als Nebenprodukt</td></tr>
+      <tr><td><b>Dashboard / IP-Einleger (NVH)</b></td><td>Traditionell PU-Schaum</td><td><b>Hoch</b></td><td><b>Autoneum Flexi-Light PET, Hybrid-Acoustics PET</b></td><td><b>Hoch – direkte Entscheidung</b></td></tr>
+      <tr><td>Bodendämmung / Unterboden</td><td>Teilweise PU</td><td>Hoch</td><td>Ultra-Silent PET, Flexi-Loft (Recycling-Cotton)</td><td>Hoch</td></tr>
+      <tr><td>Headliner</td><td>PU + Fiber</td><td>Mittel</td><td>PET-Vlies, Hybrid-Textil</td><td>Mittel</td></tr>
+      <tr><td>Bumper / Spoiler (PU-RIM)</td><td>Rückläufig</td><td>Sehr hoch</td><td>PP/TPO-Spritzguss seit Jahren dominierend</td><td>Nicht im Scope</td></tr>
+      <tr><td>IP-Skin (Integral/Slush)</td><td>PU-Slush / Spray-PU</td><td>Hoch</td><td>TPU-Slush, TPO-Vakuum, direkt-spritzgegossen (Plasticstoday 2024)</td><td>Nicht im Scope</td></tr>
+      <tr><td>Lenkrad-Schäumung</td><td>Standard</td><td>Gering</td><td>PU bleibt, aber Recycling-Druck (Porsche/BASF Pilot)</td><td>Nicht im Scope</td></tr>
+      <tr><td><b>Batterie-Thermal-Schaum (EV)</b></td><td>Neu – Wachstum</td><td>Treiber</td><td>PU bleibt, aber Konkurrenz zu Silikon-Schaum</td><td><b>Wachstumsoption</b></td></tr>
+      <tr><td>Fronttrunk (Frunk) E-Fahrzeuge</td><td>–</td><td>–</td><td>Autoneum Ultra-Silent PET (Fallstudie)</td><td>Hoch</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ========== S7 CASE STUDIES ========== -->
+<div class="section" id="s7">
+  <div class="sh"><div class="tag">Kapitel 07</div><h2>Fallstudien</h2><p>Reale Deployments; Autoneum-Peers wo auffindbar.</p></div>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>Cannon &times; Engel ClearMelt (K 2025)</h3>
+      <p>Cannon A-Compact 10 HT + Chromafeed CCS HT + LN/3 Mischkopf kombiniert mit Engel-Spritzgussmaschine. Erstmalige Integration von Thermoplast-Moulding und PU-Oberflächencoating in einem Schuss – 0,5 mm UV-stabile, self-healing Schicht, eliminiert Post-Processing (Lackierung, Polieren). Zielanwendung: ADAS-Sensorgehäuse (Kamera, LIDAR, Radar).</p>
+      <p class="src"><span class="tier-1">T1</span>Plasticstoday K 2025 Coverage (05.10.2025)</p>
+    </div>
+    <div class="card">
+      <h3>BASF &times; Porsche &times; BEST (09.2025)</h3>
+      <p>Pilotprojekt zum chemischen Recycling gemischter ELV-Abfälle. Komplexe End-of-Life-Ströme werden zu Rohstoffen für <b>neue Lenkrad-Schäume</b> rückgeführt. Erster industrieller Nachweis für geschlossenen PU-Kreislauf im Automobil.</p>
+      <p class="src"><span class="tier-1">T1</span>BASF Press Release 09.2025</p>
+    </div>
+    <div class="card">
+      <h3>Dow &times; Gruppo Fiori (08.2025)</h3>
+      <p>Prozess zur Rückgewinnung von PU-Schaum aus ELVs <b>ohne Demontage</b>. Industrieller Maßstab, erzeugt Rezyklat-Polyol, direkter Beitrag zur ELVR-Compliance. Positionierung: „upcoming mandatory recycled content requirements from End of Life Vehicle Regulation".</p>
+      <p class="src"><span class="tier-1">T1</span>Dow Corporate Press Release 08.2025</p>
+    </div>
+    <div class="card">
+      <h3>Autoneum Frunk-Modul (Ultra-Silent PET)</h3>
+      <p>Polyester-basierter Fronttrunk für BEVs, ersetzt PU-basierte Lösung. Gewichtseinsparung &amp; Reichweiten-Plus, 100 % PET, bis zu 60 % Rezyklat. Direkter Referenzpunkt für die Gundernhausen-Migration.</p>
+      <p class="src"><span class="tier-1">T1</span>Autoneum 2020/2025 + International Fiber Journal</p>
+    </div>
+    <div class="card">
+      <h3>Covestro Cardyon (Dormagen)</h3>
+      <p>Industrielle Anlage seit 2016, 5.000 t/a Kapazität, Polyole mit bis zu 20 % CO₂-Anteil. Aktuell: Fußbettungen, Auto-Innenraum, Matratzen. Ausbau auf Rigid-Foams (Wärmedämmung, KFZ, Sport) läuft.</p>
+      <p class="src"><span class="tier-1">T1</span>Covestro.com, NRW.Energy4Climate</p>
+    </div>
+    <div class="card">
+      <h3>Yanfeng Automotive Interiors</h3>
+      <p>Marktführer Automotive Interior weltweit; leder-umhüllte Cockpit-Lösungen nutzen PU-Back-Foaming + moderne Skin-Technologien. Referenz für Premium-Segment, bei dem PU noch nicht einfach ersetzt wird.</p>
+      <p class="src"><span class="tier-2">T2</span>Yanfeng Corporate Website</p>
+    </div>
+  </div>
+</div>
+
+<!-- ========== S8 INFRASTRUCTURE ========== -->
+<div class="section page-break" id="s8">
+  <div class="sh"><div class="tag">Kapitel 08</div><h2>Infrastruktur-Anforderungen</h2><p>Energie, Fläche, Isocyanat-Ventilation, REACH-Compliance.</p></div>
+
+  <table>
+    <thead><tr><th>Infrastruktur</th><th>Anforderung moderne PU-Linie</th><th>Gundernhausen-Ist (Halle 2 / 3)</th></tr></thead>
+    <tbody>
+      <tr><td>Fläche</td><td>250–500 m² für 12-Stationen-Carousel inkl. Tankfarm &amp; Trimm</td><td>Halle 2 (1.700 m²) vorhanden; Halle 3 verfügbar für Erweiterung</td></tr>
+      <tr><td>Tankfarm MDI/Polyol</td><td>2–4 isolierte Tanks, Doppelwand, Leckagesensorik, 25–45 °C Temperierung</td><td>Bestand vorhanden – muss REACH-konform dokumentiert sein</td></tr>
+      <tr><td>Isocyanat-Ventilation</td><td>Punktabsaugung Mischkopf + Raumabsaugung, Luftwechselrate &ge; 10/h, MAK-Grenzwert MDI 0,005 ppm</td><td>Legacy-System &mdash; REACH- / Arbeitsschutz-bedingter Instandhaltungs-Upgrade (kein CAPEX im Sinne einer Linien-Modernisierung)</td></tr>
+      <tr><td>Druckluft</td><td>7–10 bar, 500–1.200 Nm³/h für Mischkopf-Reinigung, Pneumatik-Werkzeuge</td><td>Bestand ausreichend</td></tr>
+      <tr><td>CO₂ / Treibmittel</td><td>Flüssiges CO₂ (wenn Cardyon-basiert), HFO (niedrige GWP)</td><td>CO₂-Versorgung teilweise vorhanden (vgl. PET-Schaum-Projekt)</td></tr>
+      <tr><td>REACH Diisocyanate-Schulung</td><td>Alle Bediener &ge; General Level, Mischkopf-Wartung &ge; Advanced Level; Wiederholung alle 5 Jahre (Pflicht seit 24.08.2023)</td><td>Compliance zu prüfen – kritisch für Audit</td></tr>
+      <tr><td>Kühlwasser</td><td>15–20 °C Vorlauf, 80–150 kW Kälteleistung bei 12-Stationen-Linie</td><td>Rückkühlwerk vorhanden, Kapazität zu prüfen</td></tr>
+      <tr><td>Abluftreinigung VOC</td><td>Thermische/katalytische Nachverbrennung oder Biofilter bei Amin-Emission</td><td>Legacy-System – Upgrade je nach Amin-Katalysator-Wahl</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ========== S9 RISKS ========== -->
+<div class="section" id="s9">
+  <div class="sh"><div class="tag">Kapitel 09</div><h2>Risiken &amp; Grenzen</h2><p>Technisch, kommerziell, regulatorisch.</p></div>
+
+  <div class="grid-2">
+    <div class="box box-warn">
+      <h3>Regulatorisch (hoch)</h3>
+      <ul class="bullet">
+        <li><b>REACH Diisocyanate-Schulung</b> verpflichtend seit 24.08.2023; Nicht-Konformität = Anlagenstillstand (Tier 1)</li>
+        <li><b>EU-ELVR 15 % (2030) &rarr; 25 % (2034)</b> Rezyklat-Kunststoff – PU-Scope in Verhandlung, wahrscheinlich inkludiert (CLEPA/JRC)</li>
+        <li><b>MDI CLH-Einstufung</b> – CMR-Risikobewertung läuft; Substitutionsdruck auf bestimmte Systeme</li>
+        <li><b>MOCA</b> (Kettenverlängerer) – REACH-Authorisation, nur mit Genehmigung</li>
+        <li><b>VDA 278/277 Fogging/Emission</b> – OEM-Spezifikationen verschärfen sich 2026–2028</li>
+      </ul>
+    </div>
+    <div class="box box-warn">
+      <h3>Kommerziell (mittel–hoch)</h3>
+      <ul class="bullet">
+        <li><b>Substitution durch PET/PP-Lösungen</b> bei Unterboden, Fronttrunk, Dash (Autoneum-Portfolio selbst)</li>
+        <li><b>Rohstoff-Volatilität</b>: MDI-Preise Q1 2026 bei 1,87 USD/kg – kurzfristig niedrig, aber Wanhua-Kapazitätsausbau ändert EU-Preissetzung</li>
+        <li><b>Chinesische OEM-Durchdringung</b> (BYD, CATL, Xiaomi) – Chinese Supplier-Präferenz für Wanhua-PU, Preisdruck auf EU-Tier-1</li>
+        <li><b>Fehlende Rezyklat-Angebote</b> von EU-Lieferanten heute – BASF/Dow/Evonik-Technologien bis 2027–2028 skaliert</li>
+      </ul>
+    </div>
+    <div class="box box-warn">
+      <h3>Technisch (mittel)</h3>
+      <ul class="bullet">
+        <li>Mechanisches PU-Recycling liefert nur Füllstoff-Qualität; chemisches Recycling (Glykolyse) TRL 7–8</li>
+        <li>CO₂-Polyole &le; 20 % Anteil – kein Drop-in bei allen Rezepturen</li>
+        <li>Bio-Polyol-Rezepte: Geruch, Fogging-Performance prüfbedürftig</li>
+        <li>Neue wasserbasierte Trennmittel: andere Zykluszeit- und Oberflächenqualität als solventbasiert – Requalifikation nötig</li>
+      </ul>
+    </div>
+    <div class="box box-warn">
+      <h3>CO₂-Footprint (strategisch)</h3>
+      <ul class="bullet">
+        <li>Primär-PU-Schaum: 3,5–5,0 kg CO₂e/kg Teil (Eco-profile Plastics Europe)</li>
+        <li>PET-Faser: 1,8–2,5 kg CO₂e/kg – strukturell bessere OEM-Scorecard-Werte</li>
+        <li>OEM-Scorecards BMW/Mercedes/VW/Volvo/Stellantis gewichten Carbon-Footprint zunehmend – PU verliert Bonus-Punkte</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ========== S10 SITE FIT ========== -->
+<div class="section page-break" id="s10">
+  <div class="sh"><div class="tag">Kapitel 10</div><h2>Gundernhausen-Fit Assessment</h2><p>Halle 2 / Halle 3, &lt;30 Mitarbeiter, 500–1.000 t/a PUR heute.</p></div>
+
+  <div class="box box-green">
+    <h3>Ausgangslage Gundernhausen 2026</h3>
+    <p style="font-size:11.5px;">Der Standort betreibt <b>heute PUR-Schaum-Fertigung</b> (500–1.000 t/a, Sitz- und NVH-Einleger für BMW, Mercedes, Audi). Die C-Linie altert, ist aber im Tageseinsatz. Halle 2 (~1.700 m²) ist belegt, Halle 3 verfügbar für Innovation. Bestehende Infrastruktur: Carousel (ohne Adapterplatten), Dosiersysteme, CO₂-Versorgung, Druckluft, REACH-geschultes Personal. Nähe zu Evonik Hanau (17 km) ist R&amp;D-Asset. Jonas Glawion hat KraussMaffei-Kontakte (Laatzen) für mögliche PET-Extrusion.</p>
+  </div>
+
+  <div class="box box-warn" style="margin-bottom:14px;">
+    <h3>Strategische Vorgabe (Standort-Entscheidung)</h3>
+    <p style="font-size:11.5px;"><b>Keine Neuinvestition in bestehende PUR-Systeme.</b> PUR-Linien laufen auf Bestandsverträgen bis EOL &mdash; nur sicherheits- und REACH-bedingte Instandhaltung (ca. 0,2 Mio €/a). Damit entfallen die Optionen <em>Modernisieren</em> und <em>Hybrid mit PUR-CAPEX</em>. Die Bewertung reduziert sich auf drei real verbleibende Pfade.</p>
+  </div>
+
+  <table>
+    <thead><tr><th style="width:24%;">Dimension</th><th>PUR as-is bis EOL</th><th>PET-Fokus Halle 3 (empfohlen)</th><th>Harter PET-Cut-Over</th></tr></thead>
+    <tbody>
+      <tr><td>CAPEX (Mio €)</td><td>~0,2 /a Instandhaltung</td><td>2,5–4,0 (Halle 3 PET-Linie)</td><td>3,5–5,0 (PET + beschleunigter PUR-Abbau)</td></tr>
+      <tr><td>ELVR-Konformität 2030 / 2034</td><td>Risiko &mdash; kein Rezyklat-Pfad</td><td>Hoch &mdash; PET mono-material, rPET-ready</td><td>Hoch</td></tr>
+      <tr><td>Volumen-Absicherung 2026–2030</td><td>Hoch (Bestandsaufträge)</td><td>Hoch (PUR läuft parallel) </td><td>Niedrig (Umstellungsrisiko)</td></tr>
+      <tr><td>Zukunftsfähigkeit post-2032</td><td>Gering</td><td>Hoch</td><td>Hoch</td></tr>
+      <tr><td>Headcount-Entwicklung</td><td>Rückbau mit PUR-Auslauf</td><td>Stabil &mdash; Umschulung auf PET</td><td>Kurzfristig &minus;20 %, dann +25 % PET</td></tr>
+      <tr><td>OEM-Alignment (Mercedes / BMW CO₂-Scorecard)</td><td>Negativ</td><td>Positiv</td><td>Positiv</td></tr>
+      <tr><td>Risiko Fehlinvestment</td><td>Stranded-Asset-Risiko Halle 2 nach 2030</td><td>Gering &mdash; PUR-Cashflow finanziert PET-Aufbau</td><td>Mittel (Timing, Kunden-LOI)</td></tr>
+    </tbody>
+  </table>
+
+  <div class="box box-green">
+    <h3>Warum PET-Fokus &mdash; nicht harter Cut-Over</h3>
+    <p style="font-size:11px;">PUR-Aufträge laufen auf Bestandsverträgen (ICE-Fahrzeuge, Sitz-Einleger) bis etwa 2030–2032. Der PUR-Betrieb liefert den Cashflow, der den PET-Aufbau in Halle 3 mitfinanziert, ohne neues PUR-CAPEX auszulösen. Gleichzeitig zwingen ELVR &amp; OEM-Scorecards bis 2030 zum Rezyklat-Nachweis &mdash; der PET-Pfad bedient genau diese Anforderung. Ein harter Cut-Over ohne PUR-Auslaufphase würde Bestandsvolumen gefährden und Personal abrupt umschichten; der PET-Fokus-Pfad führt das Team schrittweise von PUR zu PET mit demselben PC&amp;L-Kern.</p>
+  </div>
+</div>
+
+<!-- ========== S11 ROADMAP (BACKWARDS-ENGINEERED FIRST) ========== -->
+<div class="section" id="s11">
+  <div class="sh"><div class="tag">Kapitel 11</div><h2>Implementierungs-Roadmap</h2><p>Entscheidungstore: PET-Investition Halle 3 + PUR-Phase-Out auf Bestandsverträge.</p></div>
+
+  <div class="box box-warn" style="margin-bottom:14px;">
+    <h3>Rahmen: keine PUR-Neuinvestition</h3>
+    <p style="font-size:11px;">Standort-Vorgabe: kein CAPEX-Asset auf bestehende PUR-Linien. Der Entscheidungsbaum behandelt ausschließlich (a) die PET-Investition in Halle 3 und (b) das gesteuerte PUR-Auslaufen auf Bestandsverträge. REACH- &amp; sicherheitsbedingte Instandhaltung ist davon ausgenommen (Betriebsnotwendigkeit, ca. 0,2 Mio €/a OPEX).</p>
+  </div>
+
+  <div class="flow">
+    <div class="flow-step"><div class="n">Q2 2026</div><div class="t">Decision Gate 1</div><div class="d">Vendor-Quotes PET-Linie Halle 3 (KraussMaffei Schaumtandex, Hennecke, Cannon) + OEM-LOI-Hunt Mercedes/BMW/VW</div></div>
+    <div class="arrow">&rarr;</div>
+    <div class="flow-step"><div class="n">Q4 2026</div><div class="t">Pilot PET</div><div class="d">A-Muster Hybrid-Acoustics PET in Halle 3 &mdash; OEM-Freigabe, IATF-Qualifizierung</div></div>
+    <div class="arrow">&rarr;</div>
+    <div class="flow-step"><div class="n">Q2 2027</div><div class="t">PET-Serienstart</div><div class="d">Halle 3 PET-Linie live &mdash; Ramp-up 50–80 t/a &mdash; PUR-Kapazität unverändert auf Bestand</div></div>
+    <div class="arrow">&rarr;</div>
+    <div class="flow-step"><div class="n">Q4 2027</div><div class="t">Decision Gate 2</div><div class="d">PET-Volumen-Review + PUR-Phase-Out-Plan (Bestandsvertrags-Laufzeiten, Headcount-Umschulung)</div></div>
+    <div class="arrow">&rarr;</div>
+    <div class="flow-step"><div class="n">2028–2032</div><div class="t">PET-Scale &amp; PUR-EOL</div><div class="d">PET-Volumen skalieren, PUR schrittweise auf Bestandsverträge auslaufen, ELVR-Rezyklat-Nachweis 15 %</div></div>
+  </div>
+
+  <table>
+    <thead><tr><th>Gate</th><th>Kriterium</th><th>Go-Bedingung</th><th>No-Go-Bedingung</th></tr></thead>
+    <tbody>
+      <tr><td>Gate 1 Q2/2026</td><td>PET-Linie Halle 3 CAPEX + Customer Pull</td><td>KraussMaffei / Hennecke Quote &le; 4,0 Mio € + 1+ OEM-LOI (Mercedes / BMW / VW) Volumen &gt; 120 t/a</td><td>Quote &gt; 5,0 Mio € ODER keine OEM-LOI &rarr; Halle 3 für MJF / alternative Innovation verplanen</td></tr>
+      <tr><td>Gate 1 Q2/2026</td><td>PUR-CAPEX-Disziplin</td><td>Bestätigung: kein Neuinvestment in PUR &mdash; ausschließlich sicherheits- / REACH-Instandhaltung</td><td>Ausnahmen nur nach Bernete / Bentele-Zustimmung, nicht als Standard</td></tr>
+      <tr><td>Gate 2 Q4/2027</td><td>PET-Volumen-Ramp</td><td>&gt; 100 t/a PET-Output erreicht, Serienfreigabe mind. 1 OEM</td><td>&lt; 60 t/a &rarr; PET-Commercial-Plan überarbeiten, zweiten OEM aktiv akquirieren</td></tr>
+      <tr><td>Gate 2 Q4/2027</td><td>PUR-Phase-Out-Plan</td><td>Bestandsvertrags-Matrix + Headcount-Umschulungs-Plan PUR&rarr;PET dokumentiert</td><td>Kein geordneter Phase-Out &rarr; Stranded-Asset- &amp; Personalrisiko wächst nach 2030</td></tr>
+    </tbody>
+  </table>
+
+  <div class="box box-green">
+    <h3>Empfehlung an Bernete &amp; Bentele</h3>
+    <p style="font-size:11.5px;"><b>PET-Fokus freigeben: Investition 2,5–4,0 Mio € in Halle 3 PET-Schaum-Linie über 18–24 Monate &mdash; keine PUR-Neuinvestition.</b> PUR-Bestandsverträge liefern den Cashflow-Puffer, der den PET-Aufbau mitfinanziert. Der Standort nutzt vorhandenes Know-how (PUR-Personal schrittweise auf PET umschulen), belegt Halle 3 strategisch (nicht spekulativ) und erfüllt ELVR-Rezyklatziele 2030 / 2034. Eine reine PUR-Reinvestition ist bei ELVR und OEM-Scorecards nicht verantwortbar; ein harter Cut-Over ohne PUR-Auslaufphase wäre volumen- und personalseitig destabilisierend. Der PET-Fokus-Pfad führt Gundernhausen geordnet vom heutigen PUR-Schwerpunkt in eine PET-Leitproduktion.</p>
+  </div>
+</div>
+
+<!-- ========== S12 SOURCES ========== -->
+<div class="section page-break" id="s12">
+  <div class="sh"><div class="tag">Kapitel 12</div><h2>Quellen-Appendix</h2><p>Alle referenzierten URLs mit Tier-1 bis Tier-4-Bewertung.</p></div>
+
+  <div class="card">
+    <h3>Tier 1 – Primärquellen (Hersteller, Regulatoren, Peer-Review)</h3>
+    <ul class="src-list">
+      <li><span class="tier-1">T1</span><a href="https://www.kraussmaffei.com/en/products/rimstar">KraussMaffei RimStar Produktseite</a></li>
+      <li><span class="tier-1">T1</span><a href="https://www.kraussmaffei.com/en/rimstar-smart">KraussMaffei RimStar Smart Datasheet</a></li>
+      <li><span class="tier-1">T1</span><a href="https://metering.hennecke.com/high-pressure-metering-machine/topline-hk">Hennecke TOPLINE HK</a></li>
+      <li><span class="tier-1">T1</span><a href="https://www.hennecke.com/en/news/hennecke-group-k-trade-fair-2025-innovative-solutions-drive-focus2030-strategy-forward">Hennecke K-Messe 2025 / FOCUS2030</a></li>
+      <li><span class="tier-1">T1</span><a href="https://cannon.com/processing-equipment/dosing-units/a-compact/">Cannon A-Compact</a></li>
+      <li><span class="tier-1">T1</span><a href="https://www.frimo.com/en/pu-processing">FRIMO PU Processing</a></li>
+      <li><span class="tier-1">T1</span><a href="https://www.isopa.org/the-eu-introduces-mandatory-training-of-diisocyanates-workers-from-24-august-2023-in-new-reach-restriction/">ISOPA – REACH Diisocyanate Training 24.08.2023</a></li>
+      <li><span class="tier-1">T1</span><a href="https://environment.ec.europa.eu/topics/waste-and-recycling/end-life-vehicles/end-life-vehicles-regulation_en">EU-Kommission ELVR</a></li>
+      <li><span class="tier-1">T1</span><a href="https://www.covestro.com/press/driving-with-co2/">Covestro Cardyon „Driving with CO₂"</a></li>
+      <li><span class="tier-1">T1</span><a href="https://corporate.dow.com/en-us/news/press-releases/dow-and-gruppo-fiori-develop-breakthrough-recycling-process.html">Dow &amp; Gruppo Fiori ELV-Recycling 08.2025</a></li>
+      <li><span class="tier-1">T1</span><a href="https://www.basf.com/global/en/media/news-releases/2025/09/p-25-160">BASF &times; Porsche &times; BEST Chemical Recycling 09.2025</a></li>
+      <li><span class="tier-1">T1</span><a href="https://www.autoneum.com/2019/11/05/hybrid-acoustics-pet-sets-new-standards-for-sustainable-noise-protection/">Autoneum Hybrid-Acoustics PET</a></li>
+      <li><span class="tier-1">T1</span><a href="https://www.automotiveworld.com/news-releases/autoneum-flexi-light-pet-outstanding-sustainable-sound-insulation-for-vehicles/">Autoneum Flexi-Light PET (2025)</a></li>
+      <li><span class="tier-1">T1</span><a href="https://en.whchem.com/cmscontent/535.html">Wanhua Chemical Corporate Communications</a></li>
+      <li><span class="tier-1">T1</span><a href="https://www.creavis.com/en/success-stories/current-projects/circular-polyurethane-solutions">Evonik Creavis – Circular Polyurethane Solutions</a></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Tier 2 – Industrie-Publikationen, Analyst Reports</h3>
+    <ul class="src-list">
+      <li><span class="tier-2">T2</span><a href="https://www.databridgemarketresearch.com/reports/europe-mdi-tdi-polyurethane-market">Data Bridge – Europe MDI/TDI/PU Market</a></li>
+      <li><span class="tier-2">T2</span><a href="https://www.verifiedmarketreports.com/product/reaction-injection-molding-market/">Verified Market Reports – RIM Market</a></li>
+      <li><span class="tier-2">T2</span><a href="https://straitsresearch.com/report/polyurethane-based-foams-in-automotive-market">Straits Research – Auto PU Foams 2030</a></li>
+      <li><span class="tier-2">T2</span><a href="https://www.mordorintelligence.com/industry-reports/automotive-acoustic-material-market">Mordor Intelligence – Automotive Acoustic Material</a></li>
+      <li><span class="tier-2">T2</span><a href="https://www.compositesworld.com/products/pur-metering-systems-designed-for-digital-integration">CompositesWorld – PUR Metering Digital</a></li>
+      <li><span class="tier-2">T2</span><a href="https://www.plasticstoday.com/automotive-mobility/in-mold-coating-technology-accelerates-production-of-automotive-parts">PlasticsToday – Cannon/Engel ClearMelt K 2025</a></li>
+      <li><span class="tier-2">T2</span><a href="https://www.utech-polyurethane.com/news/kraussmaffeis-rimstar-compact-1616-premieres-at-fakuma">Urethanes Technology Intl. – RimStar Compact</a></li>
+      <li><span class="tier-2">T2</span><a href="https://www.chemanalyst.com/NewsAndDeals/NewsDetails/european-mdi-market-faces-downturn-amid-weaking-consumer-sentiments-36125">ChemAnalyst – EU MDI Preise 2025/2026</a></li>
+      <li><span class="tier-2">T2</span><a href="https://www.futuremarketinsights.com/reports/bio-polyol-green-polyol-market">FMI – Bio-Polyol Market 2025</a></li>
+      <li><span class="tier-2">T2</span><a href="https://www.pudaily.com/Home/NewsDetails/52362">PUdaily – Global Transformation PU 2024</a></li>
+      <li><span class="tier-2">T2</span><a href="https://circulareconomy.europa.eu/platform/en/good-practices/cardyon-reuse-co2-polyols-production">EU Circular Economy – Cardyon Case</a></li>
+      <li><span class="tier-2">T2</span><a href="https://www.energy4climate.nrw/en/topics/best-practice/cardyon-by-covestro">NRW.Energy4Climate – Cardyon</a></li>
+      <li><span class="tier-2">T2</span><a href="https://pubs.acs.org/doi/10.1021/acsomega.0c05844">ACS Omega – LCA PU Foams Chemical Recycling (0,167 kWh/kg)</a></li>
+      <li><span class="tier-2">T2</span><a href="https://www.clepa.eu/wp-content/uploads/2025/02/ELV_PositionPaper_10.06.2024_Final_MC-1.pdf">CLEPA Position Paper ELVR</a></li>
+      <li><span class="tier-2">T2</span><a href="https://euromoulders.org/2023/07/european-commission-proposal-for-the-new-end-of-life-vehicles-regulation/">Euromoulders – ELVR Proposal</a></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Tier 3 – Sekundärquellen (News, Xometry, Exothermic, iQSdirectory)</h3>
+    <ul class="src-list">
+      <li><span class="tier-3">T3</span><a href="https://www.xometry.com/resources/injection-molding/reaction-injection-molding/">Xometry – RIM Definition &amp; Applications</a></li>
+      <li><span class="tier-3">T3</span><a href="https://exothermic.com/news/mastering-rim-molding-design-unlocking-advanced-manufacturing-solutions">Exothermic – RIM Molding Design</a></li>
+      <li><span class="tier-3">T3</span><a href="https://rapitypes.com/rim-polyurethane/">Rapitypes – RIM Polyurethane</a></li>
+      <li><span class="tier-3">T3</span><a href="https://www.plasticstoday.com/dashboard-skin-injection-molded-world-first">PlasticsToday – Dashboard Skin Injection Molded</a></li>
+      <li><span class="tier-3">T3</span><a href="https://infinitymattressmachinery.com/info-detail/foaming-machine-foam-cutting-machine-guide-2025-infinity-machinery">Infinity Machinery – Foam Line Cost Guide 2025</a></li>
+      <li><span class="tier-3">T3</span><a href="https://weeklyvoice.com/chinese-top-3-pu-foam-machine-suppliers-in-2026-leading-global-foam-equipment-innovation-and-growth/">Chinese Top 3 PU Foam Machine Suppliers 2026</a></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Daten-Lücken &amp; offene Validierungen</h3>
+    <ul class="bullet">
+      <li><span class="conf-low">LOW</span> Exakter CAPEX moderne Automotive-PU-Carousel-Linie – keine öffentliche Preisliste; 2,6–4,5 Mio € aus Komponenten-Aggregation abgeleitet. <b>Aktion:</b> RfQ an KraussMaffei, Hennecke, Cannon &amp; FRIMO stellen.</li>
+      <li><span class="conf-low">LOW</span> Energie kWh/kg Primär-PU-Moulding – publizierte Werte nur für Recycling (0,167 kWh/kg). Schätzbereich 1,0–1,6 kWh/kg beruht auf Formtemperatur-Schätzung. <b>Aktion:</b> Benchmark über Gundernhausen-Power-BI ziehen (Ist-Daten C-Linie).</li>
+      <li><span class="conf-med">MED</span> OEM-Scorecard-Gewichtung CO₂-Footprint PU vs. PET – qualitativ bekannt, quantitativ OEM-vertraulich.</li>
+    </ul>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<div class="footer">
+  <p><b>NVH 2030 – Deep Research Dossier</b> &bull; PU Injection / RIM Molding Automotive &bull; <span class="classification">- CONFIDENTIAL -</span></p>
+  <p style="margin-top:8px;">Generiert 15.04.2026 &bull; Autor J. Glawion, Process Engineering Autoneum Gundernhausen &bull; Adressaten J. Bernete (Head Operations BG Europe), D. Bentele (Head BG Europe)</p>
+  <p style="margin-top:8px;opacity:.6;">Forschungsmethodik: deep-research Skill v1.3 – 3-Phasen-Protokoll (Discovery / Deep-Dive / Validation), 20+ parallele WebSearch-Queries, Tier-1–4-Quellenbewertung. Empfehlungen sind strategische Arbeitshypothesen zur Vorbereitung der Investment-Entscheidung; verbindliche Angebote und Werkslagen vor Gate 1 einzuholen.</p>
+</div>
+
+</body>
+</html>

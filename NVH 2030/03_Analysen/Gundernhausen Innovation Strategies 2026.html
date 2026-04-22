@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gundernhausen Site Transformation – CEO Paper V3</title>
+    <style>
+        :root {
+            --atn-green: #B8C400;
+            --atn-dark-green: #99CC00;
+            --atn-med-green: #CAD340;
+            --atn-light-green: #DAE279;
+            --atn-pale-green: #EAEDB2;
+            --atn-lightest-green: #EDF0BF;
+            --atn-black: #000000;
+            --atn-white: #FFFFFF;
+            --atn-dark-grey: #666666;
+            --atn-med-grey: #858585;
+            --atn-light-grey: #DCDCDC;
+            --atn-vlight-grey: #F4F4F4;
+            --atn-orange: #E86A10;
+            --atn-light-orange: #F1A670;
+            --atn-light-blue: #69BBFF;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:Arial,Calibri,sans-serif; background:var(--atn-white); color:var(--atn-black); line-height:1.6; font-size:12px; }
+        @media print {
+            body { font-size:9.5px; }
+            .page-break { page-break-before:always; }
+            .hero { padding:25px 30px !important; }
+            .container { padding:12px 25px !important; }
+            .score-card { break-inside:avoid; }
+        }
+        /* CLASSIFICATION */
+        .classification { font-size:10px; font-style:italic; color:var(--atn-orange); font-weight:400; }
+
+        /* HERO — Autoneum dark background with green accent */
+        .hero {
+            background:linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 60%, #3a3a3a 100%);
+            color:var(--atn-white); padding:45px 65px; position:relative; overflow:hidden;
+        }
+        .hero::before {
+            content:''; position:absolute; top:-40%; right:-15%; width:500px; height:500px;
+            background:radial-gradient(circle, rgba(184,196,0,.12) 0%, transparent 70%); border-radius:50%;
+        }
+        .hero-top { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:20px; }
+        .hero-tag { font-size:10px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--atn-green); margin-bottom:8px; }
+        .hero h1 { font-size:28px; font-weight:700; line-height:1.2; margin-bottom:10px; }
+        .hero h1 span { color:var(--atn-green); }
+        .hero-sub { font-size:13px; font-weight:400; opacity:.85; max-width:680px; margin-bottom:16px; }
+        .hero-meta { display:flex; gap:14px; font-size:10px; opacity:.6; flex-wrap:wrap; }
+        .vbadge { display:inline-block; background:var(--atn-green); color:var(--atn-black); padding:2px 8px; border-radius:3px; font-size:9px; font-weight:700; margin-left:6px; vertical-align:middle; }
+
+        /* KEY NUMBERS */
+        .key-numbers { display:grid; grid-template-columns:repeat(6,1fr); background:var(--atn-white); border-radius:8px; box-shadow:0 3px 16px rgba(0,0,0,.07); margin:-28px 45px 22px; position:relative; z-index:10; overflow:hidden; border:1px solid var(--atn-light-grey); }
+        .kn { padding:16px 10px; text-align:center; border-right:1px solid var(--atn-light-grey); }
+        .kn:last-child { border-right:none; }
+        .kn .v { font-size:20px; font-weight:700; color:var(--atn-black); line-height:1; margin-bottom:3px; }
+        .kn .v span { color:var(--atn-green); }
+        .kn .l { font-size:8.5px; color:var(--atn-dark-grey); text-transform:uppercase; letter-spacing:.6px; }
+
+        .container { max-width:1040px; margin:0 auto; padding:22px 45px; }
+
+        /* SECTION HEADERS */
+        .sh { margin-bottom:18px; }
+        .sh .tag { font-size:9px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--atn-green); margin-bottom:4px; }
+        .sh h2 { font-size:20px; font-weight:700; color:var(--atn-green); }
+        .sh p { color:var(--atn-dark-grey); margin-top:3px; font-size:11.5px; }
+
+        /* BOXES */
+        .box { border-radius:6px; padding:20px 24px; margin-bottom:22px; }
+        .box h3 { font-size:13px; font-weight:700; margin-bottom:8px; }
+        .box-warn { background:#FFF5EB; border-left:4px solid var(--atn-orange); }
+        .box-warn h3 { color:var(--atn-orange); }
+        .box-china { background:#FFFBE6; border-left:4px solid var(--atn-light-orange); }
+        .box-china h3 { color:#8D6E00; }
+        .box-green { background:#F7F9E6; border-left:4px solid var(--atn-green); }
+        .box-green h3 { color:var(--atn-dark-green); }
+        .box-dark { background:#1a1a1a; border-left:4px solid var(--atn-green); color:#ddd; }
+        .box-dark h3 { color:var(--atn-green); }
+        .box ul { list-style:none; padding:0; }
+        .box li { padding:3px 0 3px 18px; position:relative; font-size:11px; }
+        .box li::before { content:''; position:absolute; left:0; top:7px; width:8px; height:8px; background:var(--atn-orange); border-radius:2px; }
+        .box-green li::before { background:var(--atn-green); }
+        .box-dark li::before { background:var(--atn-green); }
+
+        /* STAT GRIDS */
+        .stats { display:grid; gap:10px; margin-top:10px; }
+        .stats-4 { grid-template-columns:repeat(4,1fr); }
+        .stats-3 { grid-template-columns:repeat(3,1fr); }
+        .stats-5 { grid-template-columns:repeat(5,1fr); }
+        .stat { background:var(--atn-vlight-grey); border-radius:6px; padding:12px; text-align:center; border:1px solid var(--atn-light-grey); }
+        .stat .sv { font-size:18px; font-weight:700; color:var(--atn-black); }
+        .stat .sl { font-size:8.5px; color:var(--atn-dark-grey); margin-top:2px; }
+        .box-dark .stat { background:rgba(184,196,0,.08); border-color:rgba(184,196,0,.2); }
+        .box-dark .stat .sv { color:var(--atn-green); }
+        .box-dark .stat .sl { color:#999; }
+
+        /* TABLES — Autoneum CI */
+        table { width:100%; border-collapse:collapse; margin:14px 0; font-size:10.5px; }
+        th { background:var(--atn-green); color:var(--atn-white); padding:7px 9px; text-align:left; font-weight:700; font-size:9px; text-transform:uppercase; letter-spacing:.4px; }
+        th:first-child { border-radius:4px 0 0 0; } th:last-child { border-radius:0 4px 0 0; }
+        td { padding:7px 9px; border-bottom:1px solid var(--atn-light-grey); }
+        tr:nth-child(even) { background:var(--atn-vlight-grey); }
+        tr:hover { background:var(--atn-lightest-green); }
+        .sc-h { color:var(--atn-dark-green); font-weight:700; font-size:12px; }
+        .sc-m { color:var(--atn-orange); font-weight:700; font-size:12px; }
+        .sc-l { color:var(--atn-med-grey); font-weight:700; font-size:12px; }
+
+        /* BAR CHART */
+        .bar-row { display:flex; align-items:center; margin-bottom:5px; gap:8px; }
+        .bar-lbl { width:200px; font-size:10px; font-weight:700; color:var(--atn-black); text-align:right; flex-shrink:0; }
+        .bar-track { flex:1; height:20px; background:var(--atn-vlight-grey); border-radius:3px; overflow:hidden; border:1px solid var(--atn-light-grey); }
+        .bar-fill { height:100%; border-radius:3px; display:flex; align-items:center; justify-content:flex-end; padding-right:6px; font-size:10px; font-weight:700; color:var(--atn-white); }
+        .bf-green { background:linear-gradient(90deg,var(--atn-dark-green),var(--atn-green)); }
+        .bf-blue { background:linear-gradient(90deg,var(--atn-light-blue),#4DA8E8); }
+        .bf-orange { background:linear-gradient(90deg,var(--atn-orange),var(--atn-light-orange)); }
+        .bf-grey { background:linear-gradient(90deg,var(--atn-med-grey),var(--atn-dark-grey)); }
+
+        /* SCORE CARDS */
+        .card { background:var(--atn-white); border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,.05); margin-bottom:16px; overflow:hidden; border:1px solid var(--atn-light-grey); }
+        .card-s { border-left:5px solid var(--atn-green); }
+        .card-a { border-left:5px solid var(--atn-light-blue); }
+        .card-b { border-left:5px solid var(--atn-light-grey); }
+        .ch { display:flex; align-items:center; justify-content:space-between; padding:12px 18px; border-bottom:1px solid var(--atn-light-grey); }
+        .ch .left { display:flex; align-items:center; gap:10px; }
+        .rank { width:32px; height:32px; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:var(--atn-white); }
+        .ch h3 { font-size:13px; font-weight:700; color:var(--atn-black); }
+        .ch .sub { font-size:9.5px; color:var(--atn-dark-grey); }
+        .badges { display:flex; gap:5px; align-items:center; }
+        .badge { padding:3px 8px; border-radius:8px; font-size:9.5px; font-weight:700; }
+        .b-score { background:var(--atn-black); color:var(--atn-white); }
+        .b-cert { background:var(--atn-lightest-green); color:var(--atn-dark-green); }
+        .tier { padding:3px 9px; font-size:10px; font-weight:700; border-radius:4px; }
+        .tier-s { background:var(--atn-green); color:var(--atn-black); }
+        .tier-a { background:var(--atn-light-blue); color:var(--atn-white); }
+        .tier-b { background:var(--atn-light-grey); color:var(--atn-dark-grey); }
+        .tier-c { background:var(--atn-med-grey); color:var(--atn-white); }
+        .cb { padding:14px 18px; display:grid; grid-template-columns:repeat(6,1fr); gap:8px; }
+        .cm { padding:9px; background:var(--atn-vlight-grey); border-radius:4px; text-align:center; }
+        .cm .ml { font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:.7px; color:var(--atn-dark-grey); margin-bottom:2px; }
+        .cm .mv { font-size:14px; font-weight:700; color:var(--atn-black); }
+        .cm .mv.g { color:var(--atn-dark-green); }
+        .cm .md { font-size:8px; color:var(--atn-med-grey); margin-top:1px; }
+        .cp { padding:0 18px 12px; }
+        .cp h4 { font-size:8.5px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--atn-dark-grey); margin-bottom:5px; }
+        .tags { display:flex; flex-wrap:wrap; gap:4px; }
+        .tg { background:var(--atn-lightest-green); color:var(--atn-dark-green); padding:2px 7px; border-radius:3px; font-size:9.5px; font-weight:600; }
+        .tg-hot { background:var(--atn-green); color:var(--atn-black); }
+        .tg-cn { background:#FFF3CD; color:#856404; }
+        .cr { padding:0 18px 12px; font-size:10.5px; line-height:1.6; color:var(--atn-dark-grey); }
+        .cr strong { color:var(--atn-black); }
+
+        /* QUICKWIN */
+        .qw { background:linear-gradient(135deg,#2a3000,#3d4700,#4a5500); color:var(--atn-white); border-radius:8px; padding:22px; margin-bottom:16px; border:2px solid var(--atn-green); }
+        .qw h3 { font-size:14px; font-weight:700; color:var(--atn-green); margin-bottom:4px; }
+        .qw .qt { font-size:18px; font-weight:700; margin-bottom:12px; }
+        .qw-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:12px; }
+        .qw-item { background:rgba(184,196,0,.1); border:1px solid rgba(184,196,0,.25); border-radius:6px; padding:10px; text-align:center; }
+        .qw-item .qv { font-size:20px; font-weight:700; color:var(--atn-green); }
+        .qw-item .ql { font-size:8.5px; color:var(--atn-pale-green); margin-top:2px; }
+        .qw-ex { font-size:10.5px; opacity:.9; line-height:1.6; }
+
+        /* HALLS */
+        .halls { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:14px; }
+        .hall { border:2px solid var(--atn-light-grey); border-radius:8px; padding:16px; text-align:center; }
+        .hall.p1 { border-color:var(--atn-green); background:linear-gradient(180deg,#F7F9E6,var(--atn-white)); }
+        .hall.p2 { border-color:var(--atn-light-blue); background:linear-gradient(180deg,#EBF5FF,var(--atn-white)); }
+        .hall.p3 { border-color:var(--atn-orange); background:linear-gradient(180deg,#FFF5EB,var(--atn-white)); }
+        .hall-l { font-size:8.5px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--atn-dark-grey); margin-bottom:3px; }
+        .hall-sz { font-size:18px; font-weight:700; color:var(--atn-green); margin-bottom:2px; }
+        .hall h4 { font-size:11.5px; font-weight:700; color:var(--atn-black); margin-bottom:3px; }
+        .hall p { font-size:9.5px; color:var(--atn-dark-grey); }
+        .hall-t { display:inline-block; padding:2px 8px; border-radius:6px; font-size:8.5px; font-weight:700; margin-top:8px; }
+        .hall.p1 .hall-t { background:var(--atn-lightest-green); color:var(--atn-dark-green); }
+        .hall.p2 .hall-t { background:#D6EEFF; color:#2E75B6; }
+        .hall.p3 .hall-t { background:#FFE8D0; color:var(--atn-orange); }
+
+        /* FLOW */
+        .flow { display:flex; align-items:center; justify-content:center; gap:6px; margin:12px 0; flex-wrap:wrap; }
+        .flow-box { background:var(--atn-vlight-grey); border:2px solid var(--atn-green); border-radius:6px; padding:6px 12px; font-size:9.5px; font-weight:700; color:var(--atn-black); text-align:center; min-width:110px; }
+        .flow-arrow { font-size:16px; color:var(--atn-green); font-weight:700; }
+        .flow-box.dark { background:#2d2d2d; color:var(--atn-green); }
+
+        /* CTA */
+        .cta { background:linear-gradient(135deg,#1a1a1a,#2d2d2d); border:2px solid var(--atn-green); border-radius:8px; padding:32px; text-align:center; color:var(--atn-white); margin-bottom:22px; }
+        .cta h2 { font-size:20px; font-weight:700; color:var(--atn-green); margin-bottom:8px; }
+        .cta p { font-size:12px; opacity:.85; max-width:620px; margin:0 auto 18px; }
+        .cta-stats { display:flex; justify-content:center; gap:30px; margin-top:14px; flex-wrap:wrap; }
+        .cs2 { text-align:center; }
+        .cs2 .v2 { font-size:24px; font-weight:700; color:var(--atn-green); }
+        .cs2 .l2 { font-size:9px; opacity:.7; }
+
+        .footer { text-align:center; padding:16px; border-top:1px solid var(--atn-light-grey); margin-top:10px; }
+        .footer p { font-size:8.5px; color:var(--atn-dark-grey); font-style:italic; }
+    </style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+    <div class="hero-top">
+        <div>
+            <div class="hero-tag">Strategic Investment Proposal</div>
+            <h1>Gundernhausen Site <span>Transformation</span> <span class="vbadge">V3 FINAL</span></h1>
+        </div>
+        <div style="text-align:right;">
+            <div style="font-size:20px; font-weight:700; color:var(--atn-green); letter-spacing:1px;">AUTONEUM</div>
+            <div class="classification">- CONFIDENTIAL -</div>
+        </div>
+    </div>
+    <p class="hero-sub"><strong style="color:var(--atn-green);">The window to act is NOW &mdash; not in 1-2 years.</strong> BYD Hungary is already in trial production. Supplier nominations for series start (Q2 2026) are being awarded RIGHT NOW. Once Chinese OEMs lock in their European Tier-1 supply chains, latecomers will be shut out for the entire vehicle lifecycle (5-7 years). This report evaluates 11 business options to secure Gundernhausen&rsquo;s position before the door closes.</p>
+    <div style="margin-bottom:14px; padding:12px 16px; background:rgba(184,196,0,.08); border:1px solid rgba(184,196,0,.25); border-radius:6px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+            <div>
+                <div style="font-size:9px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--atn-green); opacity:.8;">Researched, Evaluated &amp; Compiled by</div>
+                <div style="font-size:16px; font-weight:700; color:var(--atn-white);">Jonas Roland Erwin Glawion</div>
+                <div style="font-size:11px; color:rgba(255,255,255,.7);">Process Engineer &mdash; Autoneum Germany GmbH - Gundernhausen</div>
+            </div>
+            <div style="text-align:right;">
+                <div style="font-size:9px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--atn-green); opacity:.8;">Date &amp; Distribution</div>
+                <div style="font-size:11px; color:rgba(255,255,255,.7);">March 2026 &mdash; For internal executive review</div>
+            </div>
+        </div>
+    </div>
+    <div class="hero-meta">
+        <span>Autoneum Germany GmbH - Gundernhausen</span><span>|</span><span>March 2026</span><span>|</span><span>Confidential</span><span>|</span><span>Author: J.R.E. Glawion</span>
+    </div>
+</div>
+
+<!-- KEY NUMBERS -->
+<div class="key-numbers">
+    <div class="kn"><div class="v">5,002<span>m&sup2;</span></div><div class="l">Available Space</div></div>
+    <div class="kn"><div class="v">11</div><div class="l">Options Evaluated</div></div>
+    <div class="kn"><div class="v"><span>&gt;</span>50B</div><div class="l">Addressable Market (USD)</div></div>
+    <div class="kn"><div class="v">32.9<span>%</span></div><div class="l">Top CAGR (Battery)</div></div>
+    <div class="kn"><div class="v">50<span>%</span></div><div class="l">Best IRR (MJF)</div></div>
+    <div class="kn"><div class="v">3-6<span>Mo</span></div><div class="l">Fastest Revenue</div></div>
+</div>
+
+<div class="container">
+
+<!-- URGENCY -->
+<div style="background:linear-gradient(135deg,#4A0E00,#7A1800); border:2px solid var(--atn-orange); border-radius:8px; padding:22px 26px; margin-bottom:22px; color:var(--atn-white);">
+    <div style="display:flex; align-items:flex-start; gap:16px;">
+        <div style="font-size:36px; line-height:1;">&#9888;</div>
+        <div>
+            <div style="font-size:16px; font-weight:700; color:var(--atn-orange); margin-bottom:8px;">WHY WE MUST ACT NOW &mdash; NOT IN 1-2 YEARS</div>
+            <div style="font-size:12px; line-height:1.7;">
+                <strong style="color:var(--atn-orange);">BYD Hungary (Szeged)</strong> started trial production in January 2026 and enters series production in Q2 2026. <strong>Supplier nominations are being awarded RIGHT NOW.</strong> Geely/Volvo, Leapmotor/Stellantis, Chery, and NIO are all building European plants simultaneously. Once these OEMs lock in their Tier-1 supply chains for NVH, thermal management, and recycled-content components, <strong>those contracts are locked for the entire vehicle lifecycle (5-7 years).</strong><br><br>
+                <strong style="color:var(--atn-orange);">If we wait until 2027-2028:</strong><br>
+                &bull; BYD&rsquo;s 300,000 vehicles/year in Hungary will already have nominated suppliers<br>
+                &bull; Geely/Volvo&rsquo;s European production will be fully sourced<br>
+                &bull; EU recycled-content mandates (15%) will be in force &mdash; competitors who moved first will own the certified supply<br>
+                &bull; Gundernhausen&rsquo;s 5,002 m&sup2; will have been idle for 2+ more years with zero revenue contribution<br><br>
+                <strong style="color:var(--atn-green);">If we act in Q2 2026:</strong> We can be among the first European Tier-1 plants to offer EV-specific NVH, battery thermal barriers, and virgin-quality recycled textiles to Chinese OEMs entering Europe &mdash; a first-mover advantage that compounds over a decade of vehicle programs.
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CHALLENGE -->
+<div class="box box-warn">
+    <h3>The Challenge: NVH Volume Decline</h3>
+    <ul>
+        <li>Traditional NVH (engine bay, exhaust) declining as ICE production shrinks in Europe</li>
+        <li>~5,002 m&sup2; across 3 halls underutilized &mdash; 280 skilled employees at risk</li>
+        <li>Chinese OEMs produce EVs 42.8% cheaper &mdash; European Tier-1s must find high-value niches</li>
+        <li>BYD Hungary series production Q2 2026 &mdash; supplier nominations happening NOW, not next year</li>
+        <li>Geely/Volvo, Leapmotor/Stellantis, Chery, NIO all building EU plants &mdash; supply chains being locked in 2026</li>
+    </ul>
+</div>
+
+<!-- ============ QUICK-WIN / LOWEST INVEST HIGHEST ROI ============ -->
+<div class="sh"><div class="tag">Lowest Investment &bull; Highest ROI</div><h2>Fast-Track Investment Ranking</h2><p>Sorted by ROI efficiency: maximum return per euro invested, shortest payback</p></div>
+
+<div class="qw">
+    <h3>#1 QUICK WIN &mdash; LOWEST INVEST, HIGHEST ROI</h3>
+    <div class="qt">HP Multi Jet Fusion 3D Printing &mdash; Serial + Spare Parts</div>
+    <div class="qw-grid">
+        <div class="qw-item"><div class="qv">&euro;0.5M</div><div class="ql">Minimum Investment</div></div>
+        <div class="qw-item"><div class="qv">35-50%</div><div class="ql">IRR (highest of all)</div></div>
+        <div class="qw-item"><div class="qv">12-18 Mo</div><div class="ql">Payback Period</div></div>
+        <div class="qw-item"><div class="qv">3-6 Mo</div><div class="ql">Time to First Revenue</div></div>
+    </div>
+    <div class="qw-ex">
+        <strong>Why #1 Quick Win:</strong> 2x HP MJF 5420W (~&euro;300k each) + post-processing = &euro;500-600k total. Each printer: <strong>40,000 parts/week</strong>. GM produced 60,000 parts in 5 weeks. PA12 FR (flame retardant) for battery-adjacent parts. VW &amp; BMW already use MJF serial. <strong>Runs 24/7 lights-out.</strong> Only 400-600 m&sup2; needed. <strong>&euro;12k per IRR-% &mdash; 5-15x more capital-efficient than any other option.</strong>
+        <br><br><strong><a href="HP_MJF_3D_Printing_DeepDive.html" style="color:var(--atn-light-blue); font-size:12px;">&#8594; Full MJF Deep-Dive Analysis (15 sections, 40+ data tables, source-verified)</a></strong>
+    </div>
+</div>
+
+<div style="background:var(--atn-white); border-radius:8px; padding:18px; box-shadow:0 2px 8px rgba(0,0,0,.05); margin-bottom:22px; overflow-x:auto; border:1px solid var(--atn-light-grey);">
+    <h3 style="font-size:12px; font-weight:700; color:var(--atn-green); margin-bottom:10px;">Investment Efficiency Ranking &mdash; All Options by ROI / Payback</h3>
+    <table>
+        <thead><tr><th>Rank</th><th>Business Option</th><th>Min. Invest</th><th>IRR</th><th>Payback</th><th>Rev. Start</th><th>Score</th><th>&euro;/IRR-%</th><th>Verdict</th></tr></thead>
+        <tbody>
+            <tr style="background:var(--atn-lightest-green);"><td><strong>1</strong></td><td><strong>MJF 3D Printing</strong></td><td><strong>&euro;0.5M</strong></td><td class="sc-h">35-50%</td><td><strong>12-18 Mo</strong></td><td><strong>3-6 Mo</strong></td><td class="sc-h">82</td><td><strong>&euro;12k</strong></td><td style="color:var(--atn-dark-green);font-weight:700;">IMMEDIATE START</td></tr>
+            <tr style="background:var(--atn-lightest-green);"><td><strong>2</strong></td><td><strong>EV Acoustic + PET Foam</strong></td><td>&euro;2.0M</td><td class="sc-h">25-35%</td><td>18-24 Mo</td><td>6-12 Mo</td><td class="sc-h">92</td><td>&euro;67k</td><td style="color:var(--atn-dark-green);font-weight:700;">HIGH PRIORITY</td></tr>
+            <tr style="background:var(--atn-lightest-green);"><td><strong>3</strong></td><td><strong>Battery Thermal Insulation</strong></td><td>&euro;2.0M</td><td class="sc-h">30-45%</td><td>24-30 Mo</td><td>12-18 Mo</td><td class="sc-h">90</td><td>&euro;53k</td><td style="color:var(--atn-dark-green);font-weight:700;">HIGH PRIORITY</td></tr>
+            <tr><td>4</td><td>Natural Fiber Composites</td><td>&euro;1.0M</td><td class="sc-m">15-25%</td><td>24-30 Mo</td><td>6-12 Mo</td><td class="sc-m">68</td><td>&euro;50k</td><td>Opportunistic</td></tr>
+            <tr><td>5</td><td>Closed-Loop Recycling</td><td>&euro;3.0M</td><td class="sc-m">20-30%</td><td>30-36 Mo</td><td>18-24 Mo</td><td class="sc-h">80</td><td>&euro;120k</td><td>Strategic (regulation)</td></tr>
+            <tr><td>6</td><td>Injection Molding EV Parts</td><td>&euro;1.0M</td><td class="sc-m">15-25%</td><td>24-36 Mo</td><td>12-18 Mo</td><td class="sc-m">72</td><td>&euro;50k</td><td>With OEM nomination</td></tr>
+            <tr><td>7</td><td>PET Foam Extrusion</td><td>&euro;2.0M</td><td class="sc-l">15-20%</td><td>30-36 Mo</td><td>12-18 Mo</td><td class="sc-m">65</td><td>&euro;114k</td><td>Part of Option 2</td></tr>
+            <tr><td>8</td><td>Composite Enclosures</td><td>&euro;3.0M</td><td class="sc-l">12-20%</td><td>30-42 Mo</td><td>18-24 Mo</td><td class="sc-m">62</td><td>&euro;188k</td><td>Monitor gigacasting</td></tr>
+            <tr><td>9</td><td>Cable Harness Wrapping</td><td>&euro;0.5M</td><td class="sc-l">10-15%</td><td>18-24 Mo</td><td>12-18 Mo</td><td class="sc-l">48</td><td>&euro;40k</td><td>Low priority</td></tr>
+            <tr><td>10</td><td>Fuel Cell Components</td><td>&euro;2.0M</td><td class="sc-l">10-18%</td><td>36-48 Mo</td><td>24-36 Mo</td><td class="sc-l">52</td><td>&euro;143k</td><td>Wait 2028+</td></tr>
+            <tr><td>11</td><td>Profile Extrusion</td><td>&euro;0.5M</td><td class="sc-l">8-15%</td><td>24-36 Mo</td><td>12-18 Mo</td><td class="sc-l">42</td><td>&euro;43k</td><td>Not recommended</td></tr>
+        </tbody>
+    </table>
+    <p style="font-size:8.5px; color:var(--atn-dark-grey); margin-top:6px; font-style:italic;">* &quot;&euro;/IRR-%&quot; = Min. Investment &divide; Mid-IRR. Lower = more efficient. MJF at &euro;12k/IRR-% is 5-15x more capital-efficient than other options.</p>
+</div>
+
+<!-- ============ CHINA OEM ============ -->
+<div class="page-break"></div>
+<div class="sh"><div class="tag">China Benchmark</div><h2>What BYD, Xiaomi &amp; XPeng Teach Us</h2><p>Chinese OEMs are 2-3 years ahead in EV manufacturing. Their methods create new demand for European suppliers.</p></div>
+
+<div class="box box-china">
+    <h3>China at a Glance</h3>
+    <div class="stats stats-4">
+        <div class="stat"><div class="sv">75%</div><div class="sl">BYD in-house (excl. glass, tires, NVH textiles)</div></div>
+        <div class="stat"><div class="sv">80%</div><div class="sl">Gigacasting machines worldwide in China</div></div>
+        <div class="stat"><div class="sv">30%</div><div class="sl">Faster time-to-market vs EU OEMs</div></div>
+        <div class="stat"><div class="sv">42.8%</div><div class="sl">Lower EV production cost vs Europe</div></div>
+    </div>
+</div>
+
+<div style="background:var(--atn-white); border-radius:8px; padding:18px; box-shadow:0 2px 8px rgba(0,0,0,.05); margin-bottom:22px; border:1px solid var(--atn-light-grey);">
+    <h3 style="font-size:12px; font-weight:700; color:var(--atn-green); margin-bottom:10px;">BYD Vertical Integration &mdash; What They Source Externally</h3>
+    <table>
+        <thead><tr><th>BYD Subsidiary</th><th>In-House</th><th>Sourced Externally</th><th>Opportunity</th></tr></thead>
+        <tbody>
+            <tr><td><strong>FinDreams Battery</strong></td><td>Blade Battery, cells, packs</td><td>Cell-to-cell thermal barriers, insulation</td><td style="color:var(--atn-dark-green);font-weight:700;">HIGH</td></tr>
+            <tr><td><strong>FinDreams Powertrain</strong></td><td>E-motors, axles</td><td>Motor acoustic encapsulation</td><td style="color:var(--atn-dark-green);font-weight:700;">MEDIUM</td></tr>
+            <tr><td><strong>FinDreams Moulding</strong></td><td>Injection moulding</td><td>Complex textile NVH parts</td><td style="color:var(--atn-orange);font-weight:700;">LOW (IM in-house)</td></tr>
+            <tr><td><strong>HVAC / Thermal</strong></td><td>Heat pumps, cooling</td><td>Thermal insulation layers</td><td style="color:var(--atn-dark-green);font-weight:700;">MEDIUM</td></tr>
+        </tbody>
+    </table>
+    <p style="font-size:9.5px; color:var(--atn-black); margin-top:6px; padding:6px; background:var(--atn-lightest-green); border-radius:3px;">
+        <strong>Key:</strong> BYD sources NVH textiles, acoustic insulation, and thermal barriers externally. Hungary plant (300k vehicles/yr) starting Q2 2026 needs European suppliers immediately.
+    </p>
+</div>
+
+<div style="background:var(--atn-white); border-radius:8px; padding:18px; box-shadow:0 2px 8px rgba(0,0,0,.05); margin-bottom:22px; border:1px solid var(--atn-light-grey);">
+    <h3 style="font-size:12px; font-weight:700; color:var(--atn-green); margin-bottom:10px;">Chinese Manufacturing Methods vs. Europe</h3>
+    <table>
+        <thead><tr><th>Method</th><th>China Status</th><th>Europe Status</th><th>Impact on Gundernhausen</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Gigacasting</strong></td><td>80% of machines. Xiaomi: 1 part = 72 parts + 840 welds</td><td>Tesla Berlin, Toyota 2026</td><td>New demand: <strong>acoustic inlays</strong> for castings</td></tr>
+            <tr><td><strong>Cell-to-Pack (CTP)</strong></td><td>CATL + BYD standard since 2023</td><td>Pilot phase</td><td><strong>Multiplies</strong> cell-level barrier demand</td></tr>
+            <tr><td><strong>Cell-to-Chassis (CTC)</strong></td><td>BYD CTB in series</td><td>R&amp;D stage</td><td>New insulation challenges</td></tr>
+            <tr><td><strong>Dark Factory</strong></td><td>Xiaomi: 700 robots, 1 car/76s</td><td>Siemens Amberg, FANUC</td><td>MJF + IM can run lights-sparse</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- BYD HUNGARY -->
+<div class="box box-china">
+    <h3>BYD Hungary (Szeged) &mdash; Direct Acquisition Target</h3>
+    <div class="stats stats-5">
+        <div class="stat"><div class="sv">Q2 2026</div><div class="sl">Series production start</div></div>
+        <div class="stat"><div class="sv">300k</div><div class="sl">Max. vehicles/year</div></div>
+        <div class="stat"><div class="sv">&euro;4B</div><div class="sl">Total investment</div></div>
+        <div class="stat"><div class="sv">Dolphin</div><div class="sl">First model (+ Atto 2)</div></div>
+        <div class="stat"><div class="sv">Jan 26</div><div class="sl">Trial prod. started</div></div>
+    </div>
+    <p style="font-size:10px; margin-top:8px;">Trial production running since January 2026. Additional Chinese OEMs building EU plants: Geely/Volvo, Leapmotor/Stellantis, Chery, NIO. All need local NVH/thermal sourcing.</p>
+</div>
+
+<!-- ============ DARK FACTORY ============ -->
+<div class="page-break"></div>
+<div class="sh"><div class="tag">Dark Factory Analysis</div><h2>Lights-Out Manufacturing &mdash; Applicable to Gundernhausen?</h2></div>
+
+<div class="box box-dark">
+    <h3>Xiaomi Smart Super Factory &mdash; The Benchmark</h3>
+    <div class="stats stats-4">
+        <div class="stat"><div class="sv">700+</div><div class="sl">Robots + 181 AMRs</div></div>
+        <div class="stat"><div class="sv">76 sec</div><div class="sl">Per vehicle</div></div>
+        <div class="stat"><div class="sv">98.8%</div><div class="sl">Welding automation</div></div>
+        <div class="stat"><div class="sv">50k+</div><div class="sl">Vehicles/month</div></div>
+    </div>
+    <p style="font-size:10px; margin-top:8px; color:#aaa;">720,000 m&sup2; Beijing. 20 workers in body shop (381 robots). AI &quot;X-Eye&quot; &gt;99.9% accuracy. Solar roof. Target: 550k vehicles/yr 2026.</p>
+</div>
+
+<div style="background:var(--atn-white); border-radius:8px; padding:18px; box-shadow:0 2px 8px rgba(0,0,0,.05); margin-bottom:22px; border:1px solid var(--atn-light-grey);">
+    <h3 style="font-size:12px; font-weight:700; color:var(--atn-green); margin-bottom:10px;">Dark Factory Economics: China vs. Germany</h3>
+    <table>
+        <thead><tr><th>Cost Factor</th><th>China</th><th>Germany</th><th>Implication</th></tr></thead>
+        <tbody>
+            <tr><td>Investment/m&sup2;</td><td>$4,000-5,000</td><td>$8,000-15,000</td><td>2-3x higher in DE</td></tr>
+            <tr><td>Energy</td><td>~$0.08/kWh</td><td>~$0.20-0.30/kWh</td><td>2.5-3x higher in DE</td></tr>
+            <tr><td><strong>Labor saved</strong></td><td>$8-15/h</td><td><strong>$35-55/h</strong></td><td style="color:var(--atn-dark-green);font-weight:700;">ROI 4x higher in DE!</td></tr>
+            <tr><td><strong>ROI automation</strong></td><td>200-400% / 3-5 yrs</td><td><strong>200-400% / 3-5 yrs</strong></td><td style="color:var(--atn-dark-green);font-weight:700;">Same ROI (higher savings offset higher invest)</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<div style="background:var(--atn-white); border-radius:8px; padding:18px; box-shadow:0 2px 8px rgba(0,0,0,.05); margin-bottom:22px; border:1px solid var(--atn-light-grey);">
+    <h3 style="font-size:12px; font-weight:700; color:var(--atn-green); margin-bottom:10px;">Lights-Out Suitability per Technology</h3>
+    <table>
+        <thead><tr><th>Technology</th><th>Automation Level</th><th>Lights-Out?</th><th>Reference</th></tr></thead>
+        <tbody>
+            <tr><td><strong>MJF 3D Printing</strong></td><td>11-12h unattended, auto-depowdering</td><td style="color:var(--atn-dark-green);font-weight:700;">PERFECT</td><td>HP 5420W: 24/7</td></tr>
+            <tr><td><strong>Injection Moulding</strong></td><td>Robot extraction + QA + packing</td><td style="color:var(--atn-dark-green);font-weight:700;">VERY GOOD</td><td>FANUC: lights-out since 2001</td></tr>
+            <tr><td><strong>PET Foam Extrusion</strong></td><td>Continuous process</td><td style="color:var(--atn-dark-green);font-weight:700;">GOOD</td><td>Armacell highly automated</td></tr>
+            <tr><td><strong>Nonwoven/Felt</strong></td><td>ANDRITZ needlepunch automated</td><td style="color:var(--atn-orange);font-weight:700;">GOOD</td><td>Standard in modern plants</td></tr>
+            <tr><td>Recycling</td><td>Shredding auto, sorting = AI vision</td><td style="color:var(--atn-orange);font-weight:700;">MEDIUM</td><td>Emerging</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- LIGHTS-SPARSE CONCEPT -->
+<div class="box box-dark">
+    <h3>&quot;Lights-Sparse&quot; Halle 2 &mdash; Concrete Scenario</h3>
+    <div class="stats stats-5">
+        <div class="stat"><div class="sv">4x</div><div class="sl">HP MJF 5420W</div></div>
+        <div class="stat"><div class="sv">2x</div><div class="sl">FANUC ROBOSHOT</div></div>
+        <div class="stat"><div class="sv">5-8</div><div class="sl">AMR robots</div></div>
+        <div class="stat"><div class="sv">3-5</div><div class="sl">Staff (vs. 20-30)</div></div>
+        <div class="stat"><div class="sv">&euro;1.85M</div><div class="sl">Total CAPEX</div></div>
+    </div>
+    <table style="margin-top:12px;">
+        <thead><tr><th>Component</th><th>Investment</th><th>Function</th></tr></thead>
+        <tbody style="color:#ddd;">
+            <tr><td>4x HP MJF 5420W</td><td>&euro;600k</td><td>24/7, 40k parts/week each</td></tr>
+            <tr><td>2x FANUC ROBOSHOT</td><td>&euro;800k</td><td>Lights-out IM, robot extraction</td></tr>
+            <tr><td>AMR fleet (5-8)</td><td>&euro;200k</td><td>Material transport</td></tr>
+            <tr><td>AI Vision QA</td><td>&euro;150k</td><td>Inline inspection</td></tr>
+            <tr><td>MES / Digital Twin</td><td>&euro;100k</td><td>Remote monitoring</td></tr>
+            <tr style="background:rgba(184,196,0,.12);"><td><strong>Total</strong></td><td><strong>&euro;1.85M</strong></td><td><strong>Savings: 15-25 FTE &times; &euro;55k = &euro;825k-1.375M/yr</strong></td></tr>
+            <tr style="background:rgba(184,196,0,.12);"><td><strong>Payback</strong></td><td colspan="2"><strong>18-24 months for automation alone</strong></td></tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- ============ EU REGULATION ============ -->
+<div class="box box-green">
+    <h3>EU End-of-Life Vehicle Regulation (Dec 2025) + China GB38031</h3>
+    <div class="stats stats-4">
+        <div class="stat"><div class="sv">15%</div><div class="sl">Recycled plastic mandatory (6 yrs)</div></div>
+        <div class="stat"><div class="sv">25%</div><div class="sl">Recycled plastic mandatory (10 yrs)</div></div>
+        <div class="stat"><div class="sv">30%</div><div class="sl">ELV recycling rate by 2030</div></div>
+        <div class="stat"><div class="sv">GB38031</div><div class="sl">China "No Fire" &rarr; global standard</div></div>
+    </div>
+</div>
+
+<!-- ============ OVERALL BAR CHART ============ -->
+<div class="page-break"></div>
+<div class="sh"><div class="tag">Overall Ranking</div><h2>All 11 Business Options &mdash; Score Overview</h2></div>
+<div style="background:var(--atn-white); border-radius:8px; padding:18px; box-shadow:0 2px 8px rgba(0,0,0,.05); margin-bottom:22px; border:1px solid var(--atn-light-grey);">
+    <div class="bar-row"><div class="bar-lbl">1. EV Acoustic + PET Foam</div><div class="bar-track"><div class="bar-fill bf-green" style="width:92%">92</div></div></div>
+    <div class="bar-row"><div class="bar-lbl">2. Battery Thermal</div><div class="bar-track"><div class="bar-fill bf-green" style="width:90%">90</div></div></div>
+    <div class="bar-row"><div class="bar-lbl">3. MJF 3D Printing</div><div class="bar-track"><div class="bar-fill bf-blue" style="width:82%">82</div></div></div>
+    <div class="bar-row"><div class="bar-lbl">4. Closed-Loop Recycling</div><div class="bar-track"><div class="bar-fill bf-blue" style="width:80%">80</div></div></div>
+    <div class="bar-row"><div class="bar-lbl">5. Injection Molding</div><div class="bar-track"><div class="bar-fill bf-orange" style="width:72%">72</div></div></div>
+    <div class="bar-row"><div class="bar-lbl">6. Natural Fiber Composites</div><div class="bar-track"><div class="bar-fill bf-orange" style="width:68%">68</div></div></div>
+    <div class="bar-row"><div class="bar-lbl">7. PET Foam Extrusion</div><div class="bar-track"><div class="bar-fill bf-orange" style="width:65%">65</div></div></div>
+    <div class="bar-row"><div class="bar-lbl">8. Composite Enclosures</div><div class="bar-track"><div class="bar-fill bf-orange" style="width:62%">62</div></div></div>
+    <div class="bar-row"><div class="bar-lbl">9. Fuel Cell Components</div><div class="bar-track"><div class="bar-fill bf-grey" style="width:52%">52</div></div></div>
+    <div class="bar-row"><div class="bar-lbl">10. Cable Harness</div><div class="bar-track"><div class="bar-fill bf-grey" style="width:48%">48</div></div></div>
+    <div class="bar-row"><div class="bar-lbl">11. Profile Extrusion</div><div class="bar-track"><div class="bar-fill bf-grey" style="width:42%">42</div></div></div>
+</div>
+
+<!-- ============ FULL MATRIX ============ -->
+<div style="background:var(--atn-white); border-radius:8px; padding:18px; box-shadow:0 2px 8px rgba(0,0,0,.05); margin-bottom:22px; overflow-x:auto; border:1px solid var(--atn-light-grey);">
+    <h3 style="font-size:12px; font-weight:700; color:var(--atn-green); margin-bottom:10px;">Full Scoring Matrix</h3>
+    <table>
+        <thead><tr><th>#</th><th>Option</th><th>Score</th><th>Tier</th><th>Certainty</th><th>Market 2030</th><th>CAGR</th><th>Fit</th><th>Invest</th><th>ROI/Payback</th><th>Revenue</th><th>China</th></tr></thead>
+        <tbody>
+            <tr><td><strong>1</strong></td><td><strong>EV Acoustic + PET Foam</strong></td><td class="sc-h">92</td><td><span class="tier tier-s">S</span></td><td><strong>88%</strong></td><td>$17.6B+</td><td>5-10%</td><td>&#9733;&#9733;&#9733;&#9733;&#9733;</td><td>&euro;2-4M</td><td>18-24Mo/25-35%</td><td>6-12Mo</td><td>CN sources ext.</td></tr>
+            <tr><td><strong>2</strong></td><td><strong>Battery Thermal</strong></td><td class="sc-h">90</td><td><span class="tier tier-s">S</span></td><td><strong>85%</strong></td><td>$29.1B</td><td>32.9%</td><td>&#9733;&#9733;&#9733;&#9733;&#9734;</td><td>&euro;2-5M</td><td>24-30Mo/30-45%</td><td>12-18Mo</td><td>CTP = more</td></tr>
+            <tr><td><strong>3</strong></td><td><strong>MJF 3D Print</strong></td><td class="sc-h">82</td><td><span class="tier tier-a">A</span></td><td><strong>78%</strong></td><td>$2.5B+</td><td>~20%</td><td>&#9733;&#9733;&#9733;&#9733;&#9734;</td><td>&euro;0.5-1.5M</td><td>12-18Mo/35-50%</td><td>3-6Mo</td><td>CN: tooling</td></tr>
+            <tr><td><strong>4</strong></td><td><strong>Recycling</strong></td><td class="sc-h">80</td><td><span class="tier tier-a">A</span></td><td><strong>92%</strong></td><td>Reg.</td><td>n/a</td><td>&#9733;&#9733;&#9733;&#9733;&#9734;</td><td>&euro;3-6M</td><td>30-36Mo/20-30%</td><td>18-24Mo</td><td>No CN ELV reg.</td></tr>
+            <tr><td>5</td><td>Injection Molding</td><td class="sc-m">72</td><td><span class="tier tier-b">B</span></td><td>75%</td><td>$48B+</td><td>5-7%</td><td>&#9733;&#9733;&#9733;&#9734;&#9734;</td><td>&euro;1-5M</td><td>24-36Mo/15-25%</td><td>12-18Mo</td><td>BYD in-house</td></tr>
+            <tr><td>6</td><td>Natural Fiber</td><td class="sc-m">68</td><td><span class="tier tier-b">B</span></td><td>72%</td><td>$9B</td><td>7.8%</td><td>&#9733;&#9733;&#9733;&#9733;&#9734;</td><td>&euro;1-3M</td><td>24-30Mo/15-25%</td><td>6-12Mo</td><td>Not in CN</td></tr>
+            <tr><td>7</td><td>PET Foam</td><td class="sc-m">65</td><td><span class="tier tier-b">B</span></td><td>70%</td><td>$810M</td><td>6-9%</td><td>&#9733;&#9733;&#9733;&#9733;&#9734;</td><td>&euro;2-4M</td><td>30-36Mo/15-20%</td><td>12-18Mo</td><td>Emerging</td></tr>
+            <tr><td>8</td><td>Comp. Enclosures</td><td class="sc-m">62</td><td><span class="tier tier-b">B</span></td><td>68%</td><td>$5.4B</td><td>3.5x</td><td>&#9733;&#9733;&#9733;&#9734;&#9734;</td><td>&euro;3-6M</td><td>30-42Mo/12-20%</td><td>18-24Mo</td><td>Gigacasting</td></tr>
+            <tr><td>9</td><td>Fuel Cell</td><td class="sc-l">52</td><td><span class="tier tier-c">C</span></td><td>55%</td><td>$27B</td><td>22.4%</td><td>&#9733;&#9733;&#9733;&#9734;&#9734;</td><td>&euro;2-5M</td><td>36-48Mo/10-18%</td><td>24-36Mo</td><td>CN = BEV</td></tr>
+            <tr><td>10</td><td>Cable Harness</td><td class="sc-l">48</td><td><span class="tier tier-c">C</span></td><td>60%</td><td>Niche</td><td>mod.</td><td>&#9733;&#9733;&#9733;&#9734;&#9734;</td><td>&euro;0.5-1M</td><td>18-24Mo/10-15%</td><td>12-18Mo</td><td>Low-cost CN</td></tr>
+            <tr><td>11</td><td>Extrusion</td><td class="sc-l">42</td><td><span class="tier tier-c">C</span></td><td>65%</td><td>mod.</td><td>3.8%</td><td>&#9733;&#9733;&#9734;&#9734;&#9734;</td><td>&euro;0.5-2M</td><td>24-36Mo/8-15%</td><td>12-18Mo</td><td>Competed</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- ============ TIER S DETAIL ============ -->
+<div class="page-break"></div>
+<div class="sh"><div class="tag">Detailed Analysis</div><h2>Tier S &amp; A &mdash; Recommended Investments</h2></div>
+
+<div class="card card-s">
+    <div class="ch"><div class="left"><div class="rank" style="background:var(--atn-green); color:var(--atn-black);">1</div><div><h3>EV Acoustic Components + PET Foam Sandwich</h3><div class="sub">Core NVH DNA reapplied for EVs + PET foam for multi-function panels</div></div></div><div class="badges"><span class="badge b-cert">88%</span><span class="badge b-score">92/100</span><span class="tier tier-s">S</span></div></div>
+    <div class="cb">
+        <div class="cm"><div class="ml">Market 2030</div><div class="mv">$17.6B+</div><div class="md">Heat shield + acoustic</div></div>
+        <div class="cm"><div class="ml">CAGR</div><div class="mv g">5-10%</div><div class="md">Structural growth</div></div>
+        <div class="cm"><div class="ml">Fit</div><div class="mv" style="color:var(--atn-green);">&#9733;&#9733;&#9733;&#9733;&#9733;</div><div class="md">NVH = core DNA</div></div>
+        <div class="cm"><div class="ml">Invest</div><div class="mv">&euro;2-4M</div><div class="md">PET foam + tools</div></div>
+        <div class="cm"><div class="ml">Payback</div><div class="mv g">18-24Mo</div><div class="md">25-35% IRR</div></div>
+        <div class="cm"><div class="ml">Revenue</div><div class="mv">6-12Mo</div><div class="md">EV parts since 2023</div></div>
+    </div>
+    <div class="cp"><h4>Products</h4><div class="tags"><span class="tg tg-hot">Wheelhouse Liners</span><span class="tg tg-hot">Acoustic Underbody</span><span class="tg tg-hot">PET Foam Doors</span><span class="tg">Frunk</span><span class="tg">E-Motor Capsule</span><span class="tg tg-cn">Gigacasting Inlays</span></div></div>
+    <div class="cr"><strong>Rationale:</strong> 40% of EV noise = tire/road. PET foam + nonwoven = panels no competitor matches alone. BYD Hungary + Chinese OEMs need local suppliers. ArmaFORM PET FR60/GR60 thermoformable on existing equipment.</div>
+</div>
+
+<div class="card card-s">
+    <div class="ch"><div class="left"><div class="rank" style="background:var(--atn-green); color:var(--atn-black);">2</div><div><h3>Battery Thermal Insulation &amp; Runaway Barriers</h3><div class="sub">Cell-to-cell barriers, fire protection &mdash; fastest-growing segment (32.9% CAGR)</div></div></div><div class="badges"><span class="badge b-cert">85%</span><span class="badge b-score">90/100</span><span class="tier tier-s">S</span></div></div>
+    <div class="cb">
+        <div class="cm"><div class="ml">Market 2030</div><div class="mv">$29.1B</div><div class="md">Battery thermal mgmt</div></div>
+        <div class="cm"><div class="ml">CAGR</div><div class="mv g">32.9%</div><div class="md">Highest segment</div></div>
+        <div class="cm"><div class="ml">Fit</div><div class="mv" style="color:var(--atn-green);">&#9733;&#9733;&#9733;&#9733;&#9734;</div><div class="md">Thermal + nonwoven</div></div>
+        <div class="cm"><div class="ml">Invest</div><div class="mv">&euro;2-5M</div><div class="md">+ material partners</div></div>
+        <div class="cm"><div class="ml">Payback</div><div class="mv g">24-30Mo</div><div class="md">30-45% IRR</div></div>
+        <div class="cm"><div class="ml">Revenue</div><div class="mv">12-18Mo</div><div class="md">Qualification needed</div></div>
+    </div>
+    <div class="cp"><h4>Products</h4><div class="tags"><span class="tg tg-hot">Runaway Barriers</span><span class="tg tg-hot">Aerogel Composites</span><span class="tg tg-hot">Pack Insulation</span><span class="tg">Compression Pads</span><span class="tg tg-cn">CTP/CTC Spacers</span></div></div>
+    <div class="cr"><strong>Rationale:</strong> EU + China GB38031 safety drives demand. CTP/CTC = more barriers per pack. Aspen PyroThin reference. Partners: Aspen Aerogels, 3M, SABIC.</div>
+</div>
+
+<div class="card card-a">
+    <div class="ch"><div class="left"><div class="rank" style="background:var(--atn-light-blue);">3</div><div><h3>HP Multi Jet Fusion 3D Printing</h3><div class="sub">Lowest investment, fastest ROI, lights-out capable &mdash; the Quick Win</div></div></div><div class="badges"><span class="badge b-cert">78%</span><span class="badge b-score">82/100</span><span class="tier tier-a">A</span></div></div>
+    <div class="cb">
+        <div class="cm"><div class="ml">Market</div><div class="mv">$2.5B+</div><div class="md">AM spare parts</div></div>
+        <div class="cm"><div class="ml">CAGR</div><div class="mv g">~20%</div><div class="md">EU AM market</div></div>
+        <div class="cm"><div class="ml">Fit</div><div class="mv" style="color:var(--atn-green);">&#9733;&#9733;&#9733;&#9733;&#9734;</div><div class="md">New, low curve</div></div>
+        <div class="cm"><div class="ml">Invest</div><div class="mv g">&euro;0.5-1.5M</div><div class="md">Lowest of all</div></div>
+        <div class="cm"><div class="ml">Payback</div><div class="mv g">12-18Mo</div><div class="md">35-50% IRR (best!)</div></div>
+        <div class="cm"><div class="ml">Revenue</div><div class="mv g">3-6Mo</div><div class="md">Fastest of all</div></div>
+    </div>
+    <div class="cp"><h4>Products</h4><div class="tags"><span class="tg tg-hot">Clips, Brackets</span><span class="tg tg-hot">EV Connectors PA12 FR</span><span class="tg tg-hot">Spare Parts On-Demand</span><span class="tg">Internal Tooling</span><span class="tg">Low-Vol EV Variants</span></div></div>
+    <div class="cr"><strong>Rationale:</strong> GM: 60k parts in 5 weeks. 40k parts/week per printer. <strong>24/7 lights-out. &euro;12k per IRR-% = 5-15x more efficient than alternatives.</strong> Regional MJF hub for Rhine-Main.</div>
+</div>
+
+<div class="card card-a">
+    <div class="ch"><div class="left"><div class="rank" style="background:var(--atn-light-blue);">4</div><div><h3>Closed-Loop Textile Recycling</h3><div class="sub">EU law mandates recycled content &mdash; highest certainty (92%) &mdash; dual revenue</div></div></div><div class="badges"><span class="badge b-cert">92%</span><span class="badge b-score">80/100</span><span class="tier tier-a">A</span></div></div>
+    <div class="cb">
+        <div class="cm"><div class="ml">Driver</div><div class="mv">EU Law</div><div class="md">15-25% mandatory</div></div>
+        <div class="cm"><div class="ml">Certainty</div><div class="mv g">92%</div><div class="md">Highest (signed)</div></div>
+        <div class="cm"><div class="ml">Fit</div><div class="mv" style="color:var(--atn-green);">&#9733;&#9733;&#9733;&#9733;&#9734;</div><div class="md">Relive-1 DNA</div></div>
+        <div class="cm"><div class="ml">Invest</div><div class="mv">&euro;3-6M</div><div class="md">Shredder + wash</div></div>
+        <div class="cm"><div class="ml">Payback</div><div class="mv">30-36Mo</div><div class="md">20-30% (dual)</div></div>
+        <div class="cm"><div class="ml">Revenue</div><div class="mv">18-24Mo</div><div class="md">Equip + cert</div></div>
+    </div>
+    <div class="cp"><h4>Capabilities</h4><div class="tags"><span class="tg tg-hot">ELV Sorting</span><span class="tg tg-hot">rPET Fiber</span><span class="tg tg-hot">Closed-Loop Cert</span><span class="tg tg-hot">Dual-Acid Separation</span><span class="tg">Feed H1 (Foam)</span><span class="tg">Feed H2 (IM)</span><span class="tg tg-cn">Virgin-Quality Recyclate</span></div></div>
+    <div class="cr"><strong>Rationale:</strong> 6.5M ELV/yr in EU. Dual revenue: disposal fees + fiber sales. Feeds Hall 1 + 2. No CN equivalent. EU + KfW subsidies could offset 15-30% CAPEX. <strong>Game-changer: Dual-Acid chemical recycling (see below) enables virgin-quality PET monomer + intact cotton recovery from mixed-fiber waste &mdash; solving the one problem mechanical recycling cannot.</strong></div>
+</div>
+
+<!-- ============ DUAL-ACID RECYCLING INNOVATION ============ -->
+<div style="background:var(--atn-white); border-radius:8px; padding:22px; box-shadow:0 2px 10px rgba(0,0,0,.06); margin-bottom:22px; border:2px solid var(--atn-green); position:relative;">
+    <div style="position:absolute; top:-10px; left:20px; background:var(--atn-green); color:var(--atn-black); padding:2px 12px; border-radius:4px; font-size:9px; font-weight:700; letter-spacing:1px;">INNOVATION SPOTLIGHT &mdash; INTERNAL IDEA (HYPE #2026-01)</div>
+
+    <div style="margin-top:10px;">
+        <div class="sh" style="margin-bottom:14px;">
+            <div class="tag">Breakthrough Technology for Hall 3</div>
+            <h2>Selective Polymer-Retention: Dual-Acid Recycling for Mixed-Fiber Automotive Textiles</h2>
+            <p>Originated by Jonas R.E. Glawion (Process Engineer, Autoneum Germany GmbH - Gundernhausen) &mdash; Submitted to HYPE Innovation Portal Feb 2026 &mdash; TRL 3-4 (lab-proven)</p>
+        </div>
+
+        <!-- PROBLEM + SOLUTION SIDE BY SIDE -->
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:16px;">
+            <div class="box box-warn" style="margin-bottom:0;">
+                <h3>Problem: Mixed-Fiber Recycling Dead End</h3>
+                <ul>
+                    <li>Flexi-Light PET, Propylat (PP+PET+cotton), Hybrid-Acoustics &mdash; cannot be sort-pure recycled</li>
+                    <li>Mechanical shredding = "shoddy" with degraded polymer chains</li>
+                    <li>Aggressive chemical recycling destroys both PET and cotton</li>
+                    <li>Result: high-value materials lost to low-value downcycling</li>
+                    <li>Zero recycling solution for mixed-fiber production waste + EOL returns</li>
+                </ul>
+            </div>
+            <div class="box box-green" style="margin-bottom:0;">
+                <h3>Solution: Dual-Acid Flash Separation</h3>
+                <ul>
+                    <li>Specific dual-acid mixture heated to <strong>216&deg;C</strong></li>
+                    <li>PET matrix dissolves in <strong>5 minutes</strong> (flash separation)</li>
+                    <li>Cotton fibers remain <strong>100% intact</strong> (structurally undamaged)</li>
+                    <li><strong>97% pure PET monomer</strong> with full polymer chain integrity</li>
+                    <li>Output: two pure streams &mdash; virgin-quality PET + intact cotton</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- PROCESS FLOW -->
+        <div style="background:var(--atn-vlight-grey); border-radius:6px; padding:14px; margin-bottom:16px;">
+            <div style="font-size:10px; font-weight:700; color:var(--atn-green); margin-bottom:8px; text-transform:uppercase; letter-spacing:1px;">Industrial Process Flow (Target)</div>
+            <div class="flow">
+                <div class="flow-box" style="min-width:100px;">Mixed-Fiber<br>Waste<br><span style="font-size:7.5px; color:var(--atn-dark-grey);">Flexi-Loft, Propylat,<br>EOL parts, off-cuts</span></div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-box" style="min-width:90px;">Mechanical<br>Shredding<br><span style="font-size:7.5px; color:var(--atn-dark-grey);">Pre-processing</span></div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-box" style="min-width:100px; border-color:var(--atn-orange);">Dual-Acid<br>Reactor<br><span style="font-size:7.5px; color:var(--atn-orange);">216&deg;C / 5 min</span></div>
+                <div class="flow-arrow">&rarr;</div>
+                <div class="flow-box" style="min-width:90px;">Filtration &amp;<br>Separation<br><span style="font-size:7.5px; color:var(--atn-dark-grey);">Solid vs. liquid</span></div>
+                <div class="flow-arrow">&rarr;</div>
+                <div style="display:flex; flex-direction:column; gap:6px;">
+                    <div class="flow-box" style="border-color:var(--atn-green); min-width:110px;">100% Cotton<br>Fibers (solid)<br><span style="font-size:7.5px; color:var(--atn-dark-green);">&rarr; Hybrid-Acoustics,<br>IFP-R2, Carpets</span></div>
+                    <div class="flow-box" style="border-color:var(--atn-light-blue); min-width:110px;">97% PET<br>Monomer (liquid)<br><span style="font-size:7.5px; color:var(--atn-light-blue);">&rarr; Ultra-Silent, Frunk,<br>PET Foam (H1)</span></div>
+                </div>
+            </div>
+            <div class="flow" style="margin-top:6px;">
+                <div class="flow-box" style="opacity:.6; min-width:90px;">Acid Solvent</div>
+                <div class="flow-arrow">&circlearrowleft;</div>
+                <div style="font-size:9px; color:var(--atn-dark-grey);">Re-distillation &amp; reuse (&gt;95% recovery required for viable OPEX)</div>
+            </div>
+        </div>
+
+        <!-- KEY DIFFERENTIATOR -->
+        <div style="background:linear-gradient(135deg,#2a3000,#3d4700); color:var(--atn-white); border-radius:6px; padding:16px; margin-bottom:16px;">
+            <div style="font-size:11px; font-weight:700; color:var(--atn-green); margin-bottom:8px;">Why This Changes Everything for Hall 3</div>
+            <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px;">
+                <div style="background:rgba(184,196,0,.1); border:1px solid rgba(184,196,0,.2); border-radius:5px; padding:10px; text-align:center;">
+                    <div style="font-size:18px; font-weight:700; color:var(--atn-green);">Virgin Quality</div>
+                    <div style="font-size:8.5px; color:#aaa; margin-top:2px;">Unlike mechanical rPET, polymer chains are intact &mdash; meets OEM specs for odor, fogging, longevity</div>
+                </div>
+                <div style="background:rgba(184,196,0,.1); border:1px solid rgba(184,196,0,.2); border-radius:5px; padding:10px; text-align:center;">
+                    <div style="font-size:18px; font-weight:700; color:var(--atn-green);">Mixed Fibers</div>
+                    <div style="font-size:8.5px; color:#aaa; margin-top:2px;">Solves the unsolvable: separates PET/cotton/PP blends that mechanical recycling cannot handle</div>
+                </div>
+                <div style="background:rgba(184,196,0,.1); border:1px solid rgba(184,196,0,.2); border-radius:5px; padding:10px; text-align:center;">
+                    <div style="font-size:18px; font-weight:700; color:var(--atn-green);">5 Minutes</div>
+                    <div style="font-size:8.5px; color:#aaa; margin-top:2px;">"Flash separation" vs. hours in traditional hydrolysis &mdash; enables industrial throughput</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- APPLICABLE AUTONEUM PRODUCTS -->
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:16px;">
+            <div>
+                <div style="font-size:10px; font-weight:700; color:var(--atn-green); margin-bottom:6px; text-transform:uppercase; letter-spacing:1px;">Input Materials (Waste Streams)</div>
+                <table style="margin:0;">
+                    <thead><tr><th>Material</th><th>Composition</th><th>Current Recycling</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>Flexi-Light PET</strong></td><td>100% PET</td><td>Mechanical (clean scrap only)</td></tr>
+                        <tr><td><strong>Propylat</strong></td><td>PP + PET + cotton + natural fiber</td><td>None (downcycled)</td></tr>
+                        <tr><td><strong>Hybrid-Acoustics ECO+</strong></td><td>Cotton-based monomaterial</td><td>Limited mechanical</td></tr>
+                        <tr><td><strong>EOL parts (15+ yr)</strong></td><td>Contaminated (glue, dirt)</td><td>None (ASR landfill)</td></tr>
+                        <tr><td><strong>Production off-cuts</strong></td><td>Mixed fiber trims</td><td>Shoddy (downcycled)</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <div style="font-size:10px; font-weight:700; color:var(--atn-green); margin-bottom:6px; text-transform:uppercase; letter-spacing:1px;">Output Products (Virgin-Quality)</div>
+                <table style="margin:0;">
+                    <thead><tr><th>Recovered Material</th><th>Reuse Target</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>100% Cotton Fibers</strong></td><td>Hybrid-Acoustics ECO+, IFP-R2 inner dashes, Flexi-Light carpets</td></tr>
+                        <tr><td><strong>97% PET Monomer</strong></td><td>Ultra-Silent Frunk, Ultra-Silent Tune, PET Foam (Hall 1), Needlepunch Carpets</td></tr>
+                        <tr><td><strong>PP Recovery (Phase 2)</strong></td><td>Injection Moulding feedstock (Hall 2)</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- INVESTMENT & ROADMAP -->
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:16px;">
+            <div>
+                <div style="font-size:10px; font-weight:700; color:var(--atn-green); margin-bottom:6px; text-transform:uppercase; letter-spacing:1px;">Investment Phasing</div>
+                <table style="margin:0;">
+                    <thead><tr><th>Phase</th><th>Investment</th><th>Timeline</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>Phase 1:</strong> University Lab Partnership</td><td>Minimal (&lt;&euro;50k)</td><td>Q2-Q3 2026</td></tr>
+                        <tr><td><strong>Phase 2:</strong> Pilot Plant</td><td>&euro;500k - 1M</td><td>Q4 2026 - Q2 2027</td></tr>
+                        <tr><td><strong>Phase 3:</strong> Industrial Line (in Hall 3)</td><td>&gt;&euro;5M</td><td>2028 (post-validation)</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <div style="font-size:10px; font-weight:700; color:var(--atn-green); margin-bottom:6px; text-transform:uppercase; letter-spacing:1px;">Scouting Partners (Germany)</div>
+                <table style="margin:0;">
+                    <thead><tr><th>Partner</th><th>Location</th><th>Capability</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>Eeden</strong></td><td>M&uuml;nster</td><td>Pilot plant for cellulose/PET separation</td></tr>
+                        <tr><td><strong>Fraunhofer IAP</strong></td><td>Potsdam</td><td>Mixed-textile depolymerization R&amp;D</td></tr>
+                        <tr><td><strong>DITF Denkendorf</strong></td><td>Stuttgart</td><td>Europe&rsquo;s largest textile research, Solvolysis</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- RISKS & MITIGATIONS -->
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px;">
+            <div class="box box-warn" style="margin-bottom:0; padding:14px;">
+                <h3 style="font-size:11px;">Key Risks</h3>
+                <ul>
+                    <li>Acid handling at &gt;200&deg;C requires closed-loop vapor recovery (EHS)</li>
+                    <li>Solvent recovery rate must exceed 95% for viable OPEX</li>
+                    <li>Binder fibers (bicomponent) and phenol resins may interfere</li>
+                    <li>Process cost today higher than virgin PET &mdash; economics depend on CO2 taxes, ASR avoidance costs, and EU EPR regulations</li>
+                </ul>
+            </div>
+            <div class="box box-green" style="margin-bottom:0; padding:14px;">
+                <h3 style="font-size:11px;">Strategic Mitigations</h3>
+                <ul>
+                    <li>Start with lab validation (&lt;&euro;50k) before committing to pilot</li>
+                    <li>German research partners available (no US dependency)</li>
+                    <li>Rising ASR taxes + CBAM + EU EPR will close the cost gap by 2028-2030</li>
+                    <li>Phase 1+2 can run in parallel with mechanical recycling in Hall 3</li>
+                    <li>USP: First supplier to guarantee "virgin-quality" recyclate from mixed-fiber automotive waste</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- STRATEGIC VALUE -->
+        <div style="background:var(--atn-lightest-green); border-radius:6px; padding:14px; border:1px solid var(--atn-pale-green);">
+            <div style="font-size:10px; font-weight:700; color:var(--atn-dark-green); margin-bottom:6px; text-transform:uppercase; letter-spacing:1px;">Strategic Value for Gundernhausen Site Transformation</div>
+            <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:10px;">
+                <div style="text-align:center;">
+                    <div style="font-size:14px; font-weight:700; color:var(--atn-black);">Hall 3 &rarr; Hall 1</div>
+                    <div style="font-size:8.5px; color:var(--atn-dark-grey);">Virgin-quality PET monomer feeds PET Foam extrusion line directly</div>
+                </div>
+                <div style="text-align:center;">
+                    <div style="font-size:14px; font-weight:700; color:var(--atn-black);">Hall 3 &rarr; Hall 2</div>
+                    <div style="font-size:8.5px; color:var(--atn-dark-grey);">Recovered PP/PET feeds injection moulding as premium recycled granulate</div>
+                </div>
+                <div style="text-align:center;">
+                    <div style="font-size:14px; font-weight:700; color:var(--atn-black);">"Autoneum Pure"</div>
+                    <div style="font-size:8.5px; color:var(--atn-dark-grey);">Enhances sustainability brand. First supplier with virgin-quality closed-loop for mixed textiles</div>
+                </div>
+                <div style="text-align:center;">
+                    <div style="font-size:14px; font-weight:700; color:var(--atn-black);">EU Compliance</div>
+                    <div style="font-size:8.5px; color:var(--atn-dark-grey);">Meets 15-25% recycled content mandate without ANY performance compromise</div>
+                </div>
+            </div>
+        </div>
+
+        <p style="font-size:8.5px; color:var(--atn-dark-grey); margin-top:10px; font-style:italic;">Sources: Nature Communications (2025), NC State University (2023), Deep Eutectic Solvent Research (ISTA), Patent WO2019047176A1. Internal: HYPE Innovation Portal submission by J. Glawion, Feb 2026. TRL 3-4 (lab-proven, &gt;97% separation purity).</p>
+    </div>
+</div>
+
+<!-- ============ HALLS ============ -->
+<div class="page-break"></div>
+<div class="sh"><div class="tag">Implementation</div><h2>Hall Allocation &mdash; Integrated Circular Model</h2></div>
+
+<div style="background:var(--atn-white); border-radius:8px; padding:18px; box-shadow:0 2px 8px rgba(0,0,0,.05); margin-bottom:22px; border:1px solid var(--atn-light-grey);">
+    <div class="halls">
+        <div class="hall p1">
+            <div class="hall-l">Hall 1 &mdash; Revenue Core</div><div class="hall-sz">~1,700 m&sup2;</div>
+            <h4>EV Acoustics + PET Foam</h4>
+            <p>Nonwoven + PET foam extrusion + thermoforming. Wheelhouse, underbody, headliner, frunk.</p>
+            <div class="hall-t">Q2 2026 &rarr; Rev. Q4 2026</div>
+        </div>
+        <div class="hall p2">
+            <div class="hall-l">Hall 2 &mdash; Lights-Sparse</div><div class="hall-sz">~1,700 m&sup2;</div>
+            <h4>Thermal + MJF + IM</h4>
+            <p>Aerogel barriers + 4x MJF (24/7) + 2x FANUC IM + AMRs + AI QA. 3-5 staff.</p>
+            <div class="hall-t">Q3 2026 &rarr; Rev. Q1 2027</div>
+        </div>
+        <div class="hall p3">
+            <div class="hall-l">Hall 3 &mdash; Circular Engine</div><div class="hall-sz">~1,600 m&sup2;</div>
+            <h4>Textile Recycling + Dual-Acid</h4>
+            <p>Mechanical recycling + Dual-Acid chemical separation (216&deg;C/5min). Virgin-quality PET + cotton recovery. Feeds H1 + H2.</p>
+            <div class="hall-t">Q1 2027 &rarr; Rev. H2 2027</div>
+        </div>
+    </div>
+    <div style="margin-top:14px; padding:12px; background:var(--atn-vlight-grey); border-radius:6px; text-align:center;">
+        <div class="flow">
+            <div class="flow-box">ELV Textiles +<br>Mixed-Fiber Waste</div><div class="flow-arrow">&rarr;</div>
+            <div class="flow-box" style="border-color:var(--atn-orange);">H3: Mechanical +<br>Dual-Acid Separation</div><div class="flow-arrow">&rarr;</div>
+            <div class="flow-box">H1: NVH + Foam<br><span style="font-size:7.5px;">(virgin-quality PET)</span></div><div class="flow-arrow">&rarr;</div>
+            <div class="flow-box">OEMs</div><div class="flow-arrow">&rarr;</div>
+            <div class="flow-box">Vehicle EoL</div><div class="flow-arrow">&circlearrowleft;</div>
+        </div>
+        <div class="flow" style="margin-top:3px;">
+            <div class="flow-box" style="opacity:.6;">H3 rPET</div><div class="flow-arrow">&rarr;</div>
+            <div class="flow-box dark">H2: MJF+IM (24/7)</div><div class="flow-arrow">&rarr;</div>
+            <div class="flow-box" style="opacity:.6;">OEMs</div>
+        </div>
+    </div>
+</div>
+
+<!-- TOTAL INVEST -->
+<div style="background:var(--atn-white); border-radius:8px; padding:18px; box-shadow:0 2px 8px rgba(0,0,0,.05); margin-bottom:22px; border:1px solid var(--atn-light-grey);">
+    <h3 style="font-size:12px; font-weight:700; color:var(--atn-green); margin-bottom:10px;">Total Investment Summary</h3>
+    <table>
+        <thead><tr><th>Item</th><th>Conservative</th><th>Mid-Range</th><th>Aggressive</th></tr></thead>
+        <tbody>
+            <tr><td>Hall 1: EV Acoustic + PET Foam</td><td>&euro;2.0M</td><td>&euro;3.0M</td><td>&euro;4.0M</td></tr>
+            <tr><td>Hall 2: Thermal + MJF + IM + Automation</td><td>&euro;3.0M</td><td>&euro;5.5M</td><td>&euro;8.0M</td></tr>
+            <tr><td>Hall 3: Recycling + Dual-Acid Pilot</td><td>&euro;3.5M</td><td>&euro;5.5M</td><td>&euro;7.0M</td></tr>
+            <tr style="background:var(--atn-lightest-green);"><td><strong>Total CAPEX</strong></td><td><strong>&euro;8.5M</strong></td><td><strong>&euro;14.0M</strong></td><td><strong>&euro;19.0M</strong></td></tr>
+            <tr><td><strong>Blended IRR</strong></td><td>20-25%</td><td>25-35%</td><td>30-40%</td></tr>
+            <tr><td><strong>Blended Payback</strong></td><td>30-36 Mo</td><td>24-30 Mo</td><td>18-24 Mo</td></tr>
+            <tr><td><strong>Automation Savings (H2)</strong></td><td colspan="3">&euro;825k-1.375M/yr (15-25 FTE &times; &euro;55k)</td></tr>
+        </tbody>
+    </table>
+    <p style="font-size:8.5px; color:var(--atn-dark-grey); margin-top:6px; font-style:italic;">* Excl. EU Circular Economy Fund, KfW, Hessen incentives (potential 15-30% offset).</p>
+</div>
+
+<!-- CTA -->
+<div class="cta">
+    <h2>The Cost of Waiting Is Higher Than the Cost of Acting</h2>
+    <p>BYD Hungary is nominating suppliers <strong>now</strong> &mdash; not in 2027. Supplier locks last 5-7 years per vehicle program. Every quarter we delay, another Chinese OEM finalises its European supply chain without us. 5,002 m&sup2; idle = sunk cost. EU regulations create mandatory demand. Dual-Acid recycling delivers a world-first USP. <strong>Q2 2026 is the decision point. There is no second window.</strong></p>
+    <div class="cta-stats">
+        <div class="cs2"><div class="v2">$29B</div><div class="l2">Battery Thermal 2030</div></div>
+        <div class="cs2"><div class="v2">$17.6B</div><div class="l2">Acoustic 2030</div></div>
+        <div class="cs2"><div class="v2">92%</div><div class="l2">Certainty (Recycling)</div></div>
+        <div class="cs2"><div class="v2">50%</div><div class="l2">Best IRR (MJF)</div></div>
+        <div class="cs2"><div class="v2">76s</div><div class="l2">Xiaomi Benchmark</div></div>
+    </div>
+</div>
+
+<div class="footer">
+    <div style="margin-bottom:10px; padding:12px; background:var(--atn-vlight-grey); border-radius:6px; border:1px solid var(--atn-light-grey);">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+            <div>
+                <div style="font-size:11px; font-weight:700; color:var(--atn-black);">Jonas Roland Erwin Glawion</div>
+                <div style="font-size:9px; color:var(--atn-dark-grey);">Process Engineer &mdash; Autoneum Germany GmbH - Gundernhausen</div>
+            </div>
+            <div style="text-align:center;">
+                <div style="font-size:9px; color:var(--atn-dark-grey);">Researched &bull; Evaluated &bull; Compiled &bull; Distributed</div>
+                <div style="font-size:9px; color:var(--atn-dark-grey);">March 2026</div>
+            </div>
+            <div style="text-align:right;">
+                <div style="font-size:9px; color:var(--atn-dark-grey);">Autoneum Germany GmbH</div>
+                <div style="font-size:9px; color:var(--atn-dark-grey);">- Gundernhausen</div>
+            </div>
+        </div>
+    </div>
+    <p><strong>Autoneum Management AG</strong> &mdash; Gundernhausen Site Transformation V3 Final &mdash; March 2026</p>
+    <p class="classification" style="margin-top:4px;">- CONFIDENTIAL -</p>
+    <p style="margin-top:4px;">Sources: Grand View Research, MarketsandMarkets, Stratview Research, IDTechEx, EU Parliament, Rhodium Group, CNBC, Armacell, Aspen Aerogels, HP Inc., FANUC, Siemens, Xiaomi, BYD/FinDreams, Mordor Intelligence, Autoneum Annual Report 2025, Nature Communications (2025), NC State University (2023), Patent WO2019047176A1, HYPE Innovation Portal (J. Glawion, Feb 2026)</p>
+</div>
+
+</div>
+</body>
+</html>

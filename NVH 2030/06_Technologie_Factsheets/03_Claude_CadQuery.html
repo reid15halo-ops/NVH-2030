@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Opus + <span>CadQuery</span> – Technology Factsheet</title>
+    <style>
+:root{--g:#B8C400;--dg:#99CC00;--o:#E86A10;--b:#69BBFF;--dk:#2d2d2d;--gy:#666;--lg:#DCDCDC;--vlg:#F4F4F4;--wh:#FFF;--pg:#EDF0BF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Arial,Calibri,sans-serif;background:var(--wh);color:#000;line-height:1.6;font-size:12px}
+@media print{body{font-size:9.5px}.hero{padding:20px 25px!important}.container{padding:10px 20px!important}}
+.hero{background:linear-gradient(135deg,#1a1a1a 0%,#2d2d2d 60%,#3a3a3a 100%);color:var(--wh);padding:35px 50px;position:relative}
+.hero::before{content:'';position:absolute;top:-40%;right:-15%;width:400px;height:400px;background:radial-gradient(circle,rgba(184,196,0,.12) 0%,transparent 70%);border-radius:50%}
+.hero-tag{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--g);margin-bottom:6px}
+.hero h1{font-size:24px;font-weight:700;line-height:1.2;margin-bottom:8px}
+.hero h1 span{color:var(--g)}
+.hero-sub{font-size:12px;opacity:.85;max-width:650px;margin-bottom:10px}
+.hero-meta{display:flex;gap:12px;font-size:9px;opacity:.5;flex-wrap:wrap}
+.badge{display:inline-block;padding:2px 8px;border-radius:3px;font-size:9px;font-weight:700;margin-left:6px}
+.b-phase{background:var(--g);color:#000}
+.b-cost{background:var(--o);color:var(--wh)}
+.kn-bar{display:grid;grid-template-columns:repeat(4,1fr);background:var(--wh);border-radius:8px;box-shadow:0 3px 12px rgba(0,0,0,.07);margin:-20px 30px 18px;position:relative;z-index:10;border:1px solid var(--lg)}
+.kn{padding:14px 10px;text-align:center;border-right:1px solid var(--lg)}
+.kn:last-child{border-right:none}
+.kn .v{font-size:18px;font-weight:700;color:#000;line-height:1;margin-bottom:2px}
+.kn .v span{color:var(--g)}
+.kn .l{font-size:8px;color:var(--gy);text-transform:uppercase;letter-spacing:.5px}
+.container{max-width:960px;margin:0 auto;padding:18px 40px}
+.sh{margin-bottom:14px}
+.sh .tag{font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--g);margin-bottom:3px}
+.sh h2{font-size:18px;font-weight:700;color:var(--g)}
+.sh p{color:var(--gy);margin-top:2px;font-size:11px}
+.box{border-radius:6px;padding:16px 20px;margin-bottom:18px}
+.box h3{font-size:12px;font-weight:700;margin-bottom:6px}
+.box ul{list-style:none;padding:0}
+.box li{padding:2px 0 2px 16px;position:relative;font-size:10.5px}
+.box li::before{content:'';position:absolute;left:0;top:6px;width:7px;height:7px;border-radius:2px}
+.box-green{background:#F7F9E6;border-left:4px solid var(--g)}
+.box-green h3{color:var(--dg)}
+.box-green li::before{background:var(--g)}
+.box-dark{background:#1a1a1a;border-left:4px solid var(--g);color:#ddd}
+.box-dark h3{color:var(--g)}
+.box-dark li::before{background:var(--g)}
+.box-warn{background:#FFF5EB;border-left:4px solid var(--o)}
+.box-warn h3{color:var(--o)}
+.box-warn li::before{background:var(--o)}
+.box-blue{background:#EBF5FF;border-left:4px solid var(--b)}
+.box-blue h3{color:#2E75B6}
+.box-blue li::before{background:var(--b)}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:10px}
+th{background:var(--g);color:var(--wh);padding:6px 8px;text-align:left;font-weight:700;font-size:8.5px;text-transform:uppercase;letter-spacing:.4px}
+th:first-child{border-radius:4px 0 0 0}th:last-child{border-radius:0 4px 0 0}
+td{padding:6px 8px;border-bottom:1px solid var(--lg)}
+tr:nth-child(even){background:var(--vlg)}
+tr:hover{background:var(--pg)}
+.footer{text-align:center;padding:14px;border-top:1px solid var(--lg);margin-top:10px}
+.footer p{font-size:8px;color:var(--gy);font-style:italic}
+</style>
+</head>
+<body>
+<div class="hero">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+        <div>
+            <div class="hero-tag">Technology Factsheet 03 • LLM Parametric CAD</div>
+            <h1>Claude Opus + <span>CadQuery</span> <span class="badge b-phase">PHASE 1–2</span> <span class="badge b-cost">~€200/mo API</span></h1>
+        </div>
+        <div style="text-align:right;">
+            <div style="font-size:18px;font-weight:700;color:var(--g);letter-spacing:1px;">AUTONEUM</div>
+            <div style="font-size:9px;font-style:italic;color:var(--o);">- CONFIDENTIAL -</div>
+        </div>
+    </div>
+    <p class="hero-sub">Use Anthropic's Claude Opus 4 LLM to generate Python CadQuery scripts that produce manufacturing-ready STEP/STL files. ~85% executable rate on first attempt. Real CAD kernel (OpenCASCADE).</p>
+    <div class="hero-meta">
+        <span>Autoneum Germany GmbH – Gundernhausen</span><span>|</span><span>March 2026</span><span>|</span><span>Annex to MJF Deep-Dive</span>
+    </div>
+</div>
+
+<div class="kn-bar">
+<div class="kn"><div class="v">85<span>%</span></div><div class="l">First-Attempt Success</div></div>
+<div class="kn"><div class="v">STEP</div><div class="l">Output (OpenCASCADE)</div></div>
+<div class="kn"><div class="v">Python</div><div class="l">CadQuery API</div></div>
+<div class="kn"><div class="v">0</div><div class="l">License Cost (OSS)</div></div>
+</div>
+
+<div class="container">
+
+<div class="sh"><div class="tag">Overview</div><h2>What It Does</h2></div>
+<div class="box box-dark">
+    <h3>Claude + CadQuery — LLM-Generated Parametric CAD</h3>
+    <ul>
+        <li>Claude Opus generates Python CadQuery scripts from natural language part descriptions</li>
+        <li>CadQuery is open-source, Python-based, runs on OpenCASCADE kernel — fillets, chamfers, booleans work correctly</li>
+        <li>Output: STEP files (industry standard), also STL for direct 3D printing</li>
+        <li>Dimensions as Python variables → parametric: change one value, regenerate entire model</li>
+        <li>Academic research (Text-to-CadQuery, 2025): best models achieve 69% exact match, 85%+ executable with feedback loops</li>
+        <li>No license cost for CadQuery (MIT license) — only Claude API usage cost</li>
+    </ul>
+</div>
+
+<div class="sh"><div class="tag">How It Works</div><h2>Process &amp; Principle</h2></div>
+<div class="box box-green">
+    <h3>Text → Python → STEP Pipeline</h3>
+    <ul>
+        <li><strong>Step 1:</strong> Operator describes part: 'Spray nozzle adapter, 25mm OD, 12mm ID, 3 mounting tabs at 120°'</li>
+        <li><strong>Step 2:</strong> Claude generates Python CadQuery script with parametric variables</li>
+        <li><strong>Step 3:</strong> Script executes locally — CadQuery builds geometry on OpenCASCADE kernel</li>
+        <li><strong>Step 4:</strong> If error: Claude reviews traceback, fixes code, re-executes (feedback loop)</li>
+        <li><strong>Step 5:</strong> Export STEP → import to HP SmartStream → nest → print</li>
+        <li>FDM/MJF best practices encodable: min wall 2mm, 0.3mm hole clearance, chamfers on bottom edges</li>
+    </ul>
+</div>
+
+<div class="sh"><div class="tag">Requirements</div><h2>Auxiliaries &amp; Infrastructure</h2></div>
+<div style="background:var(--wh);border-radius:8px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.05);margin-bottom:18px;border:1px solid var(--lg);">
+    <table>
+        <thead><tr><th>Auxiliary</th><th>Specification</th><th>Status at Gundernhausen</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Python 3.10+</strong></td><td>CadQuery runtime environment</td><td>Install via pip</td></tr>
+            <tr><td><strong>Internet Connection</strong></td><td>Required for Claude API calls</td><td>Available</td></tr>
+            <tr><td><strong>Claude API Key</strong></td><td>Anthropic API access for code generation</td><td>Sign up at anthropic.com</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="sh"><div class="tag">Hardware</div><h2>Required Hardware</h2></div>
+<div style="background:var(--wh);border-radius:8px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.05);margin-bottom:18px;border:1px solid var(--lg);">
+    <table>
+        <thead><tr><th>Component</th><th>Model / Specification</th><th>Est. Cost</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Any PC/Laptop</strong></td><td>Python + CadQuery runs on any modern system</td><td>€0 (existing)</td></tr>
+            <tr><td><strong>No GPU required</strong></td><td>CadQuery is CPU-based (OpenCASCADE)</td><td>€0</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="sh"><div class="tag">Software</div><h2>Required Software</h2></div>
+<div style="background:var(--wh);border-radius:8px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.05);margin-bottom:18px;border:1px solid var(--lg);">
+    <table>
+        <thead><tr><th>Software</th><th>Function</th><th>Est. Cost</th></tr></thead>
+        <tbody>
+            <tr><td><strong>CadQuery</strong></td><td>Open-source parametric CAD library (pip install cadquery)</td><td>Free (MIT)</td></tr>
+            <tr><td><strong>Claude API (Opus 4)</strong></td><td>LLM for code generation — ~$15/M input, $75/M output tokens</td><td>~€150–250/mo</td></tr>
+            <tr><td><strong>Claude Code CLI (optional)</strong></td><td>Interactive coding assistant with CadQuery skill</td><td>Included with API</td></tr>
+            <tr><td><strong>CQ-Editor (optional)</strong></td><td>Visual CadQuery IDE for preview/debug</td><td>Free (OSS)</td></tr>
+            <tr><td><strong>FreeCAD (optional)</strong></td><td>STEP file viewer and manual editing</td><td>Free (OSS)</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="sh"><div class="tag">Gundernhausen Fit</div><h2>Relevance &amp; Recommendation</h2></div>
+<div class="box box-blue">
+    <h3>Recommendation for Gundernhausen</h3>
+    <ul>
+        <li><strong>Immediate start:</strong> Install CadQuery on operator PCs today — zero cost, zero approval needed</li>
+        <li><strong>Simple workflow:</strong> Operator opens Claude → describes part → gets Python script → runs → exports STEP</li>
+        <li><strong>Best for:</strong> Simple-to-medium jigs, brackets, clips, cable management, sensor mounts</li>
+        <li><strong>Limitation:</strong> Threads, snap fits, complex assemblies need human validation — always check critical dims</li>
+        <li><strong>Combine with Zoo Zookeeper</strong> for complex parametric parts needing engineering review</li>
+        <li><strong>Cost:</strong> ~€200/mo API — generates 100+ part designs per month at that budget</li>
+    </ul>
+</div>
+
+<div class="sh"><div class="tag">Sources</div><h2>Key References</h2></div>
+<div style="background:var(--wh);border-radius:8px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.05);margin-bottom:18px;border:1px solid var(--lg);">
+    <table>
+        <thead><tr><th>Source</th><th>Topic</th></tr></thead>
+        <tbody>
+            <tr><td><a href="https://medium.com/@nchourrout/i-taught-claude-to-design-3d-printable-parts-heres-how-675f644af78a" style="color:var(--b);">Towards AI — Claude + CadQuery</a></td><td>Tutorial</td></tr>
+            <tr><td><a href="https://arxiv.org/html/2505.06507v1" style="color:var(--b);">arXiv — Text-to-CadQuery</a></td><td>Academic benchmark</td></tr>
+            <tr><td><a href="https://github.com/CadQuery/cadquery" style="color:var(--b);">CadQuery GitHub</a></td><td>Open-source library</td></tr>
+        </tbody>
+    </table>
+</div>
+
+</div>
+<div class="footer">
+    <p>&copy; 2026 Autoneum Germany GmbH – Gundernhausen | - CONFIDENTIAL - | Technology Factsheet | Author: J.R.E. Glawion</p>
+</div>
+</body>
+</html>

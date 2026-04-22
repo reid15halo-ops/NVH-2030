@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NVH 2030 — Implementierungsplan Gundernhausen</title>
+<style>
+:root {
+  --primary: #2d2d2d;
+  --accent: #b8c400;
+  --phase1: #b8c400;
+  --phase2: #A23B72;
+  --phase3: #F18F01;
+  --phase4: #C73E1D;
+  --phase5: #3B1F2B;
+  --phaseB: #9E9E9E;
+  --milestone: #FFD700;
+  --critical: #CC0000;
+  --bg: #F5F7FA;
+  --card-bg: #FFFFFF;
+  --text: #333333;
+  --text-light: #666666;
+  --border: #DEE2E6;
+  --today: #FF4444;
+  --gantt-row-even: #F8F9FA;
+  --gantt-row-odd: #FFFFFF;
+  --shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+/* Header */
+.header {
+  background: linear-gradient(135deg, #2d2d2d 0%, #333333 100%);
+  color: white;
+  padding: 20px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 4px solid #b8c400;
+}
+
+.decision-banner {
+  background: linear-gradient(135deg, #b8c400 0%, #90a000 100%);
+  color: white;
+  padding: 12px 30px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  box-shadow: 0 2px 6px rgba(184,196,0,0.3);
+}
+.decision-banner .badge {
+  background: white;
+  color: #90a000;
+  padding: 3px 12px;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.header-logo {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.header-sub {
+  font-size: 14px;
+  opacity: 0.85;
+  border-left: 2px solid rgba(255,255,255,0.4);
+  padding-left: 20px;
+}
+
+.header-sub span { display: block; }
+
+.header-right {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.zoom-btn {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: white;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.2s;
+}
+
+.zoom-btn:hover { background: rgba(255,255,255,0.3); }
+
+.zoom-label {
+  color: rgba(255,255,255,0.8);
+  font-size: 13px;
+  margin-right: 4px;
+}
+
+/* Summary Bar */
+.summary-bar {
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 30px;
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.summary-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.summary-value {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.summary-label {
+  font-size: 12px;
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Legend */
+.legend-bar {
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 30px;
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-light);
+}
+
+.legend-color {
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.legend-diamond {
+  width: 12px;
+  height: 12px;
+  background: var(--milestone);
+  transform: rotate(45deg);
+  border: 1px solid #B8860B;
+  flex-shrink: 0;
+}
+
+.legend-critical-line {
+  width: 16px;
+  height: 4px;
+  background: var(--critical);
+  border-radius: 2px;
+  flex-shrink: 0;
+  border: 1px solid var(--critical);
+}
+
+.legend-today-line {
+  width: 2px;
+  height: 16px;
+  background: var(--today);
+  flex-shrink: 0;
+}
+
+/* Main Layout */
+.main-container {
+  display: flex;
+  height: calc(100vh - 170px);
+  overflow: hidden;
+}
+
+/* Task List Panel */
+.task-list-panel {
+  width: 380px;
+  min-width: 380px;
+  background: var(--card-bg);
+  border-right: 2px solid var(--border);
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+.task-list-header {
+  display: grid;
+  grid-template-columns: 40px 1fr 70px;
+  padding: 10px 12px;
+  background: var(--primary);
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.phase-group-header {
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 700;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: sticky;
+  top: 34px;
+  z-index: 4;
+}
+
+.phase-group-header .arrow {
+  transition: transform 0.2s;
+  font-size: 10px;
+}
+
+.phase-group-header.collapsed .arrow {
+  transform: rotate(-90deg);
+}
+
+.task-row {
+  display: grid;
+  grid-template-columns: 40px 1fr 70px;
+  padding: 7px 12px;
+  border-bottom: 1px solid #EEE;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.15s;
+  align-items: center;
+}
+
+.task-row:hover { background: #f0f5e0; }
+.task-row.selected { background: #e4ecb8; }
+.task-row.milestone-row { font-style: italic; }
+
+.task-id {
+  font-weight: 600;
+  color: var(--text-light);
+  font-size: 11px;
+}
+
+.task-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 8px;
+}
+
+.task-duration {
+  text-align: right;
+  color: var(--text-light);
+  font-size: 12px;
+}
+
+/* Gantt Chart Area */
+.gantt-area {
+  flex: 1;
+  overflow: auto;
+  position: relative;
+}
+
+.gantt-container {
+  position: relative;
+  min-height: 100%;
+}
+
+/* Timeline Header */
+.timeline-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--primary);
+}
+
+.timeline-quarters {
+  display: flex;
+  height: 18px;
+}
+
+.timeline-quarter {
+  text-align: center;
+  color: white;
+  font-size: 11px;
+  font-weight: 600;
+  border-right: 1px solid rgba(255,255,255,0.2);
+  border-bottom: 1px solid rgba(255,255,255,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.timeline-months {
+  display: flex;
+  height: 16px;
+}
+
+.timeline-month {
+  text-align: center;
+  color: rgba(255,255,255,0.9);
+  font-size: 10px;
+  border-right: 1px solid rgba(255,255,255,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Gantt Rows */
+.gantt-rows {
+  position: relative;
+}
+
+.gantt-row {
+  position: relative;
+  border-bottom: 1px solid #EEE;
+  display: flex;
+  align-items: center;
+}
+
+.gantt-row:nth-child(even) { background: var(--gantt-row-even); }
+.gantt-row:nth-child(odd) { background: var(--gantt-row-odd); }
+
+.gantt-row.phase-header-row {
+  height: 33px;
+}
+
+/* Bars */
+.gantt-bar {
+  position: absolute;
+  height: 22px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: filter 0.15s, transform 0.1s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: white;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0 6px;
+  z-index: 2;
+}
+
+.gantt-bar:hover {
+  filter: brightness(1.15);
+  transform: scaleY(1.15);
+  z-index: 3;
+}
+
+.gantt-bar.critical {
+  border: 2px solid var(--critical);
+  box-shadow: 0 0 6px rgba(204,0,0,0.3);
+}
+
+/* Phase B Future Tasks */
+.gantt-bar.future-phase {
+  opacity: 0.55;
+  border: 2px dashed #757575;
+  background: repeating-linear-gradient(
+    45deg,
+    #BDBDBD,
+    #BDBDBD 4px,
+    #D5D5D5 4px,
+    #D5D5D5 8px
+  ) !important;
+  color: #555;
+}
+
+.gantt-bar.future-phase:hover {
+  opacity: 0.75;
+}
+
+.future-label {
+  position: absolute;
+  font-size: 9px;
+  font-weight: 700;
+  color: #757575;
+  background: #F0F0F0;
+  border: 1px dashed #999;
+  border-radius: 3px;
+  padding: 1px 6px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  z-index: 3;
+}
+
+.task-row.future-task {
+  opacity: 0.6;
+  font-style: italic;
+}
+
+.phase-group-header.future-header {
+  border: 2px dashed #888 !important;
+  position: relative;
+}
+
+/* Milestone Diamond */
+.milestone-marker {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background: var(--milestone);
+  border: 2px solid #B8860B;
+  transform: rotate(45deg);
+  cursor: pointer;
+  z-index: 3;
+  transition: transform 0.15s;
+}
+
+.milestone-marker:hover {
+  transform: rotate(45deg) scale(1.3);
+  z-index: 4;
+}
+
+/* Dependency Lines */
+.dependency-line {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Today Line */
+.today-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--today);
+  z-index: 5;
+  pointer-events: none;
+}
+
+.today-label {
+  position: absolute;
+  top: 36px;
+  background: var(--today);
+  color: white;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  z-index: 11;
+}
+
+/* Grid Lines */
+.grid-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: #EAEAEA;
+  z-index: 0;
+}
+
+.grid-line.quarter { background: #D0D0D0; }
+
+/* Tooltip */
+.tooltip {
+  position: fixed;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 18px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  z-index: 2000;
+  max-width: 340px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  font-size: 13px;
+}
+
+.tooltip.visible { opacity: 1; }
+
+.tooltip-title {
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.tooltip-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 3px 0;
+  border-bottom: 1px solid #F0F0F0;
+}
+
+.tooltip-label { color: var(--text-light); }
+.tooltip-value { font-weight: 600; }
+
+.tooltip-critical {
+  margin-top: 8px;
+  color: var(--critical);
+  font-weight: 700;
+  font-size: 12px;
+}
+
+/* Detail Panel */
+.detail-panel {
+  width: 0;
+  overflow: hidden;
+  background: var(--card-bg);
+  border-left: 2px solid var(--border);
+  transition: width 0.3s;
+  flex-shrink: 0;
+}
+
+.detail-panel.open {
+  width: 360px;
+  overflow-y: auto;
+}
+
+.detail-header {
+  background: var(--primary);
+  color: white;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.detail-close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+  padding: 0 4px;
+}
+
+.detail-content { padding: 20px; }
+
+.detail-section {
+  margin-bottom: 20px;
+}
+
+.detail-section-title {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-light);
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.detail-value {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 4px;
+}
+
+.detail-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: white;
+}
+
+.detail-dep-list {
+  list-style: none;
+  padding: 0;
+}
+
+.detail-dep-list li {
+  padding: 6px 0;
+  border-bottom: 1px solid #F0F0F0;
+  font-size: 13px;
+  cursor: pointer;
+  color: #00b0e8;
+}
+
+.detail-dep-list li:hover { text-decoration: underline; }
+
+.detail-progress-bar {
+  background: #E0E0E0;
+  height: 8px;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 6px;
+}
+
+.detail-progress-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.3s;
+}
+
+/* Print Styles */
+@media print {
+  .header { position: relative; }
+  .header-right { display: none; }
+  .detail-panel { display: none; }
+  .main-container { height: auto; overflow: visible; }
+  .gantt-area { overflow: visible; }
+  .task-list-panel { overflow: visible; }
+  body { overflow: visible; }
+  .tooltip { display: none; }
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .task-list-panel { width: 260px; min-width: 260px; }
+  .detail-panel.open { width: 280px; }
+  .header { flex-direction: column; gap: 10px; }
+  .summary-bar { gap: 20px; }
+}
+
+@media (max-width: 600px) {
+  .task-list-panel { width: 200px; min-width: 200px; }
+  .summary-bar { flex-direction: column; gap: 10px; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <div class="header-logo">AUTONEUM</div>
+    <div class="header-sub">
+      <span style="font-size:16px; font-weight:600;">NVH 2030 — Implementierungsplan Gundernhausen</span>
+      <span>Werk Gundernhausen | Halle 3 R&auml;umung &amp; Halle 2 Neuaufstellung (Vorschlag 4)</span>
+    </div>
+  </div>
+  <div class="header-right">
+    <span class="zoom-label">Zoom:</span>
+    <button class="zoom-btn" onclick="zoomOut()" title="Verkleinern">&#x2212;</button>
+    <button class="zoom-btn" id="zoomLevel" style="min-width:50px;text-align:center;cursor:default;">100%</button>
+    <button class="zoom-btn" onclick="zoomIn()" title="Vergrößern">&#x2b;</button>
+    <button class="zoom-btn" onclick="resetZoom()" title="Zurücksetzen">&#x21ba;</button>
+    <button class="zoom-btn" onclick="window.print()" title="Drucken">Drucken</button>
+  </div>
+</div>
+
+<div class="decision-banner">
+  <span class="badge">Basislayout</span>
+  <span>Vorschlag 4 ausgew&auml;hlt &mdash; Drei-Zonen-Layout mit gemischten Produktionszellen (Box, Tandem, Halbautomat) &amp; Staplerverkehrswegen. CO2-RA &amp; Bio-Polyol = Zukunftsphase B (26.02.2026)</span>
+</div>
+
+<div class="summary-bar" id="summaryBar"></div>
+<div class="legend-bar" id="legendBar"></div>
+
+<div class="main-container">
+  <div class="task-list-panel" id="taskListPanel"></div>
+  <div class="gantt-area" id="ganttArea">
+    <div class="gantt-container" id="ganttContainer"></div>
+  </div>
+  <div class="detail-panel" id="detailPanel"></div>
+</div>
+
+<div class="tooltip" id="tooltip"></div>
+
+<script>
+// ========== DATA ==========
+const PHASES = [
+  { id: 'a1', name: 'Phase A1: Vorbereitung & Planung', color: '#b8c400', period: 'Q2-Q3 2026' },
+  { id: 'a2', name: 'Phase A2: Maschinenabbau', color: '#A23B72', period: 'Q3-Q4 2026' },
+  { id: 'a3', name: 'Phase A3: Infrastruktur & Umstellung Halle 2', color: '#F18F01', period: 'Q4 2026 - Q1 2027' },
+  { id: 'a4', name: 'Phase A4: Anlagen aufstellen & Inbetriebnahme', color: '#C73E1D', period: 'Q1 2027' },
+  { id: 'b', name: 'Phase B: Zukunft (nach Phase A)', color: '#9E9E9E', period: 'nach Phase A', future: true }
+];
+
+const TASKS = [
+  // Phase A1: Vorbereitung & Planung (Q2-Q3 2026)
+  { id: 1,  name: 'Finale Layoutbestätigung Vorschlag 4', phase: 'a1', duration: 4, deps: [], critical: true },
+  { id: 2,  name: 'Infrastruktur-Bestandsaufnahme Halle 2', phase: 'a1', duration: 4, deps: [1], critical: true },
+  { id: 3,  name: 'Produktionsverlagerungsplan erstellen', phase: 'a1', duration: 4, deps: [1], critical: false },
+  { id: 4,  name: 'Ausschreibung & Vergabe Maschinenabbau', phase: 'a1', duration: 6, deps: [2], critical: true },
+  { id: 5,  name: 'Budgetgenehmigung Phase A', phase: 'a1', duration: 2, deps: [3, 4], critical: true },
+
+  // Phase A2: Maschinenabbau (Q3-Q4 2026)
+  // Key constraint: most disruptive work in summer break Jul/Aug 2026 (max 2 weeks shutdown)
+  { id: 6,  name: 'Tandem 172 Abbau & Entsorgung', phase: 'a2', duration: 3, deps: [5], critical: true },
+  { id: 7,  name: 'Box20 & Box21 Abbau', phase: 'a2', duration: 2, deps: [6], depOffset: { 6: 2 }, critical: true },
+  { id: 8,  name: 'Halbautomat 188 Abbau', phase: 'a2', duration: 2, deps: [7], critical: true },
+  { id: 10, name: 'AUDI Q1 STW LHD Linie Abbau', phase: 'a2', duration: 3, deps: [8], critical: true },
+  { id: 11, name: 'Halle 3 Räumung & Reinigung', phase: 'a2', duration: 2, deps: [10], critical: true },
+
+  // Phase A3: Infrastruktur & Umstellung Halle 2 (Q4 2026 - Q1 2027)
+  { id: 12, name: 'Elektroinstallation Anpassung', phase: 'a3', duration: 5, deps: [5], critical: true },
+  { id: 13, name: 'Druckluft & Wasserversorgung Umbau', phase: 'a3', duration: 4, deps: [5], critical: false },
+  { id: 14, name: 'Absaugung & Belüftung Anpassung', phase: 'a3', duration: 3, deps: [12], critical: true },
+  { id: 15, name: 'Staplerverkehrswege einrichten', phase: 'a3', duration: 3, deps: [14], critical: true },
+  { id: 16, name: 'Bodenarbeiten & Zonenmarkierung', phase: 'a3', duration: 2, deps: [14], critical: false },
+  { id: 17, name: 'Wässrige Trennmittel-Bereich einrichten', phase: 'a3', duration: 2, deps: [15], critical: false },
+
+  // Phase A4: Anlagen aufstellen & Inbetriebnahme (Q1 2027)
+  { id: 18, name: 'Produktionszellen in Bereich 1 aufstellen', phase: 'a4', duration: 3, deps: [14, 15], critical: true },
+  { id: 19, name: 'Produktionszellen in Bereich 2 aufstellen', phase: 'a4', duration: 3, deps: [18], critical: true },
+  { id: 20, name: 'Produktionszellen in Bereich 3 aufstellen', phase: 'a4', duration: 2, deps: [18], critical: false },
+  { id: 21, name: 'Testläufe & Prozessvalidierung', phase: 'a4', duration: 3, deps: [19, 20], critical: true },
+  { id: 22, name: 'Mitarbeiterschulung & Vollproduktion', phase: 'a4', duration: 2, deps: [21], critical: true },
+
+  // Phase B: Zukunft (nach Phase A — zur Information)
+  { id: 23, name: 'CO2-Trennmittel-Systemplanung', phase: 'b', duration: 6, deps: [22], critical: false, future: true },
+  { id: 24, name: 'CO2-RA Infrastruktur Installation', phase: 'b', duration: 8, deps: [23], critical: false, future: true },
+  { id: 25, name: 'Bio-Polyol-Lager einrichten', phase: 'b', duration: 4, deps: [24], critical: false, future: true },
+  { id: 26, name: 'Umstellung wässrig → CO2-RA', phase: 'b', duration: 4, deps: [24], critical: false, future: true }
+];
+
+const MILESTONES = [
+  { id: 'M1', name: 'Layoutbestätigung', taskRef: 1, label: 'M1' },
+  { id: 'M2', name: 'Budget genehmigt', taskRef: 5, label: 'M2' },
+  { id: 'M3', name: 'Halle 3 vollständig geräumt', taskRef: 11, label: 'M3' },
+  { id: 'M4', name: 'Infrastruktur Halle 2 bereit', taskRef: 17, label: 'M4' },
+  { id: 'M5', name: 'Vollproduktion neues Layout', taskRef: 22, label: 'M5' }
+];
+
+const MONTHS_DE = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
+const MONTHS_FULL_DE = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
+
+// ========== DATE CALCULATIONS ==========
+const PROJECT_START = new Date(2026, 3, 1); // April 1, 2026 (Q2 2026)
+const WEEK_MS = 7 * 24 * 60 * 60 * 1000;
+
+function calculateSchedule() {
+  const taskMap = {};
+  TASKS.forEach(t => { taskMap[t.id] = { ...t, startWeek: 0, endWeek: 0, future: t.future || false }; });
+
+  // Forward pass to compute start weeks
+  function getStart(taskId) {
+    const task = taskMap[taskId];
+    if (task.startWeek > 0 || task.deps.length === 0) {
+      if (task.deps.length === 0) {
+        task.startWeek = 0;
+        task.endWeek = task.duration;
+      }
+      return task;
+    }
+
+    let maxEnd = 0;
+    task.deps.forEach(depId => {
+      const dep = getStart(depId);
+      let end = dep.endWeek;
+      // Check for offset (e.g., task 6 starts 1 week after task 5 starts, not ends)
+      if (task.depOffset && task.depOffset[depId] !== undefined) {
+        end = dep.startWeek + task.depOffset[depId];
+      }
+      if (end > maxEnd) maxEnd = end;
+    });
+
+    task.startWeek = maxEnd;
+    task.endWeek = maxEnd + task.duration;
+    return task;
+  }
+
+  TASKS.forEach(t => getStart(t.id));
+
+  // Convert to dates
+  Object.values(taskMap).forEach(t => {
+    t.startDate = new Date(PROJECT_START.getTime() + t.startWeek * WEEK_MS);
+    t.endDate = new Date(PROJECT_START.getTime() + t.endWeek * WEEK_MS);
+  });
+
+  return taskMap;
+}
+
+const schedule = calculateSchedule();
+
+// Total weeks
+const totalWeeks = Math.max(...Object.values(schedule).map(t => t.endWeek));
+const projectEnd = new Date(PROJECT_START.getTime() + totalWeeks * WEEK_MS);
+
+// ========== ZOOM STATE ==========
+let pixelsPerWeek = 38;
+const MIN_PPW = 14;
+const MAX_PPW = 80;
+const ROW_HEIGHT = 36;
+const PHASE_HEADER_HEIGHT = 33;
+
+function zoomIn() {
+  pixelsPerWeek = Math.min(MAX_PPW, pixelsPerWeek + 8);
+  updateZoomLabel();
+  renderGantt();
+}
+function zoomOut() {
+  pixelsPerWeek = Math.max(MIN_PPW, pixelsPerWeek - 8);
+  updateZoomLabel();
+  renderGantt();
+}
+function resetZoom() {
+  pixelsPerWeek = 38;
+  updateZoomLabel();
+  renderGantt();
+}
+function updateZoomLabel() {
+  document.getElementById('zoomLevel').textContent = Math.round(pixelsPerWeek / 38 * 100) + '%';
+}
+
+// ========== RENDER SUMMARY ==========
+function renderSummary() {
+  const bar = document.getElementById('summaryBar');
+  const startStr = formatDateDE(PROJECT_START);
+  const coreTaskCount = TASKS.filter(t => !t.future).length;
+  const futureTaskCount = TASKS.filter(t => t.future).length;
+  // Compute core project end (excluding Phase B)
+  const coreEndWeek = Math.max(...Object.values(schedule).filter(t => !t.future).map(t => t.endWeek));
+  const coreEndDate = new Date(PROJECT_START.getTime() + coreEndWeek * WEEK_MS);
+  const coreEndStr = formatDateDE(coreEndDate);
+  const coreMonths = Math.round(coreEndWeek / 4.33);
+  bar.innerHTML = `
+    <div class="summary-item">
+      <div><div class="summary-value">${coreTaskCount}</div><div class="summary-label">Kernaufgaben (Phase A)</div></div>
+    </div>
+    <div class="summary-item">
+      <div><div class="summary-value" style="color:#9E9E9E;">${futureTaskCount}</div><div class="summary-label">Zukunft (Phase B)</div></div>
+    </div>
+    <div class="summary-item">
+      <div><div class="summary-value">${MILESTONES.length}</div><div class="summary-label">Meilensteine</div></div>
+    </div>
+    <div class="summary-item">
+      <div><div class="summary-value">${coreEndWeek} Wo.</div><div class="summary-label">Dauer Phase A</div></div>
+    </div>
+    <div class="summary-item">
+      <div><div class="summary-value">~${coreMonths} Mon.</div><div class="summary-label">ca. Monate</div></div>
+    </div>
+    <div class="summary-item">
+      <div><div class="summary-value">${startStr}</div><div class="summary-label">Projektstart</div></div>
+    </div>
+    <div class="summary-item">
+      <div><div class="summary-value">${coreEndStr}</div><div class="summary-label">Ende Phase A</div></div>
+    </div>
+  `;
+}
+
+// ========== RENDER LEGEND ==========
+function renderLegend() {
+  const bar = document.getElementById('legendBar');
+  let html = '<span style="font-size:12px;font-weight:600;color:var(--text-light);margin-right:8px;">Legende:</span>';
+  PHASES.forEach(p => {
+    if (p.future) {
+      html += `<div class="legend-item"><div class="legend-color" style="background:repeating-linear-gradient(45deg,#BDBDBD,#BDBDBD 3px,#D5D5D5 3px,#D5D5D5 6px);border:1px dashed #888;opacity:0.7;"></div>${p.name.split(':')[0]} (Zukunft)</div>`;
+    } else {
+      html += `<div class="legend-item"><div class="legend-color" style="background:${p.color}"></div>${p.name.split(':')[0]}</div>`;
+    }
+  });
+  html += `<div class="legend-item"><div class="legend-diamond"></div>Meilenstein</div>`;
+  html += `<div class="legend-item"><div class="legend-critical-line"></div>Kritischer Pfad</div>`;
+  html += `<div class="legend-item"><div class="legend-today-line"></div>Heute</div>`;
+  bar.innerHTML = html;
+}
+
+// ========== RENDER TASK LIST ==========
+let selectedTaskId = null;
+let collapsedPhases = {};
+
+function renderTaskList() {
+  const panel = document.getElementById('taskListPanel');
+  let html = `<div class="task-list-header"><div>Nr.</div><div>Aufgabe</div><div>Dauer</div></div>`;
+
+  PHASES.forEach(phase => {
+    const collapsed = collapsedPhases[phase.id] || false;
+    const isFuture = phase.future || false;
+    html += `<div class="phase-group-header ${collapsed ? 'collapsed' : ''} ${isFuture ? 'future-header' : ''}" style="background:${phase.color}" onclick="togglePhase('${phase.id}')">
+      <span class="arrow">&#9660;</span> ${phase.name} ${isFuture ? '<span style="margin-left:8px;font-size:10px;background:rgba(255,255,255,0.3);padding:1px 8px;border-radius:3px;letter-spacing:1px;">ZUKUNFTSPHASE</span>' : ''}
+    </div>`;
+
+    if (!collapsed) {
+      const phaseTasks = TASKS.filter(t => t.phase === phase.id);
+      phaseTasks.forEach(task => {
+        const t = schedule[task.id];
+        const futureClass = task.future ? 'future-task' : '';
+        html += `<div class="task-row ${selectedTaskId === task.id ? 'selected' : ''} ${t.critical ? 'critical-row' : ''} ${futureClass}" data-taskid="${task.id}" onclick="selectTask(${task.id})">
+          <div class="task-id">${task.id}</div>
+          <div class="task-name" title="${task.name}">${task.name}</div>
+          <div class="task-duration">${task.duration} Wo.</div>
+        </div>`;
+      });
+
+      // Milestones at end of phase
+      MILESTONES.filter(m => {
+        const refTask = TASKS.find(t => t.id === m.taskRef);
+        return refTask && refTask.phase === phase.id;
+      }).forEach(m => {
+        html += `<div class="task-row milestone-row" data-milestone="${m.id}" onclick="selectMilestone('${m.id}')">
+          <div class="task-id" style="color:goldenrod;">&#9670;</div>
+          <div class="task-name" title="${m.name}">${m.label}: ${m.name}</div>
+          <div class="task-duration"></div>
+        </div>`;
+      });
+    }
+  });
+
+  panel.innerHTML = html;
+}
+
+function togglePhase(phaseId) {
+  collapsedPhases[phaseId] = !collapsedPhases[phaseId];
+  renderTaskList();
+  renderGantt();
+}
+
+// ========== RENDER GANTT ==========
+function renderGantt() {
+  const container = document.getElementById('ganttContainer');
+  const totalWidth = totalWeeks * pixelsPerWeek + 60;
+
+  // Build rows data
+  const rows = [];
+  PHASES.forEach(phase => {
+    rows.push({ type: 'phase', phase });
+    if (!collapsedPhases[phase.id]) {
+      TASKS.filter(t => t.phase === phase.id).forEach(task => {
+        rows.push({ type: 'task', task, scheduled: schedule[task.id] });
+      });
+      MILESTONES.filter(m => {
+        const refTask = TASKS.find(t => t.id === m.taskRef);
+        return refTask && refTask.phase === phase.id;
+      }).forEach(m => {
+        rows.push({ type: 'milestone', milestone: m });
+      });
+    }
+  });
+
+  const totalHeight = rows.reduce((h, r) => h + (r.type === 'phase' ? PHASE_HEADER_HEIGHT : ROW_HEIGHT), 0);
+
+  let html = '';
+
+  // Timeline header
+  html += renderTimeline(totalWidth);
+
+  // Grid lines
+  html += renderGridLines(totalWidth, totalHeight);
+
+  // Rows
+  html += `<div class="gantt-rows" style="position:relative;">`;
+
+  let yOffset = 0;
+  rows.forEach((row, idx) => {
+    const rowH = row.type === 'phase' ? PHASE_HEADER_HEIGHT : ROW_HEIGHT;
+
+    // Row background
+    html += `<div class="gantt-row ${row.type === 'phase' ? 'phase-header-row' : ''}" style="height:${rowH}px; width:${totalWidth}px; ${idx % 2 === 0 ? 'background:var(--gantt-row-even);' : ''}">`;
+
+    if (row.type === 'phase') {
+      // Phase summary bar (optional: could show a span)
+    } else if (row.type === 'task') {
+      const t = row.scheduled;
+      const phase = PHASES.find(p => p.id === row.task.phase);
+      const left = t.startWeek * pixelsPerWeek;
+      const width = t.duration * pixelsPerWeek;
+      const critClass = t.critical ? 'critical' : '';
+      const futureClass = row.task.future ? 'future-phase' : '';
+
+      html += `<div class="gantt-bar ${critClass} ${futureClass}"
+        style="left:${left}px; width:${width}px; top:${(rowH - 22) / 2}px; background:${phase.color};"
+        data-taskid="${t.id}"
+        onmouseenter="showTooltip(event, ${t.id})"
+        onmousemove="moveTooltip(event)"
+        onmouseleave="hideTooltip()"
+        onclick="selectTask(${t.id})">
+        ${width > 60 ? t.name.substring(0, Math.floor(width / 7)) : ''}
+      </div>`;
+
+      // Add ZUKUNFTSPHASE label above first future task bar
+      if (row.task.future && row.task.id === 23) {
+        html += `<span class="future-label" style="left:${left}px; top:1px;">ZUKUNFTSPHASE &mdash; nicht im aktuellen Budget</span>`;
+      }
+    } else if (row.type === 'milestone') {
+      const refTask = schedule[row.milestone.taskRef];
+      const left = refTask.endWeek * pixelsPerWeek - 9;
+      html += `<div class="milestone-marker"
+        style="left:${left}px; top:${(rowH - 18) / 2}px;"
+        onmouseenter="showMilestoneTooltip(event, '${row.milestone.id}')"
+        onmousemove="moveTooltip(event)"
+        onmouseleave="hideTooltip()"
+        onclick="selectMilestone('${row.milestone.id}')">
+      </div>`;
+      // Milestone label
+      html += `<span style="position:absolute; left:${left + 24}px; top:${(rowH - 14) / 2}px; font-size:11px; font-weight:700; color:#B8860B; white-space:nowrap;">${row.milestone.label}: ${row.milestone.name}</span>`;
+    }
+
+    html += `</div>`;
+    yOffset += rowH;
+  });
+
+  html += `</div>`;
+
+  // Dependency arrows (SVG overlay)
+  html += renderDependencies(rows, totalWidth, totalHeight);
+
+  // Today line
+  html += renderTodayLine(totalHeight);
+
+  container.style.width = totalWidth + 'px';
+  container.innerHTML = html;
+}
+
+function renderTimeline(totalWidth) {
+  let html = `<div class="timeline-header" style="width:${totalWidth}px;">`;
+
+  // Quarter row
+  html += `<div class="timeline-quarters">`;
+  const startDate = new Date(PROJECT_START);
+  const endDate = new Date(projectEnd.getTime() + 4 * WEEK_MS);
+  let d = new Date(startDate);
+
+  // Align to quarter start
+  const qStartMonth = Math.floor(d.getMonth() / 3) * 3;
+  d.setMonth(qStartMonth, 1);
+
+  while (d < endDate) {
+    const qMonth = Math.floor(d.getMonth() / 3) * 3;
+    const qStart = new Date(d.getFullYear(), qMonth, 1);
+    const qEnd = new Date(d.getFullYear(), qMonth + 3, 1);
+    const qLabel = `Q${Math.floor(qMonth / 3) + 1} ${d.getFullYear()}`;
+
+    const startWeek = Math.max(0, (qStart - PROJECT_START) / WEEK_MS);
+    const endWeek = Math.min(totalWeeks + 2, (qEnd - PROJECT_START) / WEEK_MS);
+    const width = (endWeek - startWeek) * pixelsPerWeek;
+
+    if (width > 0) {
+      html += `<div class="timeline-quarter" style="width:${width}px;">${qLabel}</div>`;
+    }
+
+    d = qEnd;
+  }
+  html += `</div>`;
+
+  // Month row
+  html += `<div class="timeline-months">`;
+  d = new Date(PROJECT_START.getFullYear(), PROJECT_START.getMonth(), 1);
+  while (d < endDate) {
+    const mStart = new Date(d);
+    const mEnd = new Date(d.getFullYear(), d.getMonth() + 1, 1);
+
+    const startWeek = Math.max(0, (mStart - PROJECT_START) / WEEK_MS);
+    const endWeek = Math.min(totalWeeks + 2, (mEnd - PROJECT_START) / WEEK_MS);
+    const width = (endWeek - startWeek) * pixelsPerWeek;
+
+    if (width > 0) {
+      html += `<div class="timeline-month" style="width:${width}px;">${MONTHS_DE[d.getMonth()]}</div>`;
+    }
+
+    d = mEnd;
+  }
+  html += `</div>`;
+
+  html += `</div>`;
+  return html;
+}
+
+function renderGridLines(totalWidth, totalHeight) {
+  let html = '';
+  const endDate = new Date(projectEnd.getTime() + 4 * WEEK_MS);
+  let d = new Date(PROJECT_START.getFullYear(), PROJECT_START.getMonth(), 1);
+
+  while (d < endDate) {
+    const mStart = new Date(d);
+    const weekOff = (mStart - PROJECT_START) / WEEK_MS;
+    const left = weekOff * pixelsPerWeek;
+
+    if (left >= 0 && left <= totalWidth) {
+      const isQuarter = d.getMonth() % 3 === 0;
+      html += `<div class="grid-line ${isQuarter ? 'quarter' : ''}" style="left:${left}px; height:${totalHeight + 34}px; top:34px;"></div>`;
+    }
+
+    d = new Date(d.getFullYear(), d.getMonth() + 1, 1);
+  }
+  return html;
+}
+
+function renderDependencies(rows, totalWidth, totalHeight) {
+  let svg = `<svg style="position:absolute; top:34px; left:0; width:${totalWidth}px; height:${totalHeight}px; pointer-events:none; z-index:1;">`;
+
+  // Build row y-offset map
+  const rowYMap = {};
+  let y = 0;
+  rows.forEach(row => {
+    const h = row.type === 'phase' ? PHASE_HEADER_HEIGHT : ROW_HEIGHT;
+    if (row.type === 'task') {
+      rowYMap[row.task.id] = y + h / 2;
+    }
+    y += h;
+  });
+
+  TASKS.forEach(task => {
+    const t = schedule[task.id];
+    if (!t.deps || t.deps.length === 0) return;
+
+    t.deps.forEach(depId => {
+      const depTask = schedule[depId];
+      if (!rowYMap[task.id] || !rowYMap[depId]) return;
+
+      const x1 = depTask.endWeek * pixelsPerWeek;
+      const y1 = rowYMap[depId];
+
+      let x2 = t.startWeek * pixelsPerWeek;
+      const y2 = rowYMap[task.id];
+
+      // Offset handling
+      if (task.depOffset && task.depOffset[depId] !== undefined) {
+        const offX = (depTask.startWeek + task.depOffset[depId]) * pixelsPerWeek;
+        x2 = t.startWeek * pixelsPerWeek;
+      }
+
+      const midX = x1 + 8;
+      const color = t.critical && depTask.critical ? '#CC0000' : '#AAA';
+      const strokeW = t.critical && depTask.critical ? 1.8 : 1;
+
+      svg += `<path d="M${x1},${y1} L${midX},${y1} L${midX},${y2} L${x2},${y2}" fill="none" stroke="${color}" stroke-width="${strokeW}" stroke-dasharray="${t.critical && depTask.critical ? '' : '4,3'}"/>`;
+
+      // Arrowhead
+      svg += `<polygon points="${x2},${y2} ${x2 - 5},${y2 - 3} ${x2 - 5},${y2 + 3}" fill="${color}"/>`;
+    });
+  });
+
+  svg += `</svg>`;
+  return svg;
+}
+
+function renderTodayLine(totalHeight) {
+  const today = new Date();
+  const weekOff = (today - PROJECT_START) / WEEK_MS;
+  if (weekOff < 0 || weekOff > totalWeeks + 2) return '';
+  const left = weekOff * pixelsPerWeek;
+  return `<div class="today-line" style="left:${left}px; top:34px; height:${totalHeight}px;"></div>
+          <div class="today-label" style="left:${left}px;">Heute (${formatDateDE(today)})</div>`;
+}
+
+// ========== TOOLTIP ==========
+function showTooltip(e, taskId) {
+  const t = schedule[taskId];
+  const phase = PHASES.find(p => p.id === t.phase);
+  const tt = document.getElementById('tooltip');
+
+  let depsStr = t.deps.length > 0 ? t.deps.map(d => `#${d} ${schedule[d].name.substring(0, 30)}`).join('<br>') : 'Keine';
+
+  tt.innerHTML = `
+    <div class="tooltip-title" style="border-left:4px solid ${phase.color}; padding-left:8px;">${t.name}</div>
+    <div class="tooltip-row"><span class="tooltip-label">Phase:</span><span class="tooltip-value">${phase.name.split(':')[0]}</span></div>
+    <div class="tooltip-row"><span class="tooltip-label">Start:</span><span class="tooltip-value">${formatDateDE(t.startDate)}</span></div>
+    <div class="tooltip-row"><span class="tooltip-label">Ende:</span><span class="tooltip-value">${formatDateDE(t.endDate)}</span></div>
+    <div class="tooltip-row"><span class="tooltip-label">Dauer:</span><span class="tooltip-value">${t.duration} Wochen</span></div>
+    <div class="tooltip-row"><span class="tooltip-label">Abhängigkeiten:</span><span class="tooltip-value" style="font-size:11px;">${depsStr}</span></div>
+    ${t.critical ? '<div class="tooltip-critical">&#9888; Kritischer Pfad</div>' : ''}
+    ${t.future ? '<div style="margin-top:8px;color:#757575;font-weight:700;font-size:12px;border:1px dashed #999;display:inline-block;padding:2px 8px;border-radius:3px;">ZUKUNFTSPHASE &mdash; nicht im aktuellen Budget</div>' : ''}
+  `;
+  tt.classList.add('visible');
+  positionTooltip(e);
+}
+
+function showMilestoneTooltip(e, msId) {
+  const m = MILESTONES.find(ms => ms.id === msId);
+  const refTask = schedule[m.taskRef];
+  const tt = document.getElementById('tooltip');
+  tt.innerHTML = `
+    <div class="tooltip-title" style="color:goldenrod;">&#9670; ${m.label}: ${m.name}</div>
+    <div class="tooltip-row"><span class="tooltip-label">Datum:</span><span class="tooltip-value">${formatDateDE(refTask.endDate)}</span></div>
+    <div class="tooltip-row"><span class="tooltip-label">Nach Aufgabe:</span><span class="tooltip-value">#${m.taskRef} ${refTask.name.substring(0, 35)}</span></div>
+  `;
+  tt.classList.add('visible');
+  positionTooltip(e);
+}
+
+function moveTooltip(e) { positionTooltip(e); }
+function hideTooltip() { document.getElementById('tooltip').classList.remove('visible'); }
+
+function positionTooltip(e) {
+  const tt = document.getElementById('tooltip');
+  let x = e.clientX + 16;
+  let y = e.clientY + 16;
+  const rect = tt.getBoundingClientRect();
+  if (x + 340 > window.innerWidth) x = e.clientX - 350;
+  if (y + rect.height > window.innerHeight) y = e.clientY - rect.height - 10;
+  tt.style.left = x + 'px';
+  tt.style.top = y + 'px';
+}
+
+// ========== DETAIL PANEL ==========
+function selectTask(taskId) {
+  selectedTaskId = taskId;
+  const t = schedule[taskId];
+  const phase = PHASES.find(p => p.id === t.phase);
+  const panel = document.getElementById('detailPanel');
+
+  const milestone = MILESTONES.find(m => m.taskRef === taskId);
+
+  let depsHtml = '';
+  if (t.deps.length > 0) {
+    depsHtml = '<ul class="detail-dep-list">' + t.deps.map(d =>
+      `<li onclick="selectTask(${d})">#${d} — ${schedule[d].name}</li>`
+    ).join('') + '</ul>';
+  } else {
+    depsHtml = '<span style="color:var(--text-light)">Keine Abhängigkeiten</span>';
+  }
+
+  // Find tasks that depend on this one
+  const dependents = TASKS.filter(task => task.deps.includes(taskId));
+  let deptsHtml = '';
+  if (dependents.length > 0) {
+    deptsHtml = '<ul class="detail-dep-list">' + dependents.map(d =>
+      `<li onclick="selectTask(${d.id})">#${d.id} — ${d.name}</li>`
+    ).join('') + '</ul>';
+  } else {
+    deptsHtml = '<span style="color:var(--text-light)">Keine nachfolgenden Aufgaben</span>';
+  }
+
+  panel.innerHTML = `
+    <div class="detail-header">
+      <span>Aufgabe #${t.id}</span>
+      <button class="detail-close" onclick="closeDetail()">&times;</button>
+    </div>
+    <div class="detail-content">
+      <div class="detail-section">
+        <div class="detail-section-title">Aufgabenname</div>
+        <div class="detail-value">${t.name}</div>
+      </div>
+      <div class="detail-section">
+        <div class="detail-section-title">Phase</div>
+        <div class="detail-badge" style="background:${phase.color}">${phase.name}</div>
+      </div>
+      <div class="detail-section">
+        <div class="detail-section-title">Zeitraum</div>
+        <div class="detail-value">${formatDateDE(t.startDate)} — ${formatDateDE(t.endDate)}</div>
+        <div style="color:var(--text-light); font-size:13px;">${t.duration} Wochen</div>
+      </div>
+      ${t.critical ? `<div class="detail-section">
+        <div class="detail-section-title">Status</div>
+        <div class="detail-badge" style="background:var(--critical);">Kritischer Pfad</div>
+      </div>` : ''}
+      ${t.future ? `<div class="detail-section">
+        <div class="detail-section-title">Hinweis</div>
+        <div class="detail-badge" style="background:#9E9E9E; border:2px dashed #757575;">ZUKUNFTSPHASE &mdash; nicht im aktuellen Budget</div>
+      </div>` : ''}
+      ${milestone ? `<div class="detail-section">
+        <div class="detail-section-title">Meilenstein</div>
+        <div style="color:goldenrod; font-weight:700;">&#9670; ${milestone.label}: ${milestone.name}</div>
+      </div>` : ''}
+      <div class="detail-section">
+        <div class="detail-section-title">Voraussetzungen (Abhängigkeiten)</div>
+        ${depsHtml}
+      </div>
+      <div class="detail-section">
+        <div class="detail-section-title">Nachfolger</div>
+        ${deptsHtml}
+      </div>
+    </div>
+  `;
+
+  panel.classList.add('open');
+  renderTaskList();
+}
+
+function selectMilestone(msId) {
+  const m = MILESTONES.find(ms => ms.id === msId);
+  if (m) selectTask(m.taskRef);
+}
+
+function closeDetail() {
+  selectedTaskId = null;
+  document.getElementById('detailPanel').classList.remove('open');
+  renderTaskList();
+}
+
+// ========== UTILITIES ==========
+function formatDateDE(date) {
+  const d = new Date(date);
+  return `${d.getDate().toString().padStart(2, '0')}.${(d.getMonth() + 1).toString().padStart(2, '0')}.${d.getFullYear()}`;
+}
+
+// ========== SCROLL SYNC ==========
+// Sync task list scroll with gantt vertical scroll
+(function() {
+  const ganttArea = document.getElementById('ganttArea');
+  const taskList = document.getElementById('taskListPanel');
+
+  ganttArea.addEventListener('scroll', function() {
+    taskList.scrollTop = ganttArea.scrollTop;
+  });
+  taskList.addEventListener('scroll', function() {
+    ganttArea.scrollTop = taskList.scrollTop;
+  });
+})();
+
+// ========== KEYBOARD ==========
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeDetail();
+  if (e.key === '+' || e.key === '=') { zoomIn(); e.preventDefault(); }
+  if (e.key === '-') { zoomOut(); e.preventDefault(); }
+});
+
+// ========== INIT ==========
+renderSummary();
+renderLegend();
+renderTaskList();
+renderGantt();
+</script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zoo Design Studio + <span>Zookeeper</span> – Technology Factsheet</title>
+    <style>
+:root{--g:#B8C400;--dg:#99CC00;--o:#E86A10;--b:#69BBFF;--dk:#2d2d2d;--gy:#666;--lg:#DCDCDC;--vlg:#F4F4F4;--wh:#FFF;--pg:#EDF0BF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Arial,Calibri,sans-serif;background:var(--wh);color:#000;line-height:1.6;font-size:12px}
+@media print{body{font-size:9.5px}.hero{padding:20px 25px!important}.container{padding:10px 20px!important}}
+.hero{background:linear-gradient(135deg,#1a1a1a 0%,#2d2d2d 60%,#3a3a3a 100%);color:var(--wh);padding:35px 50px;position:relative}
+.hero::before{content:'';position:absolute;top:-40%;right:-15%;width:400px;height:400px;background:radial-gradient(circle,rgba(184,196,0,.12) 0%,transparent 70%);border-radius:50%}
+.hero-tag{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--g);margin-bottom:6px}
+.hero h1{font-size:24px;font-weight:700;line-height:1.2;margin-bottom:8px}
+.hero h1 span{color:var(--g)}
+.hero-sub{font-size:12px;opacity:.85;max-width:650px;margin-bottom:10px}
+.hero-meta{display:flex;gap:12px;font-size:9px;opacity:.5;flex-wrap:wrap}
+.badge{display:inline-block;padding:2px 8px;border-radius:3px;font-size:9px;font-weight:700;margin-left:6px}
+.b-phase{background:var(--g);color:#000}
+.b-cost{background:var(--o);color:var(--wh)}
+.kn-bar{display:grid;grid-template-columns:repeat(4,1fr);background:var(--wh);border-radius:8px;box-shadow:0 3px 12px rgba(0,0,0,.07);margin:-20px 30px 18px;position:relative;z-index:10;border:1px solid var(--lg)}
+.kn{padding:14px 10px;text-align:center;border-right:1px solid var(--lg)}
+.kn:last-child{border-right:none}
+.kn .v{font-size:18px;font-weight:700;color:#000;line-height:1;margin-bottom:2px}
+.kn .v span{color:var(--g)}
+.kn .l{font-size:8px;color:var(--gy);text-transform:uppercase;letter-spacing:.5px}
+.container{max-width:960px;margin:0 auto;padding:18px 40px}
+.sh{margin-bottom:14px}
+.sh .tag{font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--g);margin-bottom:3px}
+.sh h2{font-size:18px;font-weight:700;color:var(--g)}
+.sh p{color:var(--gy);margin-top:2px;font-size:11px}
+.box{border-radius:6px;padding:16px 20px;margin-bottom:18px}
+.box h3{font-size:12px;font-weight:700;margin-bottom:6px}
+.box ul{list-style:none;padding:0}
+.box li{padding:2px 0 2px 16px;position:relative;font-size:10.5px}
+.box li::before{content:'';position:absolute;left:0;top:6px;width:7px;height:7px;border-radius:2px}
+.box-green{background:#F7F9E6;border-left:4px solid var(--g)}
+.box-green h3{color:var(--dg)}
+.box-green li::before{background:var(--g)}
+.box-dark{background:#1a1a1a;border-left:4px solid var(--g);color:#ddd}
+.box-dark h3{color:var(--g)}
+.box-dark li::before{background:var(--g)}
+.box-warn{background:#FFF5EB;border-left:4px solid var(--o)}
+.box-warn h3{color:var(--o)}
+.box-warn li::before{background:var(--o)}
+.box-blue{background:#EBF5FF;border-left:4px solid var(--b)}
+.box-blue h3{color:#2E75B6}
+.box-blue li::before{background:var(--b)}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:10px}
+th{background:var(--g);color:var(--wh);padding:6px 8px;text-align:left;font-weight:700;font-size:8.5px;text-transform:uppercase;letter-spacing:.4px}
+th:first-child{border-radius:4px 0 0 0}th:last-child{border-radius:0 4px 0 0}
+td{padding:6px 8px;border-bottom:1px solid var(--lg)}
+tr:nth-child(even){background:var(--vlg)}
+tr:hover{background:var(--pg)}
+.footer{text-align:center;padding:14px;border-top:1px solid var(--lg);margin-top:10px}
+.footer p{font-size:8px;color:var(--gy);font-style:italic}
+</style>
+</head>
+<body>
+<div class="hero">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+        <div>
+            <div class="hero-tag">Technology Factsheet 02 • AI-Powered CAD</div>
+            <h1>Zoo Design Studio + <span>Zookeeper</span> <span class="badge b-phase">PHASE 2</span> <span class="badge b-cost">€0–2.8k/yr</span></h1>
+        </div>
+        <div style="text-align:right;">
+            <div style="font-size:18px;font-weight:700;color:var(--g);letter-spacing:1px;">AUTONEUM</div>
+            <div style="font-size:9px;font-style:italic;color:var(--o);">- CONFIDENTIAL -</div>
+        </div>
+    </div>
+    <p class="hero-sub">AI-native CAD platform with conversational Zookeeper agent. Generates manufacturing-ready B-Rep geometry (STEP files) from natural language descriptions. Built on KCL parametric language.</p>
+    <div class="hero-meta">
+        <span>Autoneum Germany GmbH – Gundernhausen</span><span>|</span><span>March 2026</span><span>|</span><span>Annex to MJF Deep-Dive</span>
+    </div>
+</div>
+
+<div class="kn-bar">
+<div class="kn"><div class="v">B-Rep</div><div class="l">Output Format (STEP)</div></div>
+<div class="kn"><div class="v">KCL</div><div class="l">Parametric Language</div></div>
+<div class="kn"><div class="v">v1.1</div><div class="l">GA Jan 2026</div></div>
+<div class="kn"><div class="v">Free</div><div class="l">20 min/mo included</div></div>
+</div>
+
+<div class="container">
+
+<div class="sh"><div class="tag">Overview</div><h2>What It Does</h2></div>
+<div class="box box-dark">
+    <h3>Zoo Design Studio — AI-Native CAD Platform</h3>
+    <ul>
+        <li>Desktop CAD application built on Zoo's high-performance geometry engine (Rust-based, GPU-accelerated)</li>
+        <li>Zookeeper: conversational AI agent that writes KCL code (Zoo's parametric design language) from natural language</li>
+        <li>Generates B-Rep surfaces (not meshes) — output is editable STEP files importable into any CAD program</li>
+        <li>Agent loop: Plan → Act (write KCL) → Observe (render, check geometry) → Update → Repeat until correct</li>
+        <li>Engineering tools: center of mass, volume, surface area, multi-view snapshots for design review</li>
+        <li>Roadmap: multimodal (image input), reverse engineering (STEP→KCL), fleet management (multi-agent)</li>
+    </ul>
+</div>
+
+<div class="sh"><div class="tag">How It Works</div><h2>Process &amp; Principle</h2></div>
+<div class="box box-green">
+    <h3>Conversational Design Workflow</h3>
+    <ul>
+        <li><strong>Step 1:</strong> Operator describes part in natural language: 'Create a bracket with 4 M6 mounting holes, 80mm wide, 3mm wall thickness'</li>
+        <li><strong>Step 2:</strong> Zookeeper generates KCL parametric code — dimensions as variables, fully editable</li>
+        <li><strong>Step 3:</strong> Agent renders geometry, inspects from multiple angles, checks for errors</li>
+        <li><strong>Step 4:</strong> If issues detected: agent debugs and regenerates. If OK: exports STEP file</li>
+        <li><strong>Step 5:</strong> STEP file imported into HP SmartStream for nesting and printing on MJF</li>
+        <li>Parametric: changing one dimension (e.g., width=100mm) regenerates entire model automatically</li>
+    </ul>
+</div>
+
+<div class="sh"><div class="tag">Requirements</div><h2>Auxiliaries &amp; Infrastructure</h2></div>
+<div style="background:var(--wh);border-radius:8px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.05);margin-bottom:18px;border:1px solid var(--lg);">
+    <table>
+        <thead><tr><th>Auxiliary</th><th>Specification</th><th>Status at Gundernhausen</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Internet Connection</strong></td><td>Required for Zookeeper AI reasoning (cloud-based)</td><td>Available</td></tr>
+            <tr><td><strong>Modern PC/Laptop</strong></td><td>GPU-accelerated rendering — any modern workstation</td><td>Existing operator PCs</td></tr>
+            <tr><td><strong>File Storage</strong></td><td>STEP/KCL files stored in digital catalog (Würth DIS or local)</td><td>Available</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="sh"><div class="tag">Hardware</div><h2>Required Hardware</h2></div>
+<div style="background:var(--wh);border-radius:8px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.05);margin-bottom:18px;border:1px solid var(--lg);">
+    <table>
+        <thead><tr><th>Component</th><th>Model / Specification</th><th>Est. Cost</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Workstation PC</strong></td><td>Any modern PC with GPU (existing operator stations)</td><td>€0 (existing)</td></tr>
+            <tr><td><strong>Display</strong></td><td>Standard monitor — no special requirements</td><td>€0 (existing)</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="sh"><div class="tag">Software</div><h2>Required Software</h2></div>
+<div style="background:var(--wh);border-radius:8px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.05);margin-bottom:18px;border:1px solid var(--lg);">
+    <table>
+        <thead><tr><th>Software</th><th>Function</th><th>Est. Cost</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Zoo Design Studio</strong></td><td>Desktop CAD application — free download</td><td>Free</td></tr>
+            <tr><td><strong>Zookeeper AI Agent</strong></td><td>Conversational design assistant — 20 min/mo free tier</td><td>Free / €1k/yr per seat</td></tr>
+            <tr><td><strong>Zoo ML API (optional)</strong></td><td>Text-to-CAD API for automated pipelines</td><td>$0.0083/sec usage</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="sh"><div class="tag">Gundernhausen Fit</div><h2>Relevance &amp; Recommendation</h2></div>
+<div class="box box-blue">
+    <h3>Recommendation for Gundernhausen (3 Workcells)</h3>
+    <ul>
+        <li><strong>Start free:</strong> 20 min/mo × 3 seats = 60 min Zookeeper reasoning per month — sufficient for initial evaluation</li>
+        <li><strong>Use case:</strong> Operators describe needed jigs/brackets → Zookeeper generates parametric STEP → validate → print on MJF</li>
+        <li><strong>Annual cost:</strong> Free tier or ~€2.8k/yr for 3 Annual seats — negligible vs €400k printer</li>
+        <li><strong>Combine with Claude + CadQuery</strong> for parts requiring Python scripting flexibility</li>
+        <li><strong>Phase 3:</strong> Integrate with nTopology for lattice-optimized NVH parts</li>
+    </ul>
+</div>
+
+<div class="sh"><div class="tag">Sources</div><h2>Key References</h2></div>
+<div style="background:var(--wh);border-radius:8px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.05);margin-bottom:18px;border:1px solid var(--lg);">
+    <table>
+        <thead><tr><th>Source</th><th>Topic</th></tr></thead>
+        <tbody>
+            <tr><td><a href="https://zoo.dev/research/zookeeper" style="color:var(--b);">Zoo.dev — Zookeeper Research</a></td><td>Agent architecture</td></tr>
+            <tr><td><a href="https://zoo.dev/design-studio-pricing" style="color:var(--b);">Zoo.dev — Pricing</a></td><td>License costs</td></tr>
+            <tr><td><a href="https://zoo.dev/text-to-cad" style="color:var(--b);">Zoo.dev — Text-to-CAD</a></td><td>ML API</td></tr>
+        </tbody>
+    </table>
+</div>
+
+</div>
+<div class="footer">
+    <p>&copy; 2026 Autoneum Germany GmbH – Gundernhausen | - CONFIDENTIAL - | Technology Factsheet | Author: J.R.E. Glawion</p>
+</div>
+</body>
+</html>

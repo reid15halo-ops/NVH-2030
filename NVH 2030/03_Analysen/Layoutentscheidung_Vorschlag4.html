@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NVH 2030 — Layoutentscheidung: Vorschlag 4</title>
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: #333333;
+            background-color: #f6f6f6;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+            color: #ffffff;
+            padding: 32px 0 0 0;
+            border-bottom: 4px solid #b8c400;
+        }
+
+        .header-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 32px 28px 32px;
+        }
+
+        .brand {
+            font-size: 13px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #b8c400;
+            margin-bottom: 2px;
+            font-weight: 600;
+        }
+
+        .brand-tagline {
+            font-size: 11px;
+            color: #999999;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            line-height: 1.3;
+        }
+
+        .header-meta {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            font-size: 14px;
+            color: #cccccc;
+            margin-top: 8px;
+        }
+
+        .header-meta span {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Decision banner */
+        .decision-banner {
+            background: #b8c400;
+            color: #ffffff;
+            text-align: center;
+            padding: 14px 32px;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .decision-banner .status-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.25);
+            padding: 3px 14px;
+            border-radius: 4px;
+            margin-left: 10px;
+            font-size: 13px;
+            letter-spacing: 2px;
+        }
+
+        /* Main content */
+        .main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 32px;
+        }
+
+        /* Section cards */
+        .card {
+            background: #ffffff;
+            border-radius: 4px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+            padding: 28px 32px;
+            margin-bottom: 24px;
+        }
+
+        h2 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #333333;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #b8c400;
+        }
+
+        h3 {
+            font-size: 17px;
+            font-weight: 700;
+            color: #333333;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        h4 {
+            font-size: 15px;
+            font-weight: 600;
+            color: #7a7b7a;
+            margin-top: 16px;
+            margin-bottom: 8px;
+        }
+
+        p {
+            margin-bottom: 12px;
+        }
+
+        strong {
+            font-weight: 600;
+        }
+
+        /* Decision highlight */
+        .decision-text {
+            background: linear-gradient(135deg, #f9fbe7 0%, #f1f5c8 100%);
+            border-left: 4px solid #b8c400;
+            padding: 16px 20px;
+            border-radius: 0 4px 4px 0;
+            margin-bottom: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #333333;
+        }
+
+        /* Ordered lists */
+        ol {
+            margin: 0 0 16px 24px;
+        }
+
+        ol li {
+            margin-bottom: 6px;
+            padding-left: 4px;
+        }
+
+        /* Unordered lists */
+        ul {
+            margin: 0 0 16px 24px;
+            list-style: disc;
+        }
+
+        ul li {
+            margin-bottom: 5px;
+            padding-left: 4px;
+        }
+
+        /* Nested list styling */
+        ul ul, ol ul {
+            margin-top: 4px;
+            margin-bottom: 4px;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+
+        thead th {
+            background: #b8c400;
+            color: #ffffff;
+            font-weight: 600;
+            text-align: left;
+            padding: 10px 14px;
+            border: 1px solid #a8b300;
+            white-space: nowrap;
+        }
+
+        tbody td {
+            padding: 9px 14px;
+            border: 1px solid #e5e5e5;
+            vertical-align: top;
+        }
+
+        tbody tr:nth-child(odd) {
+            background: #f6f6f6;
+        }
+
+        tbody tr:nth-child(even) {
+            background: #ffffff;
+        }
+
+        tbody tr:hover {
+            background: #f0f2d8;
+        }
+
+        /* Pre / code blocks (ASCII diagrams) */
+        .diagram-block {
+            background: #fafafa;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 20px 24px;
+            margin: 16px 0;
+            overflow-x: auto;
+        }
+
+        .diagram-block pre {
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.5;
+            color: #333333;
+            margin: 0;
+            white-space: pre;
+        }
+
+        /* Horizontal rule */
+        hr {
+            border: none;
+            border-top: 1px solid #e5e5e5;
+            margin: 24px 0;
+        }
+
+        /* Phase badges */
+        .phase-badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 3px 10px;
+            border-radius: 4px;
+            margin-bottom: 8px;
+        }
+
+        .phase-a {
+            background: #b8c400;
+            color: #ffffff;
+        }
+
+        .phase-b {
+            background: #00b0e8;
+            color: #ffffff;
+        }
+
+        /* Callout box for important notes */
+        .callout {
+            background: #fff9e6;
+            border-left: 4px solid #f0c000;
+            padding: 14px 18px;
+            border-radius: 0 4px 4px 0;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+
+        .callout strong {
+            color: #333333;
+        }
+
+        /* Open questions */
+        .question-list {
+            counter-reset: question;
+        }
+
+        .question-list li {
+            counter-increment: question;
+            margin-bottom: 8px;
+        }
+
+        /* Sub-section divider */
+        .section-divider {
+            border-top: 1px dashed #d0d0d0;
+            margin: 20px 0;
+        }
+
+        /* Footer */
+        .footer {
+            max-width: 1100px;
+            margin: 16px auto 40px auto;
+            padding: 0 32px;
+            text-align: center;
+            font-size: 12px;
+            color: #7a7b7a;
+        }
+
+        .footer-line {
+            border-top: 2px solid #b8c400;
+            padding-top: 16px;
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                background: #ffffff;
+                font-size: 11pt;
+            }
+
+            .header {
+                background: #2d2d2d !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .decision-banner {
+                background: #b8c400 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .card {
+                box-shadow: none;
+                border: 1px solid #e0e0e0;
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+
+            thead th {
+                background: #b8c400 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            tbody tr:nth-child(odd) {
+                background: #f6f6f6 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .main {
+                padding: 16px;
+            }
+
+            .diagram-block {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+
+            table {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-inner {
+                padding: 0 20px 24px 20px;
+            }
+
+            .header h1 {
+                font-size: 22px;
+            }
+
+            .main {
+                padding: 20px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            table {
+                font-size: 12px;
+            }
+
+            thead th, tbody td {
+                padding: 7px 10px;
+            }
+
+            .diagram-block pre {
+                font-size: 11px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="header-inner">
+            <div class="brand">Autoneum</div>
+            <div class="brand-tagline">Mastering Sound and Heat</div>
+            <h1>NVH 2030 — Layoutentscheidung: Vorschlag 4</h1>
+            <div class="header-meta">
+                <span><strong>Datum:</strong> 26.02.2026</span>
+                <span><strong>Standort:</strong> Werk Gundernhausen, Deutschland</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Decision Banner -->
+    <div class="decision-banner">
+        Status: Ausgew&auml;hlt <span class="status-badge">&#10003; AUSGEW&Auml;HLT</span>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main">
+
+        <!-- Entscheidung -->
+        <div class="card">
+            <h2>Entscheidung</h2>
+            <div class="decision-text">Vorschlag 4 wurde als Basislayout f&uuml;r die Umsetzung ausgew&auml;hlt.</div>
+
+            <h3>Begr&uuml;ndung</h3>
+            <ol>
+                <li>Einziger Vorschlag mit expliziter CO2- und Trennmittel-Zonenplanung</li>
+                <li>Drei Produktbereiche klar getrennt durch Staplerverkehrswege</li>
+                <li>H&ouml;chste Flexibilit&auml;t f&uuml;r zuk&uuml;nftige Technologieintegration (Bio-Polyol, PUSH HR, CO2-RA)</li>
+                <li>Beste Bewertung in allen 5 Kriterien (Gewichtete Gesamtnote: 4,0 von 5,0)</li>
+                <li>Marginaler Kostenunterschied gegen&uuml;ber Vorschlag 2 (&lt;4%)</li>
+            </ol>
+        </div>
+
+        <!-- Projekteckdaten -->
+        <div class="card">
+            <h2>Projekteckdaten (aktualisiert)</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Wert</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Aktuelle Produktionsausstattung</td><td>Gemischte Anlagen (Boxen, Tandem, Halbautomaten)</td></tr>
+                    <tr><td>Jahresvolumen</td><td>500-1.000 t/Jahr</td></tr>
+                    <tr><td>Mitarbeiter (Halle 2 + 3)</td><td>&lt; 30 Personen</td></tr>
+                    <tr><td>Aktuelles Trennmittel</td><td>W&auml;ssrig (wasserbasiert)</td></tr>
+                    <tr><td>CO2-Infrastruktur vor Ort</td><td>Vorhanden — aktuell als Treibmittel beim Sch&auml;umen</td></tr>
+                    <tr><td>CO2-Tank</td><td>Au&szlig;enbereich, nur Ladeeinheit vor Ort</td></tr>
+                    <tr><td>Max. Produktionsstillstand</td><td>2 Wochen (Sommerpause)</td></tr>
+                    <tr><td>Genehmigungen erforderlich</td><td>Nein</td></tr>
+                    <tr><td>Halle 3 Nachnutzung</td><td>Noch nicht entschieden</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Phasenaufteilung -->
+        <div class="card">
+            <h2>Phasenaufteilung</h2>
+
+            <h3><span class="phase-badge phase-a">Phase A</span> Kernprojekt — Layoutumbau (Scope dieses Projekts)</h3>
+            <ul>
+                <li>Entfernung von 5 Maschinen (Tandem 172, Box20, Box21, Halbautomat 188, AUDI Q1 STW LHD)</li>
+                <li>Konsolidierung aller Produktionsanlagen in Halle 2</li>
+                <li>Halle 3 vollst&auml;ndig freimachen</li>
+                <li>Anpassung Infrastruktur (Wasser, Druckluft, Elektrik) in Halle 2</li>
+                <li>Platzreservierung f&uuml;r zuk&uuml;nftige CO2-RA- und Bio-Polyol-Integration</li>
+                <li>Optimierung Staplerverkehrswege zwischen Produktbereichen</li>
+            </ul>
+
+            <div class="section-divider"></div>
+
+            <h3><span class="phase-badge phase-b">Phase B</span> Zukunftsphase — CO2-Trennmittel (separates Projekt, nach Phase A)</h3>
+            <ul>
+                <li>Umstellung von w&auml;ssrigen auf CO2-basierte Trennmittel</li>
+                <li>Erweiterung der bestehenden CO2-Infrastruktur (aktuell nur Treibmittel)</li>
+                <li>Installation CO2-Mischeinheiten, Hochdruckleitungen, Trennmittel-Aufbereitung</li>
+                <li>Separates Budget und Zeitplan</li>
+                <li>Voraussetzung: Phase A abgeschlossen, Platz in Layout reserviert</li>
+            </ul>
+        </div>
+
+        <!-- Detaillierte Zonenanalyse -->
+        <div class="card">
+            <h2>Detaillierte Zonenanalyse — Vorschlag 4</h2>
+
+            <h3>Zonen&uuml;bersicht</h3>
+            <p>Vorschlag 4 teilt Halle 2 in <strong>drei Produktbereiche</strong>, getrennt durch <strong>Staplerverkehrswege</strong> (schwarz umrandet):</p>
+
+            <div class="diagram-block">
+<pre>┌─────────────────────────────────────────────────────────────────┐
+│                        HALLE 2                                   │
+│                                                                  │
+│  ┌─────────────────────────────┐    ┌──────────────────────────┐ │
+│  │  PRODUKTBEREICH 1 (OBEN)    │    │  Büros, Elektro-Werkstatt│ │
+│  │  Gemischte Produktionszellen│    │  Technische Betriebe     │ │
+│  │  • Produktgruppe A          │    │  Aufenthaltsraum         │ │
+│  └─────────────────────────────┘    └──────────────────────────┘ │
+│  ═══════ STAPLERVERKEHRSWEG ═════════════════════════════════    │
+│  ┌─────────────────────────────────────────────────────────────┐ │
+│  │         PRODUKTBEREICH 2 (MITTE) — HAUPTPRODUKTION          │ │
+│  │                                                              │ │
+│  │  • Gemischte Produktionszellen (Boxen, Tandem, etc.)        │ │
+│  │  • Dosier- &amp; Mischanlagen                                    │ │
+│  │  • [CO2] — Aktuell: Treibmittel / Zukunft: RA-Versorgung   │ │
+│  │  • [Trennmittel] — Aktuell: wässrig / Zukunft: CO2-basiert │ │
+│  │  • Entformung &amp; Qualitätskontrolle                          │ │
+│  │                                                              │ │
+│  └─────────────────────────────────────────────────────────────┘ │
+│  ═══════ STAPLERVERKEHRSWEG ═════════════════════════════════    │
+│  ┌─────────────────────────────────────────────────────────────┐ │
+│  │         PRODUKTBEREICH 3 (UNTEN)                            │ │
+│  │                                                              │ │
+│  │  • Gemischte Produktionszellen                              │ │
+│  │  • Produktgruppe C                                           │ │
+│  │                                                              │ │
+│  └─────────────────────────────────────────────────────────────┘ │
+│                                                                  │
+│  ┌──────────────────────────────────────────────────────────┐   │
+│  │  Sozialräume: Besprechungsraum | WC | Umkleide | Dusche  │   │
+│  │  (&lt; 30 MA → Kapazität ausreichend)                        │   │
+│  └──────────────────────────────────────────────────────────┘   │
+│                                                                  │
+│  LINKS: Poly | Poly | MO 2 | Lager | Lager | Werkstatt         │
+│         Werkzeuginstandhaltung | Schnittmaschine                │
+│                                                                  │
+└─────────────────────────────────────────────────────────────────┘</pre>
+            </div>
+
+            <div class="callout">
+                <strong>Wichtig:</strong> Die schwarz umrandeten Bereiche definieren die <strong>Produktbereiche</strong>, getrennt durch <strong>Staplerverkehrswege</strong>. Dies erm&ouml;glicht sicheren Gabelstaplerverkehr zwischen den Bereichen ohne Kreuzung mit Fu&szlig;g&auml;ngerwegen.
+            </div>
+        </div>
+
+        <!-- Produktbereich 1 -->
+        <div class="card">
+            <h3>Produktbereich 1 (Oberer Bereich)</h3>
+
+            <p><strong>Sichtbare Elemente im Layout:</strong></p>
+            <ul>
+                <li>Obere schwarz umrandete Zone</li>
+                <li>Gemischte Produktionszellen</li>
+            </ul>
+
+            <p><span class="phase-badge phase-a">Phase A</span> <strong>Kernprojekt:</strong></p>
+            <ul>
+                <li>Verbleibende Produktionsanlagen aus Halle 3 hier konsolidieren</li>
+                <li>Anschluss an bestehende Medienversorgung (Wasser, Druckluft, Elektrik)</li>
+                <li>Stapleranbindung zur Rohstoffzuf&uuml;hrung</li>
+            </ul>
+        </div>
+
+        <!-- Produktbereich 2 -->
+        <div class="card">
+            <h3>Produktbereich 2 (Mittlerer Bereich) — Hauptproduktion</h3>
+
+            <p><strong>Sichtbare Elemente im Layout:</strong></p>
+            <ul>
+                <li>Gr&ouml;&szlig;te Zone mit den meisten Produktionszellen</li>
+                <li><strong>[CO2]</strong> — Markierter CO2-Bereich (blau) — aktuell Treibmittel, zuk&uuml;nftig auch RA</li>
+                <li><strong>[Trennmittel]</strong> — Markierter RA-Bereich (gr&uuml;n) — aktuell w&auml;ssrig, zuk&uuml;nftig CO2-basiert</li>
+                <li>Dosier- und Mischanlagen</li>
+                <li>Entformungsstationen</li>
+            </ul>
+
+            <p><span class="phase-badge phase-a">Phase A</span> <strong>Kernprojekt:</strong></p>
+            <ul>
+                <li>Gemischte Produktionszellen aufstellen (Boxen, Tandem-Nachfolger, Halbautomaten)</li>
+                <li>Bestehende w&auml;ssrige Trennmittel-Applikation einrichten</li>
+                <li>CO2-Versorgung f&uuml;r Treibmittel beibehalten</li>
+                <li>Dosier- und Mischanlagen anschlie&szlig;en</li>
+            </ul>
+
+            <p><span class="phase-badge phase-b">Phase B</span> <strong>Zukunft — CO2-RA:</strong></p>
+            <ul>
+                <li>Platz im [Trennmittel]-Bereich f&uuml;r CO2-Mischeinheiten reserviert</li>
+                <li>[CO2]-Bereich f&uuml;r Erweiterung der Hochdruckleitungen vorgesehen</li>
+                <li>Umstellung von w&auml;ssrigem auf CO2-basiertes Trennmittel</li>
+            </ul>
+
+            <h4>Infrastrukturbedarf Phase A</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Komponente</th>
+                        <th>Platzbedarf</th>
+                        <th>Position</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Gemischte Produktionszellen</td><td>Je nach Anzahl/Typ</td><td>Mittlere Zone</td></tr>
+                    <tr><td>Dosieranlage</td><td>10-15 m&sup2;</td><td>Neben Produktionszellen</td></tr>
+                    <tr><td>Mischk&ouml;pfe</td><td>In Produktionszellen integriert</td><td>An Stationen</td></tr>
+                    <tr><td>W&auml;ssrige RA-Aufbereitung</td><td>8-12 m&sup2;</td><td>[Trennmittel]-Bereich</td></tr>
+                    <tr><td>Steuerung/HMI</td><td>5 m&sup2;</td><td>Bedienplatz</td></tr>
+                </tbody>
+            </table>
+
+            <h4>Platzreservierung Phase B</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Komponente</th>
+                        <th>Reservierter Platz</th>
+                        <th>Position</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>CO2-RA-Mischeinheit(en)</td><td>4-6 m&sup2;</td><td>[CO2]-Bereich</td></tr>
+                    <tr><td>CO2-Hochdruckleitungstrasse</td><td>Wandtrasse vorsehen</td><td>Von CO2-Zone zu Stationen</td></tr>
+                    <tr><td>Trennmittel-Aufbereitung (CO2)</td><td>8-12 m&sup2;</td><td>[Trennmittel]-Bereich</td></tr>
+                    <tr><td>K&uuml;hlung/Kompressor</td><td>8-10 m&sup2;</td><td>Nahe Hallenwand (Au&szlig;enanbindung)</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Produktbereich 3 -->
+        <div class="card">
+            <h3>Produktbereich 3 (Unterer Bereich)</h3>
+
+            <p><strong>Sichtbare Elemente im Layout:</strong></p>
+            <ul>
+                <li>Untere schwarz umrandete Zone</li>
+                <li>Gemischte Produktionszellen</li>
+            </ul>
+
+            <p><span class="phase-badge phase-a">Phase A</span> <strong>Kernprojekt:</strong></p>
+            <ul>
+                <li>Weitere Produktionsanlagen aufstellen</li>
+                <li>Anschluss an Medienversorgung</li>
+                <li>Stapleranbindung zum Versandbereich</li>
+            </ul>
+        </div>
+
+        <!-- Linker Seitenbereich -->
+        <div class="card">
+            <h3>Linker Seitenbereich: Werkzeuginstandhaltung &amp; Lager</h3>
+
+            <p><strong>Sichtbare Elemente im Layout:</strong></p>
+            <ul>
+                <li>Poly (Polyol-Lager) — 2x</li>
+                <li>MO 2</li>
+                <li>Lager — 2x</li>
+                <li>Werkstatt</li>
+                <li>Werkzeuginstandhaltung</li>
+                <li>Schnittmaschine</li>
+            </ul>
+
+            <p><strong>Funktion:</strong></p>
+            <ul>
+                <li>Werkzeuglager und -instandhaltung (wichtig f&uuml;r Werkzeugwechsel)</li>
+                <li>Rohstofflager (Polyol)</li>
+                <li>Allgemeine Werkstatt f&uuml;r Reparaturen</li>
+            </ul>
+
+            <p><span class="phase-badge phase-b">Phase B</span> <strong>Zuk&uuml;nftige Erweiterung:</strong></p>
+            <ul>
+                <li>Bio-Polyol IBC-Lager (separater Bereich, 30-50 m&sup2;) in oder neben bestehendem Poly-Lager</li>
+            </ul>
+        </div>
+
+        <!-- Rechter Seitenbereich -->
+        <div class="card">
+            <h3>Rechter Seitenbereich: Technik &amp; Verwaltung</h3>
+
+            <p><strong>Sichtbare Elemente im Layout:</strong></p>
+            <ul>
+                <li>B&uuml;ro (mehrere)</li>
+                <li>Elektro-Werkstatt</li>
+                <li>Technische Betriebe</li>
+                <li>Aufenthaltsraum</li>
+            </ul>
+
+            <p><strong>Funktion:</strong></p>
+            <ul>
+                <li>Produktionsnahe B&uuml;ros (Schichtleitung, Qualit&auml;t)</li>
+                <li>Elektrotechnische Wartung</li>
+                <li>Technische Betriebsf&uuml;hrung</li>
+                <li>Soziale Infrastruktur (ausreichend f&uuml;r &lt; 30 MA)</li>
+            </ul>
+        </div>
+
+        <!-- Staplerverkehrskonzept -->
+        <div class="card">
+            <h2>Staplerverkehrskonzept</h2>
+            <p>Die schwarz umrandeten Zonen in Vorschlag 4 definieren <strong>sichere Staplerverkehrswege</strong> zwischen den drei Produktbereichen:</p>
+
+            <div class="diagram-block">
+<pre>     ROHSTOFF-ANLIEFERUNG
+            │
+            ▼
+  ┌── PRODUKTBEREICH 1 ──┐
+  │   (Produktgruppe A)   │
+  └──────────┬────────────┘
+     ════ STAPLERWEG ════
+  ┌── PRODUKTBEREICH 2 ──┐
+  │   (Hauptproduktion)   │
+  │   CO2 | Trennmittel   │
+  └──────────┬────────────┘
+     ════ STAPLERWEG ════
+  ┌── PRODUKTBEREICH 3 ──┐
+  │   (Produktgruppe C)   │
+  └──────────┬────────────┘
+            │
+            ▼
+       VERSAND / LAGER</pre>
+            </div>
+
+            <p><strong>Vorteile:</strong></p>
+            <ul>
+                <li>Staplerverkehr klar von Fu&szlig;g&auml;nger-/Bedienbereichen getrennt</li>
+                <li>Drei Produktbereiche unabh&auml;ngig anfahrbar</li>
+                <li>Rohstoffe und Fertigteile &uuml;ber definierte Wege transportiert</li>
+                <li>Sicherheit: Keine Kreuzungen Stapler/Fu&szlig;g&auml;nger innerhalb der Produktbereiche</li>
+            </ul>
+        </div>
+
+        <!-- Nächste Schritte -->
+        <div class="card">
+            <h2>N&auml;chste Schritte</h2>
+
+            <h3><span class="phase-badge phase-a">Phase A</span> Kernprojekt</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Aktion</th>
+                        <th>Priorit&auml;t</th>
+                        <th>Zieltermin</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1</td><td>Vorschlag 4 als Basislayout best&auml;tigen (Werkleitung)</td><td>Hoch</td><td>M&auml;rz 2026</td></tr>
+                    <tr><td>2</td><td>Infrastruktur-Bestandsaufnahme Halle 2 (Medienanschl&uuml;sse)</td><td>Hoch</td><td>April 2026</td></tr>
+                    <tr><td>3</td><td>Produktionsverlagerungsplan erstellen (welche Anlagen wohin)</td><td>Hoch</td><td>April 2026</td></tr>
+                    <tr><td>4</td><td>Ausschreibung Maschinenabbau (5 Maschinen)</td><td>Hoch</td><td>Mai 2026</td></tr>
+                    <tr><td>5</td><td>Budgetgenehmigung Phase A (~310-570k &euro;)</td><td>Hoch</td><td>Mai 2026</td></tr>
+                    <tr><td>6</td><td>Sommerpause nutzen f&uuml;r kritische Umbauten (max. 2 Wochen)</td><td>Hoch</td><td>Juli/Aug 2026</td></tr>
+                    <tr><td>7</td><td>Halle 3 R&auml;umung abschlie&szlig;en</td><td>Hoch</td><td>Q4 2026</td></tr>
+                </tbody>
+            </table>
+
+            <div class="section-divider"></div>
+
+            <h3><span class="phase-badge phase-b">Phase B</span> CO2-Trennmittel (Zukunft, separates Projekt)</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Aktion</th>
+                        <th>Priorit&auml;t</th>
+                        <th>Zieltermin</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1</td><td>Expertenteam f&uuml;r CO2-RA definieren (intern/extern)</td><td>Mittel</td><td>Nach Phase A</td></tr>
+                    <tr><td>2</td><td>Ausschreibung CO2-RA-Systemkomponenten</td><td>Mittel</td><td>Nach Phase A</td></tr>
+                    <tr><td>3</td><td>Detailplanung CO2-RA-Leitungsf&uuml;hrung</td><td>Mittel</td><td>Nach Phase A</td></tr>
+                    <tr><td>4</td><td>Erweiterung bestehende CO2-Infrastruktur (Treibmittel &rarr; RA)</td><td>Mittel</td><td>Nach Phase A</td></tr>
+                    <tr><td>5</td><td>Bio-Polyol-Lagerbereich einrichten</td><td>Mittel</td><td>Nach Phase A</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Offene Fragen -->
+        <div class="card">
+            <h2>Offene Fragen zur Kl&auml;rung</h2>
+
+            <h3><span class="phase-badge phase-a">Phase A</span></h3>
+            <ol class="question-list">
+                <li><strong>Anlagenverteilung:</strong> Welche konkreten Produktionszellen kommen in welchen Produktbereich?</li>
+                <li><strong>Halle 3 Nachnutzung:</strong> Noch nicht entschieden — beeinflusst Priorit&auml;t der R&auml;umung</li>
+                <li><strong>Sommerpause 2026:</strong> Sind 2 Wochen Stillstand definitiv m&ouml;glich? Abstimmung mit Kunden erforderlich?</li>
+                <li><strong>Medienanschl&uuml;sse Halle 2:</strong> Reichen die bestehenden Kapazit&auml;ten (Strom, Druckluft, Wasser) f&uuml;r alle konsolidierten Anlagen?</li>
+            </ol>
+
+            <div class="section-divider"></div>
+
+            <h3><span class="phase-badge phase-b">Phase B</span></h3>
+            <ol class="question-list" start="5">
+                <li><strong>CO2-RA Expertenteam:</strong> Wer leitet die Umstellung? (E. Jeckle / Ellzee? Externer Anbieter? Internes Team?)</li>
+                <li><strong>CO2-Infrastruktur-Erweiterung:</strong> Kann die bestehende CO2-Versorgung (Treibmittel) f&uuml;r RA mitgenutzt werden, oder braucht es ein separates System?</li>
+                <li><strong>Bio-Polyol Zeitplan:</strong> Wann werden Biopol4motive-Ergebnisse produktionsreif?</li>
+                <li><strong>PUSH HR Integration:</strong> Warten auf erfolgreichen Genk Trial #3?</li>
+            </ol>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="footer-line">
+            NVH 2030 — Werk Gundernhausen &nbsp;|&nbsp; Generiert am 26.02.2026 &nbsp;|&nbsp; Autoneum &mdash; Mastering Sound and Heat
+        </div>
+    </div>
+
+</body>
+</html>

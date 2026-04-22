@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NVH 2030 — Technische Prozessbewertung Vorschlag 4</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: #333333;
+            background: #f6f6f6;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        .header {
+            background: linear-gradient(135deg, #2d2d2d 0%, #3a3a3a 100%);
+            color: #ffffff;
+            padding: 40px 0 0 0;
+            border-bottom: 4px solid #b8c400;
+        }
+        .header-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 40px 30px 40px;
+        }
+        .brand { font-size: 14px; color: #b8c400; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; }
+        .brand-tagline { font-size: 11px; color: #7a7b7a; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 2px; }
+        .header h1 { font-size: 28px; font-weight: 700; margin-top: 16px; }
+        .header-meta { display: flex; flex-wrap: wrap; gap: 24px; margin-top: 12px; font-size: 14px; color: #cccccc; }
+        .header-meta span { display: inline-flex; align-items: center; gap: 6px; }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 30px 40px 60px 40px; }
+
+        h2 {
+            font-size: 22px;
+            color: #333333;
+            margin-top: 40px;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #b8c400;
+        }
+        h3 {
+            font-size: 17px;
+            color: #333333;
+            margin-top: 28px;
+            margin-bottom: 10px;
+        }
+        h4 {
+            font-size: 15px;
+            color: #333333;
+            margin-top: 20px;
+            margin-bottom: 8px;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 4px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+            padding: 24px;
+            margin: 20px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 14px 0;
+            font-size: 14px;
+        }
+        thead th {
+            background: #b8c400;
+            color: #ffffff;
+            padding: 10px 14px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        tbody td {
+            padding: 9px 14px;
+            border-bottom: 1px solid #e8e8e8;
+        }
+        tbody tr:nth-child(even) { background: #f6f6f6; }
+        tbody tr:nth-child(odd) { background: #ffffff; }
+        tbody tr:hover { background: #f0f4d4; }
+
+        .callout {
+            background: linear-gradient(135deg, #fefff0 0%, #f9fbe7 100%);
+            border-left: 4px solid #b8c400;
+            padding: 16px 20px;
+            border-radius: 4px;
+            margin: 20px 0;
+            font-size: 14px;
+            color: #333333;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+        }
+        .callout strong { color: #333333; }
+
+        .callout.blue {
+            background: linear-gradient(135deg, #e0f7fa 0%, #e8f5e9 100%);
+            border-left-color: #00b0e8;
+        }
+
+        ul, ol { margin: 10px 0 10px 24px; }
+        li { margin: 5px 0; font-size: 14px; }
+
+        hr { border: none; border-top: 1px solid #e0e0e0; margin: 32px 0; }
+
+        /* Rating badges */
+        .rating {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 3px;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+        .rating.excellent { background: #b8c400; color: #ffffff; }
+        .rating.good { background: #00b0e8; color: #ffffff; }
+        .rating.adequate { background: #ffc107; color: #333333; }
+        .rating.check { background: #ff9800; color: #ffffff; }
+
+        .badge {
+            display: inline-block;
+            background: #b8c400;
+            color: #ffffff;
+            padding: 3px 10px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .badge.blue { background: #00b0e8; }
+
+        .critical-question {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 14px 18px;
+            border-radius: 4px;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+        .critical-question strong { color: #e65100; }
+
+        .open-point {
+            background: #e3f2fd;
+            border-left: 4px solid #00b0e8;
+            padding: 14px 18px;
+            border-radius: 4px;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+        .open-point strong { color: #0277bd; }
+
+        /* Strengths & Weaknesses */
+        .sw-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .sw-card {
+            background: #ffffff;
+            border-radius: 4px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+            padding: 20px;
+        }
+        .sw-card.strengths { border-top: 3px solid #b8c400; }
+        .sw-card.weaknesses { border-top: 3px solid #ff9800; }
+        .sw-card h3 { margin-top: 0; margin-bottom: 12px; }
+        .sw-card ol { margin-left: 20px; }
+        .sw-card li { margin: 6px 0; font-size: 14px; }
+
+        /* Recommendation sections */
+        .rec-section {
+            background: #ffffff;
+            border-radius: 4px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+            padding: 20px 24px;
+            margin: 16px 0;
+            border-left: 4px solid #b8c400;
+        }
+        .rec-section.phase-b { border-left-color: #00b0e8; }
+        .rec-section h4 { margin-top: 0; margin-bottom: 10px; }
+        .rec-section ol { margin-left: 20px; }
+        .rec-section li { margin: 5px 0; font-size: 14px; }
+
+        .footer {
+            background: #2d2d2d;
+            color: #7a7b7a;
+            text-align: center;
+            padding: 24px;
+            font-size: 12px;
+            margin-top: 40px;
+        }
+        .footer strong { color: #b8c400; }
+
+        @media print {
+            body { background: #ffffff; }
+            .header { background: #2d2d2d !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .container { padding: 20px; }
+            .card, .sw-card, .rec-section { box-shadow: none; border: 1px solid #e0e0e0; }
+            thead th { background: #b8c400 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            tbody tr:nth-child(even) { background: #f6f6f6 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .rating { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .footer { background: #2d2d2d !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            h2 { page-break-after: avoid; }
+            .card { page-break-inside: avoid; }
+        }
+
+        @media (max-width: 768px) {
+            .header-inner, .container { padding-left: 20px; padding-right: 20px; }
+            .sw-grid { grid-template-columns: 1fr; }
+            table { font-size: 12px; }
+            thead th, tbody td { padding: 7px 8px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="header-inner">
+        <div class="brand">Autoneum</div>
+        <div class="brand-tagline">Mastering Sound and Heat</div>
+        <h1>NVH 2030 — Technische Prozessbewertung Vorschlag 4</h1>
+        <div class="header-meta">
+            <span><strong>Standort:</strong>&nbsp;Gundernhausen, Deutschland</span>
+            <span><strong>Datum:</strong>&nbsp;26.02.2026</span>
+            <span><strong>Layout:</strong>&nbsp;Vorschlag 4 (ausgewählt)</span>
+            <span><strong>Erstellt für:</strong>&nbsp;Werkleitung &amp; Engineering-Team</span>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+    <!-- ============================================================ -->
+    <!-- 1. AUSGANGSLAGE -->
+    <!-- ============================================================ -->
+
+    <h2>1. Ausgangslage</h2>
+
+    <div class="card">
+        <h3>Aktuelle Situation</h3>
+        <table>
+            <thead>
+                <tr><th>Parameter</th><th style="text-align:left;">Wert</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Hallen in Betrieb</td><td>Halle 2 + Halle 3</td></tr>
+                <tr><td>Produktionsanlagen</td><td>Gemischt: Boxen, Tandem, Halbautomaten</td></tr>
+                <tr><td>Jahresvolumen</td><td>500-1.000 t/Jahr</td></tr>
+                <tr><td>Mitarbeiter</td><td>&lt; 30</td></tr>
+                <tr><td>Trennmittel</td><td>Wässrig (wasserbasiert)</td></tr>
+                <tr><td>CO2 vor Ort</td><td>Vorhanden — als Treibmittel beim Schäumen</td></tr>
+                <tr><td>CO2-Tank</td><td>Außenbereich, Ladeeinheit</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card">
+        <h3>Maschinen zur Entfernung</h3>
+        <table>
+            <thead>
+                <tr><th>Maschine</th><th style="text-align:left;">Typ</th><th style="text-align:left;">Begründung</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Tandem 172</td><td>Schäumanlage</td><td>Volumenverlust</td></tr>
+                <tr><td>Box20</td><td>Schäumbox</td><td>Volumenverlust</td></tr>
+                <tr><td>Box21</td><td>Schäumbox</td><td>Volumenverlust</td></tr>
+                <tr><td>Halbautomat 188</td><td>Halbautomatische Anlage</td><td>Volumenverlust</td></tr>
+                <tr><td>AUDI Q1 STW LHD</td><td>Produktionslinie</td><td>Auslauf Kundenauftrag</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <hr>
+
+    <!-- ============================================================ -->
+    <!-- 2. TECHNISCHE BESCHREIBUNG -->
+    <!-- ============================================================ -->
+
+    <h2>2. Vorschlag 4 — Technische Beschreibung</h2>
+
+    <div class="card">
+        <h3>Konzept</h3>
+        <p style="margin-bottom: 12px;">Vorschlag 4 teilt Halle 2 in <strong>drei Produktbereiche</strong>, getrennt durch <strong>Staplerverkehrswege</strong>:</p>
+        <ul>
+            <li><strong>Produktbereich 1 (oben):</strong> Gemischte Produktionszellen — Produktgruppe A</li>
+            <li><strong>Produktbereich 2 (mitte):</strong> Hauptproduktion — gemischte Zellen, mit markiertem CO2- und Trennmittel-Bereich</li>
+            <li><strong>Produktbereich 3 (unten):</strong> Gemischte Produktionszellen — Produktgruppe C</li>
+        </ul>
+        <p style="margin-top: 12px;">Die schwarzen Umrandungen im Layout definieren die Produktbereiche; die Zwischenräume sind <strong>Staplerverkehrswege</strong> für sicheren Gabelstaplerverkehr.</p>
+    </div>
+
+    <div class="card">
+        <h3>Sichtbare Elemente im Layout</h3>
+        <table>
+            <thead>
+                <tr><th>Element</th><th style="text-align:left;">Position</th><th style="text-align:left;">Beschreibung</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Produktionszellen (gemischt)</td><td>Alle 3 Bereiche</td><td>Boxen, Tandem-Nachfolger, Halbautomaten</td></tr>
+                <tr><td>[CO2] (blau markiert)</td><td>Bereich 2 Mitte</td><td>Aktuell: Treibmittel / Zukunft: RA-Versorgung</td></tr>
+                <tr><td>[Trennmittel] (grün markiert)</td><td>Bereich 2 Mitte</td><td>Aktuell: wässrig / Zukunft: CO2-basiert</td></tr>
+                <tr><td>Werkzeuginstandhaltung</td><td>Links</td><td>Werkzeuglager und -wartung</td></tr>
+                <tr><td>Poly-Lager (2x)</td><td>Links</td><td>Polyol-Rohstofflager</td></tr>
+                <tr><td>MO 2, Lager (2x)</td><td>Links</td><td>Weitere Lagerbereiche</td></tr>
+                <tr><td>Werkstatt</td><td>Links</td><td>Allgemeine Reparaturen</td></tr>
+                <tr><td>Schnittmaschine</td><td>Links</td><td>Nachbearbeitung</td></tr>
+                <tr><td>Büro (mehrere)</td><td>Rechts</td><td>Schichtleitung, Qualität</td></tr>
+                <tr><td>Elektro-Werkstatt</td><td>Rechts</td><td>Elektrotechnische Wartung</td></tr>
+                <tr><td>Technische Betriebe</td><td>Rechts</td><td>Betriebsführung</td></tr>
+                <tr><td>Sozialräume</td><td>Unten</td><td>Besprechungsraum, WC, Umkleide, Dusche</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <hr>
+
+    <!-- ============================================================ -->
+    <!-- 3. PROZESSBEWERTUNG PHASE A -->
+    <!-- ============================================================ -->
+
+    <h2>3. Prozessbewertung Phase A (Kernprojekt)</h2>
+
+    <div class="card">
+        <h3>3.1 Staplerverkehrskonzept</h3>
+        <div class="rating excellent">Bewertung: Sehr gut</div>
+        <ul>
+            <li>Drei Produktbereiche durch definierte Staplerverkehrswege klar getrennt</li>
+            <li>Stapler- und Fußgängerverkehr nicht gekreuzt innerhalb der Produktbereiche</li>
+            <li>Jeder Bereich unabhängig anfahrbar für Rohstoffzuführung und Fertigteilabholung</li>
+            <li>Sicherheitskonzept: Leitplanken, Bodenmarkierungen, Beschilderung vorzusehen</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h3>3.2 Anlagenaufstellung (gemischte Produktionszellen)</h3>
+        <div class="rating good">Bewertung: Gut</div>
+        <ul>
+            <li>Drei getrennte Produktbereiche ermöglichen sinnvolle Gruppierung nach Produktgruppen</li>
+            <li>Gemischte Anlagen (Boxen, Tandem, Halbautomaten) flexibel auf die Bereiche verteilbar</li>
+            <li>Medienanschlüsse (Wasser, Druckluft, Elektrik) in Halle 2 vorhanden — Umverteilung nötig</li>
+        </ul>
+        <div class="open-point">
+            <strong>Offener Punkt:</strong> Welche konkreten Anlagen in welchen Produktbereich? Erfordert Detailplanung basierend auf Produktgruppen und Kundenzuordnung.
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>3.3 Trennmittel-System (Phase A: wässrig)</h3>
+        <div class="rating adequate">Bewertung: Ausreichend</div>
+        <ul>
+            <li>Aktuell wässriges Trennmittel — System wird beibehalten</li>
+            <li>[Trennmittel]-Bereich im Layout vorgesehen → dort wässrige RA-Aufbereitung einrichten</li>
+            <li>Absaugung/Belüftung muss für wässrige RA ausgelegt werden (VOC-Abdunstung)</li>
+            <li>Platz im [Trennmittel]-Bereich für zukünftige CO2-RA-Umstellung <strong>reservieren</strong></li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h3>3.4 CO2-Versorgung (Phase A: nur Treibmittel)</h3>
+        <div class="rating good">Bewertung: Gut — bestehende Infrastruktur nutzbar</div>
+        <ul>
+            <li>CO2-Tank und Ladeeinheit bereits vorhanden (Außenbereich)</li>
+            <li>Bestehende Leitungen zum Produktionsbereich für Treibmittel beibehalten</li>
+            <li>[CO2]-Bereich im Layout reserviert für zukünftige RA-Erweiterung</li>
+            <li>Keine Änderung an CO2-Infrastruktur in Phase A nötig</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h3>3.5 Infrastruktur Halle 2</h3>
+        <div class="rating check">Bewertung: Prüfung erforderlich</div>
+        <table>
+            <thead>
+                <tr><th>Medium</th><th style="text-align:center;">Verfügbarkeit</th><th style="text-align:left;">Handlungsbedarf</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Elektrik</td><td style="text-align:center;">Vorhanden</td><td>Umverteilung auf neue Anlagenpositionen</td></tr>
+                <tr><td>Druckluft</td><td style="text-align:center;">Vorhanden</td><td>Leitungsanpassung für 3-Bereiche-Layout</td></tr>
+                <tr><td>Wasser</td><td style="text-align:center;">Vorhanden</td><td>Anpassung an neue Aufstellorte</td></tr>
+                <tr><td>Absaugung</td><td style="text-align:center;">Vorhanden</td><td>Anpassung für wässrige RA + neue Positionen</td></tr>
+                <tr><td>CO2 (Treibmittel)</td><td style="text-align:center;">Vorhanden</td><td>Keine Änderung in Phase A</td></tr>
+                <tr><td>Bodenbelastbarkeit</td><td style="text-align:center;">Vorhanden</td><td>Prüfung für schwere Anlagen empfohlen</td></tr>
+            </tbody>
+        </table>
+        <div class="critical-question">
+            <strong>Kritische Frage:</strong> Reichen die bestehenden Kapazitäten (Strom, Druckluft, Wasser) für alle konsolidierten Anlagen aus Halle 2 + 3? → Bestandsaufnahme erforderlich.
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>3.6 Sozialinfrastruktur</h3>
+        <div class="rating adequate">Bewertung: Ausreichend</div>
+        <ul>
+            <li>Sozialräume (Besprechungsraum, WC, Umkleide, Dusche) im Layout unten positioniert</li>
+            <li>Bei &lt; 30 Mitarbeitern ist die vorhandene Kapazität ausreichend</li>
+            <li>Keine Erweiterung der Sozialräume nötig</li>
+        </ul>
+    </div>
+
+    <hr>
+
+    <!-- ============================================================ -->
+    <!-- 4. PROZESSBEWERTUNG PHASE B -->
+    <!-- ============================================================ -->
+
+    <h2>4. Prozessbewertung Phase B (Zukunft — CO2-Trennmittel)</h2>
+
+    <div class="callout blue">
+        Phase B ist kein Teil des aktuellen Projekts. Diese Bewertung dient der Platzreservierung in Phase A.
+    </div>
+
+    <div class="card">
+        <h3>4.1 CO2-RA-Umstellung</h3>
+        <h4>Platzreservierung in Vorschlag 4</h4>
+        <table>
+            <thead>
+                <tr><th>Komponente</th><th style="text-align:left;">Reservierter Bereich</th><th style="text-align:left;">Phase A Aktion</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>CO2-RA-Mischeinheit(en)</td><td>[CO2]-Zone</td><td>Bereich freihalten, Medienanschlüsse vorbereiten</td></tr>
+                <tr><td>Trennmittel-Aufbereitung</td><td>[Trennmittel]-Zone</td><td>Wässrige RA so aufstellen, dass Umbau einfach</td></tr>
+                <tr><td>Hochdruckleitungstrasse</td><td>Wandtrasse</td><td>Kabelkanäle/Durchbrüche vorsehen</td></tr>
+                <tr><td>Kühlung/Kompressor</td><td>Nahe Hallenwand</td><td>Fläche reservieren, Stromanschluss vorsehen</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card">
+        <h3>4.2 Bio-Polyol-Lager</h3>
+        <h4>Platzreservierung in Vorschlag 4</h4>
+        <ul>
+            <li>Im oder neben bestehendem Poly-Lager (links) Platz für separaten Bio-Polyol IBC-Bereich vorsehen</li>
+            <li>Temperaturkontrolle (20-25°C) und Rührwerk-Anschluss in Phase A vorbereiten</li>
+            <li>Spülinfrastruktur (Lehre Genk): 3-Wege-Ventile, Ablaufleitungen im Dosierbereich planen</li>
+        </ul>
+    </div>
+
+    <hr>
+
+    <!-- ============================================================ -->
+    <!-- 5. STÄRKEN & SCHWÄCHEN -->
+    <!-- ============================================================ -->
+
+    <h2>5. Stärken &amp; Schwächen Vorschlag 4</h2>
+
+    <div class="sw-grid">
+        <div class="sw-card strengths">
+            <h3 style="color: #90a000;">Stärken</h3>
+            <ol>
+                <li><strong>Einziger Vorschlag mit expliziter CO2/Trennmittel-Planung</strong> — auch wenn CO2-RA Phase B ist, ist der Platz bereits reserviert</li>
+                <li><strong>Staplerverkehrskonzept</strong> — klare Trennung Stapler/Fußgänger durch definierte Verkehrswege</li>
+                <li><strong>Drei Produktbereiche</strong> — flexible Zuordnung nach Produktgruppen/Kunden</li>
+                <li><strong>Bestehende Infrastruktur nutzbar</strong> — Medien in Halle 2 vorhanden</li>
+                <li><strong>Sozialräume ausreichend</strong> für &lt; 30 MA ohne Erweiterung</li>
+                <li><strong>CO2-Tank vorhanden</strong> — Kostenersparnis bei zukünftiger RA-Umstellung</li>
+            </ol>
+        </div>
+        <div class="sw-card weaknesses">
+            <h3 style="color: #e65100;">Schwächen / Offene Punkte</h3>
+            <ol>
+                <li><strong>Anlagenzuordnung unklar</strong> — welche Produktionszellen in welchen Bereich? Erfordert Detailplanung</li>
+                <li><strong>Medienkapazität ungeprüft</strong> — Bestandsaufnahme Halle 2 (Strom, Druckluft, Wasser) zwingend nötig</li>
+                <li><strong>Umbauaufwand höher</strong> als kompaktere Alternativen (V2/V3) — drei Bereiche erfordern mehr Infrastrukturarbeit</li>
+                <li><strong>Wässrige RA bleibt zunächst</strong> — VOC-Belastung und Reinigungsaufwand bleiben bestehen bis Phase B</li>
+            </ol>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- ============================================================ -->
+    <!-- 6. EMPFEHLUNGEN -->
+    <!-- ============================================================ -->
+
+    <h2>6. Empfehlungen</h2>
+
+    <div class="rec-section">
+        <h4>Sofort (vor Projektstart Phase A)</h4>
+        <ol>
+            <li><strong>Infrastruktur-Bestandsaufnahme Halle 2</strong> — Medienkapazitäten prüfen und dokumentieren</li>
+            <li><strong>Anlagenliste erstellen</strong> — Welche Produktionszellen bleiben? Welche werden wohin zugeordnet?</li>
+            <li><strong>Staplerverkehrsplan detaillieren</strong> — Fahrwege, Kreuzungspunkte, Geschwindigkeitszonen</li>
+        </ol>
+    </div>
+
+    <div class="rec-section">
+        <h4>Bei Umsetzung Phase A</h4>
+        <ol start="4">
+            <li><strong>Platz für CO2-RA vorbereiten</strong> — In [CO2]- und [Trennmittel]-Zone keine fest installierten Anlagen, die späteren Umbau erschweren</li>
+            <li><strong>Leerrohr-/Kabelkanal vorsehen</strong> — Für zukünftige CO2-Hochdruckleitungen Wandtrassen freihalten</li>
+            <li><strong>Wässrige RA effizient aufstellen</strong> — So positionieren, dass spätere Umrüstung auf CO2-RA minimal-invasiv möglich</li>
+        </ol>
+    </div>
+
+    <div class="rec-section phase-b">
+        <h4>Für Phase B Vorbereitung</h4>
+        <ol start="7">
+            <li><strong>Kontakt zu CO2-RA-Experten</strong> — Team definieren (intern/extern, ggf. Ellzee-Erfahrung nutzen)</li>
+            <li><strong>CO2-Infrastruktur-Prüfung</strong> — Kann bestehender Tank/Leitung für RA mitgenutzt werden?</li>
+            <li><strong>Ausschreibung vorbereiten</strong> — Anbieter für CO2-RA-System identifizieren (offene Vergabe geplant)</li>
+        </ol>
+    </div>
+
+</div>
+
+<div class="footer">
+    <strong>NVH 2030 — Werk Gundernhausen</strong><br>
+    Generiert am 26.02.2026 &nbsp;|&nbsp; Technische Prozessbewertung Vorschlag 4
+</div>
+
+</body>
+</html>

@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NVH 2030 — Projekt&uuml;bersicht &amp; Dateiindex</title>
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: #333333;
+            background-color: #f6f6f6;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+            color: #ffffff;
+            padding: 32px 0 0 0;
+            border-bottom: 4px solid #b8c400;
+        }
+
+        .header-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 32px 28px 32px;
+        }
+
+        .brand {
+            font-size: 13px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #b8c400;
+            margin-bottom: 2px;
+            font-weight: 600;
+        }
+
+        .brand-tagline {
+            font-size: 11px;
+            color: #999999;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            line-height: 1.3;
+        }
+
+        .header-meta {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            font-size: 14px;
+            color: #cccccc;
+            margin-top: 4px;
+        }
+
+        .header-meta span {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .header-subtitle {
+            font-size: 15px;
+            color: #bbbbbb;
+            margin-top: 8px;
+            font-weight: 400;
+        }
+
+        /* Main content */
+        .main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 32px;
+        }
+
+        /* Decision callout */
+        .decision-callout {
+            background: linear-gradient(135deg, #b8c400 0%, #a0ac00 100%);
+            color: #ffffff;
+            border-radius: 4px;
+            padding: 24px 28px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(184, 196, 0, 0.3);
+        }
+
+        .decision-callout .decision-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .decision-callout .decision-title .badge {
+            background: rgba(255,255,255,0.25);
+            padding: 2px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .decision-callout p {
+            margin: 4px 0;
+            font-size: 14px;
+            line-height: 1.7;
+            opacity: 0.95;
+        }
+
+        .decision-callout strong {
+            font-weight: 700;
+        }
+
+        /* Section cards */
+        .card {
+            background: #ffffff;
+            border-radius: 4px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+            padding: 28px 32px;
+            margin-bottom: 24px;
+        }
+
+        h2 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #333333;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #b8c400;
+        }
+
+        h3 {
+            font-size: 17px;
+            font-weight: 700;
+            color: #333333;
+            margin-top: 24px;
+            margin-bottom: 10px;
+        }
+
+        h4 {
+            font-size: 15px;
+            font-weight: 600;
+            color: #7a7b7a;
+            margin-top: 14px;
+            margin-bottom: 8px;
+        }
+
+        p {
+            margin-bottom: 12px;
+        }
+
+        strong {
+            font-weight: 600;
+        }
+
+        /* Unordered lists */
+        ul {
+            margin: 0 0 16px 24px;
+            list-style: disc;
+        }
+
+        ul li {
+            margin-bottom: 5px;
+            padding-left: 4px;
+        }
+
+        /* Links */
+        a {
+            color: #00b0e8;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        a:hover {
+            color: #009bcc;
+            text-decoration: underline;
+        }
+
+        /* Pre / code blocks (file tree) */
+        .diagram-block {
+            background: #fafafa;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 20px 24px;
+            margin: 16px 0;
+            overflow-x: auto;
+        }
+
+        .diagram-block pre {
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #333333;
+            margin: 0;
+            white-space: pre;
+        }
+
+        /* Inline code */
+        code {
+            font-family: 'Consolas', 'Courier New', monospace;
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 13px;
+            color: #333333;
+        }
+
+        /* Deliverable items */
+        .deliverable-item {
+            background: #ffffff;
+            border: 1px solid #e8e8e8;
+            border-radius: 4px;
+            padding: 20px 24px;
+            margin-bottom: 16px;
+            border-left: 4px solid #b8c400;
+            transition: box-shadow 0.2s ease;
+        }
+
+        .deliverable-item:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .deliverable-item h3 {
+            margin-top: 0;
+            font-size: 16px;
+            color: #333333;
+        }
+
+        .deliverable-item .file-ref {
+            font-size: 13px;
+            color: #7a7b7a;
+            margin-bottom: 8px;
+        }
+
+        .deliverable-item .file-ref a {
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 13px;
+        }
+
+        .deliverable-item ul {
+            margin: 8px 0 0 20px;
+            font-size: 14px;
+        }
+
+        .deliverable-item ul li {
+            margin-bottom: 3px;
+        }
+
+        /* Number badge */
+        .num-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            background: #b8c400;
+            color: #ffffff;
+            border-radius: 50%;
+            font-size: 13px;
+            font-weight: 700;
+            margin-right: 8px;
+            flex-shrink: 0;
+        }
+
+        .deliverable-item h3 {
+            display: flex;
+            align-items: center;
+        }
+
+        /* Horizontal rule */
+        hr {
+            border: none;
+            border-top: 1px solid #e5e5e5;
+            margin: 24px 0;
+        }
+
+        /* Section divider */
+        .section-divider {
+            border-top: 1px dashed #d0d0d0;
+            margin: 20px 0;
+        }
+
+        /* Source documents card */
+        .source-card {
+            border-left: 4px solid #00b0e8;
+        }
+
+        /* Footer */
+        .footer {
+            max-width: 1100px;
+            margin: 16px auto 40px auto;
+            padding: 0 32px;
+            text-align: center;
+            font-size: 12px;
+            color: #7a7b7a;
+        }
+
+        .footer-line {
+            border-top: 2px solid #b8c400;
+            padding-top: 16px;
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                background: #ffffff;
+                font-size: 11pt;
+            }
+
+            .header {
+                background: #2d2d2d !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .decision-callout {
+                background: #b8c400 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .card {
+                box-shadow: none;
+                border: 1px solid #e0e0e0;
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+
+            .deliverable-item {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+
+            .num-badge {
+                background: #b8c400 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .main {
+                padding: 16px;
+            }
+
+            a {
+                color: #00b0e8;
+                text-decoration: underline;
+            }
+
+            a::after {
+                content: none;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-inner {
+                padding: 0 20px 24px 20px;
+            }
+
+            .header h1 {
+                font-size: 22px;
+            }
+
+            .main {
+                padding: 20px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .deliverable-item {
+                padding: 16px 18px;
+            }
+
+            .diagram-block pre {
+                font-size: 11px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="header-inner">
+            <div class="brand">Autoneum</div>
+            <div class="brand-tagline">Mastering Sound and Heat</div>
+            <h1>NVH 2030 — Projekt&uuml;bersicht &amp; Dateiindex</h1>
+            <div class="header-subtitle">Layoutoptimierung Werk Gundernhausen &mdash; Halle 3 freimachen, Konsolidierung in Halle 2, neue Technologien integrieren</div>
+            <div class="header-meta">
+                <span><strong>Stand:</strong> 26.02.2026</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main">
+
+        <!-- Decision Callout -->
+        <div class="decision-callout">
+            <div class="decision-title">
+                ENTSCHEIDUNG: Vorschlag 4 ausgew&auml;hlt
+                <span class="badge">26.02.2026</span>
+            </div>
+            <p>Konsolidierung aller NVH-Produktion in Halle 2 &mdash; Halle 3 komplett frei f&uuml;r zuk&uuml;nftiges Gesch&auml;ft.</p>
+            <p><strong>Budget Phase A (Layoutumbau):</strong> 262.000 - 460.000 &euro;</p>
+            <p><strong>Sommerpause nutzbar:</strong> 2 Wochen f&uuml;r kritische Umbauten &nbsp;|&nbsp; <strong>Genehmigungen:</strong> Nicht erforderlich</p>
+        </div>
+
+        <!-- Projektstruktur -->
+        <div class="card">
+            <h2>Projektstruktur</h2>
+
+            <div class="diagram-block">
+<pre>NVH 2030/
+│
+├── <a href="../00_Projektsteuerung/" style="color:#00b0e8">00_Projektsteuerung/</a>                 ← Projekt&uuml;bersicht &amp; Steuerung
+│   ├── <a href="PROJEKT_INDEX.html" style="color:#00b0e8">PROJEKT_INDEX.html</a>               ← Diese Datei (Einstiegspunkt)
+│   ├── PROJEKT_INDEX.md
+│   ├── <a href="NVH_2030_Intent_Questionnaire.md" style="color:#00b0e8">NVH_2030_Intent_Questionnaire.md</a> ← Ausgef&uuml;llter Fragebogen (Projektziele)
+│   ├── <a href="Freigabedokument_Phase_A.html" style="color:#00b0e8">Freigabedokument_Phase_A.html</a>    ← Formale Projektfreigabe &amp; Unterschriften
+│   └── <a href="RACI_Matrix_Phase_A.html" style="color:#00b0e8">RACI_Matrix_Phase_A.html</a>         ← Verantwortlichkeitsmatrix (RACI)
+│
+├── <a href="../01_Quelldokumente/" style="color:#00b0e8">01_Quelldokumente/</a>                   ← Quelldokumente &amp; Referenzen
+│   ├── <a href="../01_Quelldokumente/Document_Summaries_Reference.md" style="color:#00b0e8">Document_Summaries_Reference.md</a>  ← Zusammenfassungen aller Dokumente
+│   ├── EN_Flex_2024_Q1_WT_Global_Purchasing_Meeting.pdf
+│   ├── 20240924_BIOPOL4MOTIVE.pdf
+│   ├── 20242001_Foam EN_Bloom Foam Project.pdf
+│   ├── Developements and posibilities in using release agents at flexible foam.pdf
+│   ├── PUSH HR for Genk Trial 2 summary for EN.pdf
+│   ├── BGEU_EN_Flex_13052025.pptx
+│   └── Biopol4motive_Autoneum_CONFIDENTIAL.pptx
+│
+├── <a href="../02_Layouts/" style="color:#00b0e8">02_Layouts/</a>                          ← Layout-Bilder &amp; Pl&auml;ne
+│   ├── <a href="../02_Layouts/Vorschlag 2 24-02-2026.png" style="color:#00b0e8">Vorschlag 2 24-02-2026.png</a>       ← Layout Vorschlag 2
+│   ├── <a href="../02_Layouts/Vorschlag 3 24-02-2026.png" style="color:#00b0e8">Vorschlag 3 24-02-2026.png</a>       ← Layout Vorschlag 3
+│   ├── <a href="../02_Layouts/Vorschlag 4 24-02-2026.jpg" style="color:#00b0e8">Vorschlag 4 24-02-2026.jpg</a>       ← Layout Vorschlag 4 &#9733; AUSGEW&Auml;HLT
+│   ├── Current Layout Hall 2 and Hall 3.png
+│   ├── <a href="../02_Layouts/Halle2_Layoutplan_V4.html" style="color:#00b0e8">Halle2_Layoutplan_V4.html</a>        ← Schematischer Layoutplan (SVG, interaktiv)
+│   ├── <a href="../02_Layouts/Layout_Spezifikation_V4.html" style="color:#00b0e8">Layout_Spezifikation_V4.html</a>     ← CAD-Briefing &amp; Layout-Spezifikation
+│   └── Layout_Spezifikation_V4.md
+│
+├── <a href="../03_Analysen/" style="color:#00b0e8">03_Analysen/</a>                         ← Technische Analysen &amp; Bewertungen
+│   ├── <a href="../03_Analysen/Evaluation_Matrix.html" style="color:#00b0e8">Evaluation_Matrix.html</a>           ← Interaktive Bewertungsmatrix
+│   ├── <a href="../03_Analysen/Technische_Prozessbewertung.html" style="color:#00b0e8">Technische_Prozessbewertung.html</a> ← Technische Analyse je Vorschlag
+│   ├── <a href="../03_Analysen/Kostenschaetzung_Vergleich.html" style="color:#00b0e8">Kostenschaetzung_Vergleich.html</a>  ← Kostensch&auml;tzung &amp; ROI
+│   ├── <a href="../03_Analysen/Layoutentscheidung_Vorschlag4.html" style="color:#00b0e8">Layoutentscheidung_Vorschlag4.html</a> ← V4-Zonenanalyse &amp; Entscheidung
+│   ├── <a href="../03_Analysen/Risikobewertung_Phase_A.html" style="color:#00b0e8">Risikobewertung_Phase_A.html</a>    ← Risikobewertung &amp; Kundenauswirkung
+│   └── (+ zugeh&ouml;rige .md Dateien)
+│
+├── <a href="../04_Praesentationen/" style="color:#00b0e8">04_Praesentationen/</a>                  ← Pr&auml;sentationen &amp; Argumentation
+│   ├── <a href="../04_Praesentationen/NVH2030_Management_Summary.pptx" style="color:#00b0e8">NVH2030_Management_Summary.pptx</a>  ← Management Summary (10 Folien)
+│   ├── <a href="../04_Praesentationen/Stakeholder_Praesentation_DE.html" style="color:#00b0e8">Stakeholder_Praesentation_DE.html</a> ← Stakeholder-Pr&auml;sentation
+│   ├── <a href="../04_Praesentationen/Argumentationspapier_Vorschlag4.html" style="color:#00b0e8">Argumentationspapier_Vorschlag4.html</a> ← Business Case &amp; 12 Argumente
+│   ├── <a href="../04_Praesentationen/Phase_B_Zukunftsoptionen.html" style="color:#00b0e8">Phase_B_Zukunftsoptionen.html</a>    ← Zukunftsoptionen Halle 3
+│   └── (+ zugeh&ouml;rige .md Dateien)
+│
+├── <a href="../05_Planung/" style="color:#00b0e8">05_Planung/</a>                          ← Zeitplanung &amp; Umsetzung
+│   ├── <a href="../05_Planung/Implementation_Gantt.html" style="color:#00b0e8">Implementation_Gantt.html</a>        ← Interaktiver Gantt-Chart
+│   └── <a href="../05_Planung/Checkliste_Sommerpause_KW29_30.html" style="color:#00b0e8">Checkliste_Sommerpause_KW29_30.html</a> ← Tag-f&uuml;r-Tag Stillstandsplan
+│
+└── <a href="../_Tools/" style="color:#00b0e8">_Tools/</a>                              ← Build-Skripte &amp; Templates (intern)
+    ├── generate_pptx.py
+    ├── 200624_ATN_Template_16to9.potx
+    └── _template_converted.pptx</pre>
+            </div>
+        </div>
+
+        <!-- Deliverables -->
+        <div class="card">
+            <h2>Deliverables — Nutzungsanleitung</h2>
+
+            <div class="deliverable-item">
+                <h3><span class="num-badge">1</span> Interaktive Bewertungsmatrix</h3>
+                <div class="file-ref"><strong>Datei:</strong> <a href="../03_Analysen/Evaluation_Matrix.html">03_Analysen/Evaluation_Matrix.html</a></div>
+                <p><strong>&Ouml;ffnen:</strong> Doppelklick &rarr; &ouml;ffnet im Browser</p>
+                <p><strong>Funktionen:</strong></p>
+                <ul>
+                    <li>Bewertungen (1-5) je Kriterium editierbar</li>
+                    <li>Gewichtete Gesamtbewertung berechnet sich automatisch</li>
+                    <li>Radar-Chart aktualisiert sich live</li>
+                    <li>Ranking-&Uuml;bersicht oben</li>
+                    <li>Kommentare je Zelle editierbar</li>
+                    <li>Export/Import als JSON</li>
+                    <li>Druckansicht verf&uuml;gbar</li>
+                </ul>
+            </div>
+
+            <div class="deliverable-item">
+                <h3><span class="num-badge">2</span> Interaktiver Gantt-Chart</h3>
+                <div class="file-ref"><strong>Datei:</strong> <a href="../05_Planung/Implementation_Gantt.html">05_Planung/Implementation_Gantt.html</a></div>
+                <p><strong>&Ouml;ffnen:</strong> Doppelklick &rarr; &ouml;ffnet im Browser</p>
+                <p><strong>Funktionen:</strong></p>
+                <ul>
+                    <li>22 Aufgaben in 5 Phasen (Q2 2026 &rarr; Q1 2028)</li>
+                    <li>5 Meilensteine</li>
+                    <li>Kritischer Pfad rot markiert</li>
+                    <li>Abh&auml;ngigkeiten als Pfeile</li>
+                    <li>Zoom (+/-) und Scroll</li>
+                    <li>Klick auf Aufgabe &rarr; Detailpanel</li>
+                    <li>Phasen ein-/ausklappbar</li>
+                    <li>Druckansicht verf&uuml;gbar</li>
+                </ul>
+            </div>
+
+            <div class="deliverable-item">
+                <h3><span class="num-badge">3</span> Technische Prozessbewertung</h3>
+                <div class="file-ref"><strong>Datei:</strong> <a href="../03_Analysen/Technische_Prozessbewertung.html">03_Analysen/Technische_Prozessbewertung.html</a></div>
+                <ul>
+                    <li>Detaillierte technische Analyse je Vorschlag</li>
+                    <li>Infrastrukturbedarf (CO2-RA, Bio-Polyol, PUSH HR)</li>
+                    <li>Platzbedarf-Tabellen</li>
+                    <li>Vergleichs&uuml;bersicht &amp; Empfehlung</li>
+                </ul>
+            </div>
+
+            <div class="deliverable-item">
+                <h3><span class="num-badge">4</span> Kostensch&auml;tzung Phase A</h3>
+                <div class="file-ref"><strong>Datei:</strong> <a href="../03_Analysen/Kostenschaetzung_Vergleich.html">03_Analysen/Kostenschaetzung_Vergleich.html</a></div>
+                <ul>
+                    <li>Richtwerte auf Basis von Industriebenchmarks</li>
+                    <li>Maschinenabbau &amp; Halle 3 R&auml;umung: 81-132k &euro;</li>
+                    <li>Anlagenumstellung Halle 2: 58-100k &euro;</li>
+                    <li>Allgemeine Infrastruktur: 115-210k &euro;</li>
+                    <li><strong>Gesamt Phase A: 262-460k &euro;</strong></li>
+                    <li>Phase B separat &rarr; siehe Zukunftsoptionen</li>
+                </ul>
+            </div>
+
+            <div class="deliverable-item">
+                <h3><span class="num-badge">5</span> Stakeholder-Pr&auml;sentation</h3>
+                <div class="file-ref"><strong>Datei:</strong> <a href="../04_Praesentationen/Stakeholder_Praesentation_DE.html">04_Praesentationen/Stakeholder_Praesentation_DE.html</a></div>
+                <ul>
+                    <li>16 Folien-Struktur auf Deutsch</li>
+                    <li>Bereit zum &Uuml;bertragen in PowerPoint</li>
+                    <li>Alle Kerndaten und Empfehlungen enthalten</li>
+                </ul>
+            </div>
+
+            <div class="deliverable-item" style="border-left-color: #00b0e8;">
+                <h3><span class="num-badge" style="background: #00b0e8;">6</span> Layoutentscheidung Vorschlag 4</h3>
+                <div class="file-ref"><strong>Datei:</strong> <a href="../03_Analysen/Layoutentscheidung_Vorschlag4.html">03_Analysen/Layoutentscheidung_Vorschlag4.html</a></div>
+                <ul>
+                    <li>Formale Entscheidungsdokumentation</li>
+                    <li>Detaillierte Zonenanalyse (Zone 1-3 + Nebenbereiche)</li>
+                    <li>Materialfluss-Diagramm (linearer Top-Down-Flow)</li>
+                    <li>N&auml;chste Schritte &amp; offene Fragen</li>
+                </ul>
+            </div>
+
+            <div class="deliverable-item" style="border-left-color: #b8c400;">
+                <h3><span class="num-badge" style="background: #b8c400;">7</span> Argumentationspapier Vorschlag 4</h3>
+                <div class="file-ref"><strong>Datei:</strong> <a href="../04_Praesentationen/Argumentationspapier_Vorschlag4.html">04_Praesentationen/Argumentationspapier_Vorschlag4.html</a></div>
+                <ul>
+                    <li>12 Argumente in 5 Kategorien (Logistik, Effizienz, Energie, Instandhaltung, Strategie)</li>
+                    <li>Detaillierte Begr&uuml;ndung f&uuml;r Konsolidierung in Halle 2</li>
+                    <li>Strategische Vorteile: Halle 3 als Innovationsfl&auml;che</li>
+                    <li>R&amp;D-Pipeline &Uuml;bersicht (PU-Recycling, LHS-TPC, FR-PU)</li>
+                </ul>
+            </div>
+
+            <div class="deliverable-item" style="border-left-color: #00b0e8;">
+                <h3><span class="num-badge" style="background: #00b0e8;">8</span> Phase B &mdash; Zukunftsoptionen Halle 3</h3>
+                <div class="file-ref"><strong>Datei:</strong> <a href="../04_Praesentationen/Phase_B_Zukunftsoptionen.html">04_Praesentationen/Phase_B_Zukunftsoptionen.html</a></div>
+                <ul>
+                    <li>Separates Dokument &mdash; nicht Teil des Phase-A-Budgets</li>
+                    <li>4 Optionen: CO2-RA, PU-Chemisches Recycling, LHS-TPC, FR-PU Batterieschutz</li>
+                    <li>Vergleichsmatrix (TRL, Investition, Amortisation, Standort-Relevanz)</li>
+                    <li>HYPE Innovation Platform Kommentare &amp; Community-Interesse</li>
+                    <li>Strategische Bewertung &amp; Empfehlung</li>
+                </ul>
+            </div>
+
+            <div class="deliverable-item" style="border-left-color: #b8c400;">
+                <h3><span class="num-badge" style="background: #b8c400;">9</span> Schematischer Layoutplan Halle 2</h3>
+                <div class="file-ref"><strong>Datei:</strong> <a href="../02_Layouts/Halle2_Layoutplan_V4.html">02_Layouts/Halle2_Layoutplan_V4.html</a></div>
+                <p><strong>&Ouml;ffnen:</strong> Doppelklick &rarr; &ouml;ffnet im Browser</p>
+                <ul>
+                    <li>SVG-basierter Grundriss Halle 2 (Vorschlag 4)</li>
+                    <li>3 Produktbereiche, Staplerverkehrswege, Nebenr&auml;ume</li>
+                    <li>Sch&auml;umlinien C + F mit CO2- und Trennmittel-Bereichen</li>
+                    <li>Materialfluss-Pfeile (One-Way-Flow)</li>
+                    <li>DIN-Schriftfeld (NVH2030-V4-LP-001)</li>
+                    <li>Interaktiv: Bereiche anklicken f&uuml;r Details</li>
+                    <li>Druckansicht verf&uuml;gbar</li>
+                </ul>
+            </div>
+
+            <div class="deliverable-item" style="border-left-color: #00b0e8;">
+                <h3><span class="num-badge" style="background: #00b0e8;">10</span> Layout-Spezifikation (CAD-Briefing)</h3>
+                <div class="file-ref"><strong>Datei:</strong> <a href="../02_Layouts/Layout_Spezifikation_V4.html">02_Layouts/Layout_Spezifikation_V4.html</a></div>
+                <ul>
+                    <li>Vollst&auml;ndige Spezifikation f&uuml;r CAD-Zeichnung</li>
+                    <li>Zonenbeschreibung mit Platzbedarf (m&sup2;) je Element</li>
+                    <li>Phase-B-Platzreservierung (gestrichelte Fl&auml;chen)</li>
+                    <li>Infrastruktur-Anschl&uuml;sse, Sicherheitsnormen</li>
+                    <li>DIN-Normen f&uuml;r CAD-Zeichnung (ISO 5457, ISO 7200, ISO 128, DIN 406)</li>
+                    <li>Referenzdokumente &amp; Links</li>
+                </ul>
+            </div>
+            <div class="deliverable-item" style="border-left-color: #b8c400;">
+                <h3><span class="num-badge" style="background: #b8c400;">11</span> Risikobewertung &amp; Kundenauswirkungsanalyse</h3>
+                <div class="file-ref"><strong>Datei:</strong> <a href="../03_Analysen/Risikobewertung_Phase_A.html">03_Analysen/Risikobewertung_Phase_A.html</a></div>
+                <p><strong>&Ouml;ffnen:</strong> Doppelklick &rarr; &ouml;ffnet im Browser</p>
+                <ul>
+                    <li>19 Risiken in 6 Kategorien (Produktion, Kunden, Technik, Personal, Finanzen, Termine)</li>
+                    <li>RPZ-Bewertung (Wahrscheinlichkeit &times; Auswirkung) mit Farbcodierung</li>
+                    <li>Interaktive Risikomatrix (5&times;5 Raster)</li>
+                    <li>Top-5-Risiken: P5 (RPZ 12), K1 (RPZ 12), P2 (RPZ 9), P4 (RPZ 9), M1 (RPZ 9)</li>
+                    <li>Kundenauswirkungsanalyse: Vorproduktion 40-80 t, 6-stufiger Kommunikationsplan</li>
+                    <li>AUDI Q1 STW LHD Sondersituation &amp; 3 Notfallszenarien</li>
+                    <li><strong>Gesamtrisiko: BEHERRSCHBAR (Mittel)</strong></li>
+                </ul>
+            </div>
+
+            <div class="deliverable-item" style="border-left-color: #00b0e8;">
+                <h3><span class="num-badge" style="background: #00b0e8;">12</span> Management Summary (PowerPoint)</h3>
+                <div class="file-ref"><strong>Datei:</strong> <a href="../04_Praesentationen/NVH2030_Management_Summary.pptx">04_Praesentationen/NVH2030_Management_Summary.pptx</a></div>
+                <ul>
+                    <li>10 Folien im Autoneum Corporate Template</li>
+                    <li>Ausgangslage, 3 Layout-Vorschl&auml;ge mit eingebetteten Bildern</li>
+                    <li>Vorschlag 4 Detailansicht &amp; Begr&uuml;ndung</li>
+                    <li>Kostensch&auml;tzung Phase A: 262-460k EUR</li>
+                    <li>Roadmap (Q2 2026 &rarr; Q1 2028)</li>
+                    <li>Phase B Zukunftsoptionen &amp; Strategische Bewertung</li>
+                </ul>
+            </div>
+
+            <div class="deliverable-item" style="border-left-color: #b8c400;">
+                <h3><span class="num-badge" style="background: #b8c400;">13</span> Freigabedokument Phase A</h3>
+                <div class="file-ref"><strong>Datei:</strong> <a href="Freigabedokument_Phase_A.html">00_Projektsteuerung/Freigabedokument_Phase_A.html</a></div>
+                <ul>
+                    <li>Formale Projektfreigabe mit Unterschriftenfelder</li>
+                    <li>Kern-Massnahmen, Budget (262-460k EUR + 15% R&uuml;cklage), Zeitplan</li>
+                    <li>Risikobewertung Zusammenfassung &amp; Voraussetzungen</li>
+                    <li>Freigabeentscheidung (Freigegeben / Mit Auflagen / Nicht freigegeben)</li>
+                    <li>Referenzdokumente &amp; Anmerkungsfeld</li>
+                    <li>Druckansicht verf&uuml;gbar</li>
+                </ul>
+            </div>
+
+            <div class="deliverable-item" style="border-left-color: #00b0e8;">
+                <h3><span class="num-badge" style="background: #00b0e8;">14</span> RACI-Matrix</h3>
+                <div class="file-ref"><strong>Datei:</strong> <a href="RACI_Matrix_Phase_A.html">00_Projektsteuerung/RACI_Matrix_Phase_A.html</a></div>
+                <p><strong>&Ouml;ffnen:</strong> Doppelklick &rarr; &ouml;ffnet im Browser</p>
+                <ul>
+                    <li>12 Rollen (PL, WL, PD, TK, QS, LO, VT, CO, EK, BR, HR, EXT)</li>
+                    <li>6 Phasen, 40+ Arbeitspakete mit RACI-Zuordnung</li>
+                    <li>Farbcodierung: R = Gr&uuml;n, A = Blau, C = Gelb, I = Grau</li>
+                    <li>Zusammenfassung Hauptverantwortungen je Rolle</li>
+                </ul>
+            </div>
+
+            <div class="deliverable-item" style="border-left-color: #b8c400;">
+                <h3><span class="num-badge" style="background: #b8c400;">15</span> Checkliste Sommerpause KW 29-30</h3>
+                <div class="file-ref"><strong>Datei:</strong> <a href="../05_Planung/Checkliste_Sommerpause_KW29_30.html">05_Planung/Checkliste_Sommerpause_KW29_30.html</a></div>
+                <p><strong>&Ouml;ffnen:</strong> Doppelklick &rarr; &ouml;ffnet im Browser</p>
+                <ul>
+                    <li>12 Voraussetzungen (MUSS vor KW 29 erledigt sein)</li>
+                    <li>Tag-f&uuml;r-Tag-Plan: 10 Arbeitstage + 2 Samstage Puffer</li>
+                    <li>Interaktive Checkboxen (Klick &rarr; Aufgabe abgehakt)</li>
+                    <li>Wiederanlauf KW 31-32, Notfallkontakte, Eskalationsstufen</li>
+                    <li>GO/NO-GO Abschluss-Checkliste (16 Pr&uuml;fpunkte)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Quelldokumente -->
+        <div class="card source-card">
+            <h2>Quelldokumente — Zusammenfassungen</h2>
+            <div class="file-ref" style="font-size:13px; color:#7a7b7a; margin-bottom: 12px;">
+                <strong>Datei:</strong> <a href="../01_Quelldokumente/Document_Summaries_Reference.md">01_Quelldokumente/Document_Summaries_Reference.md</a>
+            </div>
+            <ul>
+                <li>7 Dokumente vollst&auml;ndig zusammengefasst</li>
+                <li>Cross-Document-Analyse f&uuml;r Layout-Bezug</li>
+                <li>Infrastruktur-Anforderungstabelle</li>
+                <li>5 offene Schl&uuml;sselfragen identifiziert</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="footer-line">
+            NVH 2030 — Werk Gundernhausen &nbsp;|&nbsp; Generiert am 26.02.2026 &nbsp;|&nbsp; Autoneum &mdash; Mastering Sound and Heat
+        </div>
+    </div>
+
+</body>
+</html>

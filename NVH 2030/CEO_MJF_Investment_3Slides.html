@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BG Europe Operations Briefing — Gundernhausen 3-Phase Transformation | NVH 2030</title>
+<style>
+  :root {
+    --g: #B8C400;
+    --dg: #99CC00;
+    --o: #E86A10;
+    --lo: #F1A670;
+    --b: #69BBFF;
+    --dk: #1a1a1a;
+    --gy: #666;
+    --lg: #DCDCDC;
+    --vlg: #F4F4F4;
+    --wh: #FFF;
+    --pg: #EDF0BF;
+    --red: #D32F2F;
+    --red-bg: #FDECEA;
+    --pet-blue: #2E75B6;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; overflow: hidden; }
+  body { font-family: Arial, Calibri, sans-serif; background: #0d0d0d; color: #000; line-height: 1.5; font-size: 12px; }
+
+  @media print {
+    html, body { height: auto; overflow: visible; background: #fff; }
+    .slide { display: block !important; position: static !important; transform: none !important; box-shadow: none !important; margin: 0 !important; page-break-after: always; }
+    .slide:last-child { page-break-after: auto; }
+    .nav-bar { display: none !important; }
+    .stage { position: static !important; height: auto !important; }
+  }
+
+  .stage {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 56px; /* nav bar height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .slide {
+    width: 1120px;
+    min-height: 630px;
+    background: var(--wh);
+    box-shadow: 0 8px 40px rgba(0,0,0,.5);
+    position: relative;
+    overflow: hidden;
+    display: none;
+    transform-origin: center center;
+    flex-shrink: 0;
+  }
+  .slide.active { display: block; }
+
+  .nav-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 56px;
+    background: #1a1a1a;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    z-index: 100;
+    box-shadow: 0 -2px 16px rgba(0,0,0,.25);
+  }
+  .nav-btn {
+    background: var(--g);
+    color: #000;
+    border: none;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 10px 22px;
+    border-radius: 6px;
+    cursor: pointer;
+    min-width: 110px;
+    transition: background .15s;
+  }
+  .nav-btn:hover:not(:disabled) { background: #D2E000; }
+  .nav-btn:disabled { background: #444; color: #888; cursor: not-allowed; }
+  .nav-ind {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--g);
+    min-width: 60px;
+    text-align: center;
+    letter-spacing: 1px;
+  }
+  .nav-hint {
+    position: absolute;
+    right: 18px;
+    font-size: 10px;
+    color: #666;
+    font-style: italic;
+  }
+
+  .class-mark {
+    position: absolute;
+    top: 8px;
+    right: 16px;
+    font-size: 9px;
+    font-style: italic;
+    color: var(--o);
+    z-index: 10;
+  }
+
+  .slide-num {
+    position: absolute;
+    bottom: 12px;
+    right: 20px;
+    font-size: 10px;
+    color: var(--gy);
+  }
+
+  .footer-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--o) 0%, var(--o) 20%, var(--g) 20%, var(--g) 60%, var(--b) 60%, var(--b) 100%);
+  }
+
+  /* ============================================ */
+  /* SLIDE 1 — FOMO + 3-Phase Overview            */
+  /* ============================================ */
+  .s1-hero {
+    background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 40%, #252525 100%);
+    color: var(--wh);
+    padding: 40px 52px 32px;
+    min-height: 630px;
+    display: flex;
+    flex-direction: column;
+  }
+  .s1-hero .topline {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+  }
+  .s1-hero .tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--g);
+  }
+  .s1-hero .logo {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--g);
+    letter-spacing: 1px;
+  }
+  .s1-hero h1 {
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 8px;
+    max-width: 850px;
+  }
+  .s1-hero h1 span { color: var(--g); }
+  .s1-hero h1 .warn { color: var(--o); }
+  .s1-hero h1 .blue { color: var(--b); }
+  .s1-hero .subtitle {
+    font-size: 14px;
+    color: #bbb;
+    margin-bottom: 24px;
+    max-width: 780px;
+    line-height: 1.5;
+  }
+
+  /* 3 Phase cards on slide 1 */
+  .phase-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  .ph-card {
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 8px;
+    padding: 18px 18px 14px;
+    position: relative;
+  }
+  .ph-card .ph-badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 4px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .ph1 { border-left: 4px solid var(--o); }
+  .ph1 .ph-badge { background: var(--o); color: var(--wh); }
+  .ph2 { border-left: 4px solid var(--g); }
+  .ph2 .ph-badge { background: var(--g); color: var(--dk); }
+  .ph3 { border-left: 4px solid var(--b); }
+  .ph3 .ph-badge { background: var(--b); color: var(--wh); }
+  .ph-card h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--wh);
+    margin-bottom: 6px;
+    line-height: 1.2;
+  }
+  .ph-card p {
+    font-size: 10.5px;
+    color: #aaa;
+    line-height: 1.5;
+  }
+  .ph-card strong { color: var(--wh); }
+  .ph-card .ph-kpis {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255,255,255,.08);
+  }
+  .ph-kpi {
+    text-align: center;
+  }
+  .ph-kpi .v {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .ph1 .ph-kpi .v { color: var(--o); }
+  .ph2 .ph-kpi .v { color: var(--g); }
+  .ph3 .ph-kpi .v { color: var(--b); }
+  .ph-kpi .l {
+    font-size: 7.5px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: .3px;
+    margin-top: 2px;
+  }
+
+  /* FOMO row */
+  .fomo-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+  .fomo-box {
+    background: rgba(232,106,16,.06);
+    border: 1px solid rgba(232,106,16,.15);
+    border-radius: 6px;
+    padding: 12px 14px;
+  }
+  .fomo-box h4 {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--o);
+    margin-bottom: 4px;
+  }
+  .fomo-box p {
+    font-size: 10px;
+    color: #999;
+    line-height: 1.4;
+  }
+  .fomo-box strong { color: var(--wh); }
+
+  .s1-bottom {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .s1-bottom .meta {
+    font-size: 9px;
+    color: #555;
+  }
+  .s1-cta {
+    background: var(--g);
+    color: #000;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 8px 20px;
+    border-radius: 6px;
+    display: inline-block;
+  }
+
+  /* ============================================ */
+  /* SLIDE 2 — Strategy Detail                    */
+  /* ============================================ */
+  .s2-header {
+    background: var(--dk);
+    color: var(--wh);
+    padding: 20px 52px 14px;
+  }
+  .s2-header .tag {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--g);
+    margin-bottom: 3px;
+  }
+  .s2-header h2 {
+    font-size: 22px;
+    font-weight: 700;
+  }
+  .s2-header h2 .o { color: var(--o); }
+  .s2-header h2 .g { color: var(--g); }
+  .s2-header h2 .bl { color: var(--b); }
+
+  .s2-body { padding: 18px 52px 36px; }
+
+  /* Three-column strategy */
+  .strat-grid {
+    display: grid;
+    grid-template-columns: 1fr 16px 1fr 16px 1fr;
+    gap: 0;
+    margin-bottom: 16px;
+  }
+  .strat-col {
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .strat-col h3 {
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .strat-col ul {
+    list-style: none;
+    padding: 0;
+  }
+  .strat-col li {
+    font-size: 10px;
+    padding: 3px 0 3px 14px;
+    position: relative;
+    line-height: 1.45;
+  }
+  .strat-col li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 7px;
+    width: 7px;
+    height: 7px;
+    border-radius: 2px;
+  }
+
+  .col-pur {
+    background: var(--red-bg);
+    border: 1px solid #f5c6c6;
+    border-top: 4px solid var(--red);
+  }
+  .col-pur h3 { color: var(--red); }
+  .col-pur li::before { background: var(--red); }
+
+  .col-mjf {
+    background: #F7F9E6;
+    border: 1px solid #dde2a0;
+    border-top: 4px solid var(--g);
+  }
+  .col-mjf h3 { color: #6B7A00; }
+  .col-mjf li::before { background: var(--g); }
+
+  .col-pet {
+    background: #EBF5FF;
+    border: 1px solid #b8d9f5;
+    border-top: 4px solid var(--b);
+  }
+  .col-pet h3 { color: var(--pet-blue); }
+  .col-pet li::before { background: var(--b); }
+
+  .strat-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: var(--gy);
+  }
+
+  /* Workshop decisions callout */
+  .workshop-callout {
+    background: var(--dk);
+    border-radius: 8px;
+    padding: 14px 20px;
+    margin-bottom: 14px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 16px;
+    align-items: center;
+  }
+  .workshop-callout .wc-tag {
+    background: var(--o);
+    color: var(--wh);
+    font-size: 9px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    white-space: nowrap;
+  }
+  .workshop-callout .wc-items {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .workshop-callout .wc-item {
+    font-size: 10px;
+    color: #ccc;
+  }
+  .workshop-callout .wc-item strong {
+    color: var(--o);
+  }
+
+  /* KPI row */
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+  }
+  .kpi {
+    text-align: center;
+    background: var(--vlg);
+    border-radius: 6px;
+    padding: 10px 4px;
+    border: 1px solid var(--lg);
+  }
+  .kpi .kv {
+    font-size: 18px;
+    font-weight: 700;
+    color: #000;
+    line-height: 1;
+    margin-bottom: 2px;
+  }
+  .kpi .kv .o { color: var(--o); }
+  .kpi .kv .g { color: var(--g); }
+  .kpi .kv .bl { color: var(--b); }
+  .kpi .kl {
+    font-size: 7.5px;
+    color: var(--gy);
+    text-transform: uppercase;
+    letter-spacing: .3px;
+  }
+
+  /* ============================================ */
+  /* SLIDE 3 — Roadmap & Decision                 */
+  /* ============================================ */
+  .s3-header {
+    background: var(--dk);
+    color: var(--wh);
+    padding: 20px 52px 14px;
+  }
+  .s3-header .tag {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--g);
+    margin-bottom: 3px;
+  }
+  .s3-header h2 {
+    font-size: 22px;
+    font-weight: 700;
+  }
+  .s3-header h2 span { color: var(--g); }
+
+  .s3-body { padding: 18px 52px 36px; }
+
+  /* Timeline */
+  .timeline {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0;
+    margin-bottom: 18px;
+    position: relative;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    top: 22px;
+    left: 50px;
+    right: 50px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--o) 0%, var(--o) 20%, var(--g) 20%, var(--g) 55%, var(--b) 55%, var(--b) 100%);
+    z-index: 1;
+  }
+  .tl-step {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+  }
+  .tl-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    margin: 16px auto 8px;
+    border: 3px solid var(--wh);
+  }
+  .tl-dot-o { background: var(--o); box-shadow: 0 0 0 2px var(--o); }
+  .tl-dot-g { background: var(--g); box-shadow: 0 0 0 2px var(--g); }
+  .tl-dot-b { background: var(--b); box-shadow: 0 0 0 2px var(--b); }
+  .tl-label {
+    font-size: 8px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+    color: var(--gy);
+    margin-bottom: 1px;
+  }
+  .tl-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 3px;
+  }
+  .tl-desc {
+    font-size: 9px;
+    color: var(--gy);
+    line-height: 1.35;
+    padding: 0 4px;
+  }
+  .tl-cost {
+    font-size: 10px;
+    font-weight: 700;
+    margin-top: 3px;
+  }
+  .tl-cost-o { color: var(--o); }
+  .tl-cost-g { color: var(--g); }
+  .tl-cost-b { color: var(--b); }
+
+  /* Decision grid */
+  .decision-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 14px;
+  }
+  .d-box {
+    border-radius: 8px;
+    padding: 14px 18px;
+  }
+  .d-act {
+    background: #F7F9E6;
+    border: 2px solid var(--g);
+  }
+  .d-risk {
+    background: #FFF5EB;
+    border: 2px solid var(--o);
+  }
+  .d-box h3 {
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .d-act h3 { color: #6B7A00; }
+  .d-risk h3 { color: var(--o); }
+  .d-box ul {
+    list-style: none;
+    padding: 0;
+  }
+  .d-box li {
+    font-size: 10px;
+    padding: 2px 0 2px 14px;
+    position: relative;
+    line-height: 1.45;
+  }
+  .d-act li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 6px;
+    width: 7px;
+    height: 7px;
+    background: var(--g);
+    border-radius: 2px;
+  }
+  .d-risk li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 6px;
+    width: 7px;
+    height: 7px;
+    background: var(--o);
+    border-radius: 2px;
+  }
+
+  /* CEO ask */
+  .ceo-ask {
+    margin-top: 14px;
+    background: var(--dk);
+    border-radius: 8px;
+    padding: 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .ceo-ask .left h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--g);
+    margin-bottom: 3px;
+  }
+  .ceo-ask .left p {
+    font-size: 10px;
+    color: #aaa;
+    max-width: 580px;
+    line-height: 1.4;
+  }
+  .ceo-ask .right {
+    text-align: right;
+  }
+  .ceo-ask .amounts {
+    display: flex;
+    gap: 16px;
+    align-items: baseline;
+  }
+  .ceo-ask .amt {
+    text-align: center;
+  }
+  .ceo-ask .amt .v {
+    font-size: 24px;
+    font-weight: 700;
+  }
+  .ceo-ask .amt .l {
+    font-size: 8px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+  }
+  .amt-o .v { color: var(--o); }
+  .amt-g .v { color: var(--g); }
+  .amt-b .v { color: var(--b); }
+  .ceo-ask .plus {
+    font-size: 18px;
+    color: #555;
+    font-weight: 700;
+  }
+</style>
+</head>
+<body>
+
+<div class="stage">
+
+<!-- ================================================================ -->
+<!-- SLIDE 1 — FOMO + 3-Phase Overview                                -->
+<!-- ================================================================ -->
+<div class="slide active">
+  <div class="s1-hero">
+    <div class="class-mark">- CONFIDENTIAL -</div>
+    <div class="topline">
+      <div class="tag">BG Europe Operations Briefing &bull; For J. Bernete &bull; April 2026</div>
+      <div class="logo">AUTONEUM</div>
+    </div>
+
+    <h1>Gundernhausen: <span>Consolidate</span> Hall 2, build the <span>automation platform</span>, stay ready for <span class="blue">OEM-driven PET demand</span>.</h1>
+    <div class="subtitle">
+      Workshop consensus (T. Benien et al.): <em>&ldquo;Automation is the only way to stay competitive long-term.&rdquo;</em> Hall 2 consolidation is <strong>independent</strong> of any strategy decision &mdash; it stands on its own. <strong>Keep investment low, free up floor space, preserve workforce competence, stay flexible</strong> (workshop principle). Benchmark: Katja &amp; Genk. PET-foam pull is OEM-driven: <strong>BMW, Mercedes-Benz, VW Group, Volvo &amp; Stellantis have all published 30-50% recycled-content targets by 2030</strong> &mdash; Volvo already uses PET foam in NVH today.
+    </div>
+
+    <div class="phase-cards">
+      <div class="ph-card ph1">
+        <div class="ph-badge">Short-term &mdash; Consolidate</div>
+        <h3>Hall 2 Consolidation</h3>
+        <p><strong>Driver:</strong> C-Line is old &amp; failure-prone &mdash; stabilize the process. <strong>Independent</strong> of any long-term strategy decision (workshop consensus). Design the new layouts to be <strong>automation-ready</strong>. Free up floor space for future technologies.</p>
+        <div class="ph-kpis">
+          <div class="ph-kpi"><div class="v">Stab.</div><div class="l">C-Line</div></div>
+          <div class="ph-kpi"><div class="v">Auto.</div><div class="l">Layout-Ready</div></div>
+          <div class="ph-kpi"><div class="v">Free</div><div class="l">Floor Space</div></div>
+        </div>
+      </div>
+      <div class="ph-card ph2">
+        <div class="ph-badge">Mid-term &mdash; Automate</div>
+        <h3>Competitiveness Through Automation</h3>
+        <p><em>&ldquo;Automation is the only way to stay competitive long-term&rdquo;</em> (workshop). Benchmark: <strong>Katja &amp; Genk</strong> &mdash; automated processes, significant PCCS savings. Reduces operator demand at rising utilization.</p>
+        <div class="ph-kpis">
+          <div class="ph-kpi"><div class="v">Katja</div><div class="l">Benchmark</div></div>
+          <div class="ph-kpi"><div class="v">Genk</div><div class="l">Reference</div></div>
+          <div class="ph-kpi"><div class="v">PCCS&darr;</div><div class="l">Savings</div></div>
+        </div>
+      </div>
+      <div class="ph-card ph3">
+        <div class="ph-badge">Long-term &mdash; PET option space</div>
+        <h3>OEM-Driven Substitution in NVH</h3>
+        <p><strong>Customer pull, not regulation:</strong> OEM recycled-content commitments (BMW 50% thermoplastics 2030, Mercedes 40% secondary materials 2030, VW Group 40% 2030, Volvo 25% from 2025) + EV lightweighting drive PET-foam adoption. Substitution is <strong>application-specific</strong> (decoupling, trim first; structural / flexible PUR last).</p>
+        <div class="ph-kpis">
+          <div class="ph-kpi"><div class="v">5 OEMs</div><div class="l">Public targets 2030</div></div>
+          <div class="ph-kpi"><div class="v">Volvo</div><div class="l">PET in NVH today</div></div>
+          <div class="ph-kpi"><div class="v">Flex</div><div class="l">Optionality</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fomo-row">
+      <div class="fomo-box">
+        <h4>Workshop principle: Separate</h4>
+        <p>Decide short-term consolidation &amp; long-term strategy <strong>separately</strong>. Hall 2 consolidation is <strong>independent</strong> &mdash; no strategic risk in Phase 1.</p>
+      </div>
+      <div class="fomo-box">
+        <h4>Workshop principle: Optionality</h4>
+        <p><strong>Keep investment low</strong>, free up floor space, <strong>preserve workforce competence</strong>, stay flexible to react to new requirements.</p>
+      </div>
+      <div class="fomo-box">
+        <h4>Workshop principle: Benchmark</h4>
+        <p>Compare against <strong>Katja &amp; Genk</strong> (automation), <strong>Katowice</strong> (PCCS validation). Map VW &amp; Volvo PET-foam use (action: Speaker 7).</p>
+      </div>
+    </div>
+
+    <div class="s1-bottom">
+      <div class="meta">Autoneum Germany GmbH &mdash; Gundernhausen | Author: J.R.E. Glawion | Workshop-Moderation: T. Benien | For meeting with J. Bernete (Head Operations BG Europe) | Coordination: M. Lamhardt, S. Rodriguez, A. Gomez</div>
+      <div class="s1-cta">Workshop consensus &bull; protect Phase 1 &bull; endorse automation path</div>
+    </div>
+  </div>
+  <div class="footer-bar"></div>
+  <div class="slide-num">1 / 5</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SLIDE 2 — Strategy: PUR Sunset + 3 Phases                        -->
+<!-- ================================================================ -->
+<div class="slide">
+  <div class="s2-header">
+    <div class="tag">Slide 2 &bull; Operations Plan</div>
+    <h2><span class="o">Consolidate</span> &rarr; <span class="g">Automate</span> &rarr; <span class="bl">PET Option</span> &mdash; Phased, Self-Financed, BG Europe Aligned</h2>
+  </div>
+  <div class="s2-body">
+
+    <!-- Workshop decisions banner -->
+    <div class="workshop-callout">
+      <div class="wc-tag">Workshop Consensus (T. Benien et al.)</div>
+      <div class="wc-items">
+        <div class="wc-item"><em>&ldquo;<strong>Automation is the only path</strong> to competitiveness&rdquo;</em></div>
+        <div class="wc-item"><em>&ldquo;<strong>Hall 2 consolidation independent</strong> of strategy&rdquo;</em></div>
+        <div class="wc-item"><em>&ldquo;<strong>Low investment, free space, preserve competence</strong>&rdquo;</em></div>
+        <div class="wc-item"><em>&ldquo;Decide <strong>short &amp; long-term separately</strong>&rdquo;</em></div>
+        <div class="wc-item"><em>&ldquo;C-Line is old &amp; <strong>failure-prone</strong>&rdquo;</em></div>
+        <div class="wc-item">PET pull = <strong>OEM recycled-content + EV lightweighting</strong></div>
+      </div>
+    </div>
+
+    <div class="strat-grid">
+      <div class="strat-col col-pur">
+        <h3>Short-term &mdash; Consolidate</h3>
+        <ul>
+          <li><strong>C-Line</strong> old &amp; failure-prone &mdash; process stability lever</li>
+          <li><strong>Hall 2 consolidation</strong> &mdash; independent of strategy</li>
+          <li><strong>Design layouts automation-ready</strong> (workshop consensus)</li>
+          <li><strong>Free up floor space</strong> for future technologies</li>
+          <li><strong>Logistics potential</strong> when only half the plant runs at night</li>
+          <li><strong>2 vs 3 shift model evaluation</strong> (action: T. Benien)</li>
+        </ul>
+      </div>
+      <div class="strat-arrow">&rarr;</div>
+      <div class="strat-col col-mjf">
+        <h3>Mid-term &mdash; Automate</h3>
+        <ul>
+          <li><em>&ldquo;Automation = the only path&rdquo;</em> (workshop consensus)</li>
+          <li><strong>Benchmark Katja &amp; Genk</strong> &mdash; significant cost savings</li>
+          <li><strong>Reduce operator demand</strong> at rising utilization</li>
+          <li><strong>Investment amortizes</strong> via labor &amp; efficiency gains</li>
+          <li><strong>New tools / equipment</strong> partially required</li>
+          <li><strong>Open action:</strong> PCCS validation vs. <strong>Katowice</strong> (Speakers 6, 9)</li>
+        </ul>
+      </div>
+      <div class="strat-arrow">&rarr;</div>
+      <div class="strat-col col-pet">
+        <h3>Long-term &mdash; PET Option Space</h3>
+        <ul>
+          <li><strong>BMW</strong> &mdash; 50% recycled thermoplastics by 2030 (public target)</li>
+          <li><strong>Mercedes-Benz</strong> &mdash; 40% secondary materials in fleet by 2030</li>
+          <li><strong>VW Group</strong> &mdash; 40% recycled plastic by 2030; MEB pilots</li>
+          <li><strong>Volvo</strong> &mdash; 25% recycled from 2025; PET foam in NVH today</li>
+          <li><strong>Stellantis</strong> &mdash; 38% recycled / bio-based polymers by 2030</li>
+          <li><strong>Driver = customer commitments + EV lightweighting</strong>, not regulation</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="kpi-row">
+      <div class="kpi">
+        <div class="kv"><span class="o">C</span>-Line</div>
+        <div class="kl">Stability Driver</div>
+      </div>
+      <div class="kpi">
+        <div class="kv"><span class="o">Hall 2</span></div>
+        <div class="kl">Consolidation</div>
+      </div>
+      <div class="kpi">
+        <div class="kv"><span class="g">Auto</span></div>
+        <div class="kl">Layout-Ready</div>
+      </div>
+      <div class="kpi">
+        <div class="kv"><span class="g">Katja</span></div>
+        <div class="kl">Benchmark</div>
+      </div>
+      <div class="kpi">
+        <div class="kv"><span class="g">Genk</span></div>
+        <div class="kl">Reference</div>
+      </div>
+      <div class="kpi">
+        <div class="kv"><span class="bl">5 OEMs</span></div>
+        <div class="kl">Public 2030 targets</div>
+      </div>
+      <div class="kpi">
+        <div class="kv"><span class="bl">40%</span></div>
+        <div class="kl">Avg. recycled by 2030</div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bar"></div>
+  <div class="slide-num">2 / 5</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SLIDE 3 — Technologie-Kurzprofil (MJF)                           -->
+<!-- ================================================================ -->
+<div class="slide">
+  <div class="s2-header">
+    <div class="tag">Slide 3 &bull; Technologie-Kurzprofil</div>
+    <h2><span class="g">HP Multi Jet Fusion 5200</span> &mdash; Print Hub</h2>
+  </div>
+  <div class="s2-body">
+    <div class="decision-grid" style="grid-template-columns: 1fr 1fr; margin-top:0;">
+      <div class="d-box d-act">
+        <h3>Produktideen & Herstellkonzept</h3>
+        <ul>
+          <li><strong>Produktideen:</strong> Vorrichtungen (Jigs), Werkzeugeinsätze, Betriebsmittel &amp; leichte Serienteile</li>
+          <li><strong>Technologie:</strong> Industrieller Pulverbett-3D-Druck (PA12) ohne Stützstrukturen</li>
+          <li><strong>Konzept:</strong> Zentraler "Print Hub" für Europa ("Lights-out" Betrieb über Nacht)</li>
+        </ul>
+      </div>
+      <div class="d-box d-risk" style="border-color: #ccc; background: #fafafa;">
+        <h3 style="color: #333;">Rahmendaten</h3>
+        <ul>
+          <li><strong>Investkosten:</strong> ca. 480 &ndash; 550 k&euro; (Phase 1, inkl. kompletter Peripherie)</li>
+          <li><strong>Flächenbedarf:</strong> ca. 75 &ndash; 85 m&sup2;</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bar"></div>
+  <div class="slide-num">3 / 5</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SLIDE 4 — Technologie-Kurzprofil (PET Schaum)                    -->
+<!-- ================================================================ -->
+<div class="slide">
+  <div class="s2-header">
+    <div class="tag">Slide 4 &bull; Technologie-Kurzprofil</div>
+    <h2><span class="bl">EV Acoustic + PET Foam</span> &mdash; Sandwich-Konzept</h2>
+  </div>
+  <div class="s2-body">
+    <style>
+      .d-pet-box { background: #EBF5FF; border: 2px solid var(--b); }
+      .d-pet-box h3 { color: #2E75B6; }
+      .d-pet-box li::before { background: var(--b); content: ''; position: absolute; left: 0; top: 6px; width: 7px; height: 7px; border-radius: 2px; }
+    </style>
+    <div class="decision-grid" style="grid-template-columns: 1fr 1fr; margin-top:0;">
+      <div class="d-box d-pet-box">
+        <h3>Produktideen & Herstellkonzept</h3>
+        <ul>
+          <li><strong>Produktideen:</strong> Radhausauskleidungen, Unterboden, Tür-/Frunk-Dämmung (fokussiert auf E-Fahrzeuge)</li>
+          <li><strong>Technologie:</strong> Leichtbau-Sandwich aus PET Schaumkern + Vlies (100% Monomaterial, komplett recycelbar)</li>
+          <li><strong>Konzept:</strong> Thermoumformen von Halbfabrikaten. Beginn mit Zukauf des Kerns, später In-House Schaumextrusion.</li>
+        </ul>
+      </div>
+      <div class="d-box d-risk" style="border-color: #ccc; background: #fafafa;">
+        <h3 style="color: #333;">Rahmendaten</h3>
+        <ul>
+          <li><strong>Investkosten:</strong> ca. 2,0 &ndash; 4,0 Mio. &euro; (für vollintegrierte Extrusions- &amp; Fertigungsanlage)</li>
+          <li><strong>Flächenbedarf:</strong> ca. 500 &ndash; 800 m&sup2;</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bar"></div>
+  <div class="slide-num">4 / 5</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SLIDE 5 — Roadmap & CEO Ask                                      -->
+<!-- ================================================================ -->
+<div class="slide">
+  <div class="s3-header">
+    <div class="tag">Slide 5 &bull; Roadmap & Operations Ask</div>
+    <h2>Workshop Roadmap & <span>The Ask</span></h2>
+  </div>
+  <div class="s3-body">
+
+    <div class="timeline">
+      <div class="tl-step">
+        <div class="tl-label">Short-term</div>
+        <div class="tl-dot tl-dot-o"></div>
+        <div class="tl-title">Hall 2 Consolidation</div>
+        <div class="tl-desc">Stabilize C-Line. Automation-ready layouts. Free up floor space.</div>
+        <div class="tl-cost tl-cost-o">From op. savings</div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-label">Action</div>
+        <div class="tl-dot tl-dot-o"></div>
+        <div class="tl-title">PCCS Validation</div>
+        <div class="tl-desc">Compare vs. Katowice (Speakers 6, 9). 2 vs 3 shift-model evaluation (T. Benien).</div>
+        <div class="tl-cost tl-cost-o">Precondition</div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-label">Mid-term</div>
+        <div class="tl-dot tl-dot-g"></div>
+        <div class="tl-title">Automation</div>
+        <div class="tl-desc">Tools / equipment for automation. Benchmark Katja &amp; Genk. Amortize via labor &amp; efficiency.</div>
+        <div class="tl-cost tl-cost-g">Stepwise</div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-label">Action</div>
+        <div class="tl-dot tl-dot-g"></div>
+        <div class="tl-title">VW / Volvo mapping</div>
+        <div class="tl-desc">Which technologies at competitors (Speaker 7). Product-portfolio strategy paper (Speaker 3).</div>
+        <div class="tl-cost tl-cost-g">Pre-work</div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-label">Long-term</div>
+        <div class="tl-dot tl-dot-b"></div>
+        <div class="tl-title">PET option space</div>
+        <div class="tl-desc">Floor space reserved, competence preserved. Invest only on market readiness &amp; customer pull.</div>
+        <div class="tl-cost tl-cost-b">Optionality</div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-label">2030</div>
+        <div class="tl-dot tl-dot-b"></div>
+        <div class="tl-title">OEM target deadlines</div>
+        <div class="tl-desc">BMW, Mercedes, VW, Volvo, Stellantis recycled-content commitments due. Gundernhausen ready, not locked-in.</div>
+        <div class="tl-cost tl-cost-b">Customer pull</div>
+      </div>
+    </div>
+
+    <div class="decision-grid">
+      <div class="d-box d-act">
+        <h3>What the Workshop Consensus Delivers</h3>
+        <ul>
+          <li><strong>Stability:</strong> C-Line problems structurally solved via Hall 2 consolidation</li>
+          <li><strong>Competitiveness:</strong> automation-ready layouts &mdash; Katja / Genk path</li>
+          <li><strong>Flexibility:</strong> free space &amp; preserved competence to react to the market</li>
+          <li><strong>Optionality:</strong> PET option space tracks OEM 2030 targets &mdash; no lock-in today</li>
+          <li><strong>Discipline:</strong> short &amp; long-term decided separately &mdash; no strategic risk in Phase 1</li>
+        </ul>
+      </div>
+      <div class="d-box d-risk">
+        <h3>Open Workshop Actions (before any decision)</h3>
+        <ul>
+          <li><strong>PCCS validation vs. Katowice</strong> (Speakers 6, 9)</li>
+          <li><strong>Short-term variant comparison A vs B</strong> (T. Benien, Speakers 3, 6)</li>
+          <li><strong>Strategic product-portfolio paper</strong> (Speaker 3)</li>
+          <li><strong>Competitor mapping: VW &amp; Volvo PET foam</strong> (Speaker 7)</li>
+          <li><strong>Hall 2 floor-space management &amp; investment scoping</strong> (Speaker 2)</li>
+          <li><strong>2 vs 3 shift-model evaluation</strong> &mdash; night-shift premium lever (T. Benien)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ceo-ask">
+      <div class="left">
+        <h3>The Ask &mdash; Workshop-grounded</h3>
+        <p>Hall 2 consolidation is <strong>independent &amp; standalone</strong> (workshop consensus) &mdash; please shield it from strategic cross-dependencies. <strong>Endorse the automation roadmap</strong> as the BG Europe path (Katja / Genk reference). Release <strong>PCCS validation vs. Katowice</strong> as a joint BG action. Preserve the PET option space &mdash; <strong>no CAPEX ask today</strong>, investment case follows after competitor mapping &amp; strategy paper.</p>
+      </div>
+      <div class="right">
+        <div class="amounts">
+          <div class="amt amt-o"><div class="v">Shield</div><div class="l">Phase 1</div></div>
+          <div class="plus">+</div>
+          <div class="amt amt-g"><div class="v">Endorse</div><div class="l">Automation</div></div>
+          <div class="plus">+</div>
+          <div class="amt amt-b"><div class="v">Preserve</div><div class="l">PET option</div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="footer-bar"></div>
+  <div class="slide-num">5 / 5</div>
+</div>
+
+</div><!-- /.stage -->
+
+<div class="nav-bar">
+  <button class="nav-btn" id="prevBtn" onclick="navSlide(-1)">&larr; Prev</button>
+  <span class="nav-ind" id="navInd">1 / 5</span>
+  <button class="nav-btn" id="nextBtn" onclick="navSlide(1)">Next &rarr;</button>
+  <button class="nav-btn" id="fsBtn" onclick="toggleFS()" style="background:#333;color:#fff;">Fullscreen</button>
+  <span class="nav-hint">&larr; &rarr; or Space to navigate &bull; F for fullscreen</span>
+</div>
+
+<script>
+  (function() {
+    var SLIDE_W = 1120;
+    var SLIDE_MIN_H = 630;
+    var NAV_H   = 56;
+
+    var slides = document.querySelectorAll('.slide');
+    var stage  = document.querySelector('.stage');
+    var idx = 0;
+    var prev = document.getElementById('prevBtn');
+    var next = document.getElementById('nextBtn');
+    var ind  = document.getElementById('navInd');
+
+    function scaleActive() {
+      var active = slides[idx];
+      if (!active) return;
+      // Reset transform to measure natural size, then re-apply
+      active.style.transform = 'none';
+      var slideH = Math.max(SLIDE_MIN_H, active.offsetHeight);
+      var w = window.innerWidth;
+      var h = window.innerHeight - NAV_H;
+      var pad = 24;
+      var scale = Math.min((w - pad) / SLIDE_W, (h - pad) / slideH);
+      active.style.transform = 'scale(' + scale + ')';
+    }
+
+    function show(i) {
+      idx = Math.max(0, Math.min(slides.length - 1, i));
+      for (var s = 0; s < slides.length; s++) {
+        slides[s].classList.toggle('active', s === idx);
+        if (s !== idx) slides[s].style.transform = '';
+      }
+      ind.textContent = (idx + 1) + ' / ' + slides.length;
+      prev.disabled = (idx === 0);
+      next.disabled = (idx === slides.length - 1);
+      scaleActive();
+    }
+
+    window.navSlide = function(delta) { show(idx + delta); };
+
+    window.toggleFS = function() {
+      if (!document.fullscreenElement) {
+        (document.documentElement.requestFullscreen || function(){})
+          .call(document.documentElement);
+      } else {
+        (document.exitFullscreen || function(){}).call(document);
+      }
+    };
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault(); show(idx + 1);
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault(); show(idx - 1);
+      } else if (e.key === 'Home') {
+        e.preventDefault(); show(0);
+      } else if (e.key === 'End') {
+        e.preventDefault(); show(slides.length - 1);
+      } else if (e.key === 'f' || e.key === 'F') {
+        e.preventDefault(); toggleFS();
+      }
+    });
+
+    window.addEventListener('resize', scaleActive);
+    window.addEventListener('load', scaleActive);
+    document.addEventListener('fullscreenchange', function() {
+      // allow fullscreen CSS to settle before re-measuring
+      setTimeout(scaleActive, 50);
+    });
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(scaleActive);
+    }
+
+    show(0);
+  })();
+</script>
+
+</body>
+</html>

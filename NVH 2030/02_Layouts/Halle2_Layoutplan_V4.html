@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halle 2 — Layoutplan Vorschlag 4</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f6f6f6;
+            color: #2d2d2d;
+        }
+
+        .page {
+            width: 1190px;
+            margin: 20px auto;
+            background: #ffffff;
+            border: 2px solid #2d2d2d;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            position: relative;
+        }
+
+        /* Drawing area */
+        .drawing-area {
+            padding: 12px;
+            position: relative;
+        }
+
+        svg {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        /* Legend */
+        .legend-panel {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            background: rgba(255,255,255,0.95);
+            border: 1.5px solid #2d2d2d;
+            padding: 12px 16px;
+            font-size: 11px;
+            line-height: 1.8;
+            z-index: 10;
+        }
+
+        .legend-panel h4 {
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            border-bottom: 1px solid #999;
+            padding-bottom: 4px;
+        }
+
+        .legend-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .legend-swatch {
+            width: 20px;
+            height: 12px;
+            border: 1px solid #333;
+            flex-shrink: 0;
+        }
+
+        /* DIN Title Block */
+        .title-block {
+            border-top: 2px solid #2d2d2d;
+            display: grid;
+            grid-template-columns: 1fr 1fr 340px;
+            grid-template-rows: auto auto auto;
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        .title-block .cell {
+            border: 1px solid #2d2d2d;
+            padding: 4px 8px;
+        }
+
+        .title-block .label {
+            font-size: 9px;
+            color: #7a7b7a;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .title-block .value {
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        .title-block .company-cell {
+            grid-row: 1 / 4;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: #2d2d2d;
+            color: #ffffff;
+            text-align: center;
+        }
+
+        .title-block .company-cell .brand {
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: #b8c400;
+        }
+
+        .title-block .company-cell .tagline {
+            font-size: 9px;
+            letter-spacing: 2px;
+            color: #999;
+            margin-top: 2px;
+        }
+
+        .title-block .drawing-title {
+            grid-column: 2 / 3;
+            grid-row: 1 / 3;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .title-block .drawing-title .value {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .title-block .drawing-title .subtitle {
+            font-size: 11px;
+            color: #555;
+            margin-top: 2px;
+        }
+
+        /* Controls */
+        .controls {
+            background: #f6f6f6;
+            padding: 10px 16px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+            font-size: 12px;
+        }
+
+        .controls button {
+            padding: 6px 14px;
+            background: #2d2d2d;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
+            font-family: inherit;
+        }
+
+        .controls button:hover {
+            background: #b8c400;
+            color: #2d2d2d;
+        }
+
+        .controls .sep {
+            width: 1px;
+            height: 20px;
+            background: #ccc;
+        }
+
+        /* Tooltip */
+        .tooltip-box {
+            display: none;
+            position: fixed;
+            background: #2d2d2d;
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            line-height: 1.5;
+            max-width: 280px;
+            z-index: 100;
+            pointer-events: none;
+            border-left: 3px solid #b8c400;
+        }
+
+        /* Print */
+        @media print {
+            body { background: #fff; }
+            .controls { display: none; }
+            .page {
+                margin: 0;
+                box-shadow: none;
+                border: 2px solid #000;
+                width: 100%;
+            }
+            .tooltip-box { display: none !important; }
+        }
+
+        @page {
+            size: A3 landscape;
+            margin: 10mm;
+        }
+    </style>
+</head>
+<body>
+
+<div class="controls">
+    <button onclick="window.print()">Drucken</button>
+    <div class="sep"></div>
+    <span>Layoutplan Halle 2 — Vorschlag 4 | NVH 2030 | Werk Gundernhausen</span>
+    <div class="sep"></div>
+    <span style="color:#7a7b7a;">Interaktiv: Bereiche anklicken f&uuml;r Details</span>
+</div>
+
+<div class="page">
+    <div class="drawing-area">
+        <svg viewBox="0 0 1160 780" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <!-- Hatch pattern for corridors -->
+                <pattern id="hatch" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)">
+                    <line x1="0" y1="0" x2="0" y2="8" stroke="#e0e0e0" stroke-width="1"/>
+                </pattern>
+                <!-- Arrow marker -->
+                <marker id="arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                    <polygon points="0 0, 8 3, 0 6" fill="#b8c400"/>
+                </marker>
+                <marker id="arrow-blue" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                    <polygon points="0 0, 8 3, 0 6" fill="#00b0e8"/>
+                </marker>
+                <marker id="arrow-dark" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                    <polygon points="0 0, 8 3, 0 6" fill="#2d2d2d"/>
+                </marker>
+            </defs>
+
+            <!-- Background -->
+            <rect x="0" y="0" width="1160" height="780" fill="#ffffff"/>
+
+            <!-- ============================================ -->
+            <!-- HALL 2 OUTER WALLS -->
+            <!-- ============================================ -->
+            <rect x="20" y="20" width="1120" height="720" fill="none" stroke="#2d2d2d" stroke-width="3"/>
+
+            <!-- Hall label -->
+            <text x="580" y="14" text-anchor="middle" font-size="14" font-weight="700" fill="#2d2d2d" letter-spacing="4">HALLE 2 — VORSCHLAG 4</text>
+
+            <!-- ============================================ -->
+            <!-- LEFT SIDE: Storage & Workshop -->
+            <!-- ============================================ -->
+            <rect x="20" y="20" width="120" height="720" fill="#f9f9f9" stroke="#2d2d2d" stroke-width="1.5"/>
+
+            <!-- Poly 1 -->
+            <rect x="28" y="30" width="104" height="65" rx="2" fill="#e8ecd9" stroke="#90a000" stroke-width="1.5"
+                  class="zone-hover" data-info="Polyol-Lager 1|Rohstofflager f&uuml;r PU-Sch&auml;umung|Phase B: Bio-Polyol IBC-Lager m&ouml;glich"/>
+            <text x="80" y="58" text-anchor="middle" font-size="10" font-weight="600" fill="#555">Poly</text>
+            <text x="80" y="72" text-anchor="middle" font-size="8" fill="#7a7b7a">Lager 1</text>
+
+            <!-- Poly 2 -->
+            <rect x="28" y="103" width="104" height="65" rx="2" fill="#e8ecd9" stroke="#90a000" stroke-width="1.5"
+                  class="zone-hover" data-info="Polyol-Lager 2|Rohstofflager f&uuml;r PU-Sch&auml;umung|Zukunft: Bio-Polyol Lager (30-50 m&sup2;)"/>
+            <text x="80" y="131" text-anchor="middle" font-size="10" font-weight="600" fill="#555">Poly</text>
+            <text x="80" y="145" text-anchor="middle" font-size="8" fill="#7a7b7a">Lager 2</text>
+
+            <!-- MO 2 -->
+            <rect x="28" y="176" width="104" height="55" rx="2" fill="#f0f0f0" stroke="#7a7b7a" stroke-width="1"
+                  class="zone-hover" data-info="MO 2|Materialorganisation / Lagerfl&auml;che"/>
+            <text x="80" y="208" text-anchor="middle" font-size="10" font-weight="600" fill="#555">MO 2</text>
+
+            <!-- Lager 1 -->
+            <rect x="28" y="239" width="104" height="60" rx="2" fill="#f0f0f0" stroke="#7a7b7a" stroke-width="1"
+                  class="zone-hover" data-info="Lager|Allgemeines Lager|Werkzeuge, Ersatzteile, Verbrauchsmaterial"/>
+            <text x="80" y="274" text-anchor="middle" font-size="10" font-weight="600" fill="#555">Lager</text>
+
+            <!-- Lager 2 -->
+            <rect x="28" y="307" width="104" height="60" rx="2" fill="#f0f0f0" stroke="#7a7b7a" stroke-width="1"
+                  class="zone-hover" data-info="Lager|Allgemeines Lager"/>
+            <text x="80" y="342" text-anchor="middle" font-size="10" font-weight="600" fill="#555">Lager</text>
+
+            <!-- Werkstatt -->
+            <rect x="28" y="375" width="104" height="75" rx="2" fill="#fff3e0" stroke="#e6a000" stroke-width="1"
+                  class="zone-hover" data-info="Werkstatt|Allgemeine Werkstatt f&uuml;r Reparaturen|Zugang f&uuml;r Instandhaltungsteam"/>
+            <text x="80" y="418" text-anchor="middle" font-size="10" font-weight="600" fill="#555">Werkstatt</text>
+
+            <!-- Werkzeuginstandhaltung -->
+            <rect x="28" y="458" width="104" height="90" rx="2" fill="#fff3e0" stroke="#e6a000" stroke-width="1"
+                  class="zone-hover" data-info="Werkzeuginstandhaltung|Werkzeuglager &amp; Instandhaltung|Alle Werkzeuge zentral am Einsatzort|K&uuml;rzere R&uuml;stzeiten"/>
+            <text x="80" y="496" text-anchor="middle" font-size="10" font-weight="600" fill="#555">Werkzeug-</text>
+            <text x="80" y="510" text-anchor="middle" font-size="10" font-weight="600" fill="#555">instand-</text>
+            <text x="80" y="524" text-anchor="middle" font-size="10" font-weight="600" fill="#555">haltung</text>
+
+            <!-- Schnittmaschine -->
+            <rect x="28" y="556" width="104" height="55" rx="2" fill="#f0f0f0" stroke="#7a7b7a" stroke-width="1"
+                  class="zone-hover" data-info="Schnittmaschine|Zuschnitt Halbzeuge"/>
+            <text x="80" y="580" text-anchor="middle" font-size="10" font-weight="600" fill="#555">Schnitt-</text>
+            <text x="80" y="594" text-anchor="middle" font-size="10" font-weight="600" fill="#555">maschine</text>
+
+            <!-- Left side label -->
+            <text x="80" y="640" text-anchor="middle" font-size="8" fill="#7a7b7a" font-style="italic">Lager &amp; Werkstatt</text>
+
+            <!-- ============================================ -->
+            <!-- FORKLIFT CORRIDOR 1 (between Zone 1 and Zone 2) -->
+            <!-- ============================================ -->
+            <rect x="140" y="220" width="720" height="36" fill="url(#hatch)" stroke="#2d2d2d" stroke-width="1.5" stroke-dasharray="8,4"/>
+            <text x="500" y="243" text-anchor="middle" font-size="10" font-weight="700" fill="#2d2d2d" letter-spacing="2">STAPLERVERKEHRSWEG</text>
+
+            <!-- ============================================ -->
+            <!-- FORKLIFT CORRIDOR 2 (between Zone 2 and Zone 3) -->
+            <!-- ============================================ -->
+            <rect x="140" y="508" width="720" height="36" fill="url(#hatch)" stroke="#2d2d2d" stroke-width="1.5" stroke-dasharray="8,4"/>
+            <text x="500" y="531" text-anchor="middle" font-size="10" font-weight="700" fill="#2d2d2d" letter-spacing="2">STAPLERVERKEHRSWEG</text>
+
+            <!-- ============================================ -->
+            <!-- PRODUCTION ZONE 1 (TOP) -->
+            <!-- ============================================ -->
+            <rect x="140" y="30" width="720" height="182" rx="3" fill="#f0f7e6" stroke="#90a000" stroke-width="2.5"
+                  class="zone-hover" data-info="PRODUKTBEREICH 1|Gemischte Produktionszellen|Produktgruppe A (Stirnwandverkleidung, Heckablage)|Vollautomaten best&uuml;cken direkt die Formtr&auml;ger"/>
+
+            <!-- Zone 1 label -->
+            <rect x="148" y="36" width="200" height="22" rx="2" fill="#90a000"/>
+            <text x="248" y="51" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">PRODUKTBEREICH 1</text>
+
+            <!-- Zone 1 machines -->
+            <!-- Box Machines -->
+            <rect x="160" y="70" width="80" height="55" rx="2" fill="#ffffff" stroke="#2d2d2d" stroke-width="1.5"/>
+            <text x="200" y="93" text-anchor="middle" font-size="9" font-weight="600">Box</text>
+            <text x="200" y="106" text-anchor="middle" font-size="8" fill="#7a7b7a">Zelle A1</text>
+
+            <rect x="250" y="70" width="80" height="55" rx="2" fill="#ffffff" stroke="#2d2d2d" stroke-width="1.5"/>
+            <text x="290" y="93" text-anchor="middle" font-size="9" font-weight="600">Box</text>
+            <text x="290" y="106" text-anchor="middle" font-size="8" fill="#7a7b7a">Zelle A2</text>
+
+            <!-- Halbautomat -->
+            <rect x="340" y="70" width="90" height="55" rx="2" fill="#ffffff" stroke="#2d2d2d" stroke-width="1.5"/>
+            <text x="385" y="90" text-anchor="middle" font-size="9" font-weight="600">Halbautomat</text>
+            <text x="385" y="106" text-anchor="middle" font-size="8" fill="#7a7b7a">Zelle A3</text>
+
+            <!-- Vollautomat -->
+            <rect x="160" y="135" width="120" height="55" rx="2" fill="#ffffff" stroke="#2d2d2d" stroke-width="1.5"/>
+            <text x="220" y="158" text-anchor="middle" font-size="9" font-weight="600">Vollautomat</text>
+            <text x="220" y="174" text-anchor="middle" font-size="8" fill="#7a7b7a">Direkt auf Formtr&auml;ger</text>
+
+            <!-- Entformung Zone 1 -->
+            <rect x="290" y="135" width="90" height="55" rx="2" fill="#fafafa" stroke="#999" stroke-width="1" stroke-dasharray="4,2"/>
+            <text x="335" y="158" text-anchor="middle" font-size="9" fill="#555">Entformung</text>
+            <text x="335" y="172" text-anchor="middle" font-size="8" fill="#7a7b7a">QS</text>
+
+            <!-- Container Stellplatz Zone 1 -->
+            <rect x="540" y="70" width="130" height="65" rx="2" fill="#f6f6f6" stroke="#bbb" stroke-width="1"/>
+            <text x="605" y="100" text-anchor="middle" font-size="9" fill="#555">Container-Stellplatz</text>
+            <text x="605" y="115" text-anchor="middle" font-size="8" fill="#7a7b7a">Fertigteile Gr. A</text>
+
+            <!-- HL Lager Zone 1 -->
+            <rect x="680" y="70" width="100" height="65" rx="2" fill="#eef6ff" stroke="#00b0e8" stroke-width="1"/>
+            <text x="730" y="95" text-anchor="middle" font-size="9" fill="#009bcc" font-weight="600">HL Lager</text>
+            <text x="730" y="110" text-anchor="middle" font-size="8" fill="#7a7b7a">Produktgruppe A</text>
+
+            <!-- Schneidformen Zone 1 -->
+            <rect x="540" y="145" width="100" height="50" rx="2" fill="#fafafa" stroke="#999" stroke-width="1"/>
+            <text x="590" y="168" text-anchor="middle" font-size="9" fill="#555">Schneidformen</text>
+            <text x="590" y="182" text-anchor="middle" font-size="8" fill="#7a7b7a">Werkzeuge A</text>
+
+            <!-- Zone 1 product annotation -->
+            <rect x="790" y="70" width="60" height="22" rx="10" fill="#90a000"/>
+            <text x="820" y="85" text-anchor="middle" font-size="9" font-weight="600" fill="#fff">Gr. A</text>
+
+            <!-- ============================================ -->
+            <!-- PRODUCTION ZONE 2 (MIDDLE) — MAIN -->
+            <!-- ============================================ -->
+            <rect x="140" y="264" width="720" height="236" rx="3" fill="#e6f5fb" stroke="#009bcc" stroke-width="2.5"
+                  class="zone-hover" data-info="PRODUKTBEREICH 2 &mdash; HAUPTPRODUKTION|Gr&ouml;&szlig;te Zone: Sch&auml;umlinien C + F|CO2-Versorgung (aktuell Treibmittel)|Trennmittel (aktuell w&auml;ssrig)|Dosier- &amp; Mischanlagen (6+6 Mischk&ouml;pfe)|Entformung &amp; Qualit&auml;tskontrolle"/>
+
+            <!-- Zone 2 label -->
+            <rect x="148" y="270" width="350" height="22" rx="2" fill="#009bcc"/>
+            <text x="323" y="285" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">PRODUKTBEREICH 2 — HAUPTPRODUKTION</text>
+
+            <!-- Schäumlinie C -->
+            <rect x="160" y="300" width="240" height="80" rx="3" fill="#ffffff" stroke="#2d2d2d" stroke-width="2"/>
+            <rect x="160" y="300" width="240" height="20" rx="3" fill="#2d2d2d"/>
+            <text x="280" y="314" text-anchor="middle" font-size="10" font-weight="700" fill="#ffffff">SCH&Auml;UMLINIE C</text>
+            <text x="280" y="342" text-anchor="middle" font-size="9" fill="#2d2d2d">6 Mischk&ouml;pfe | Formtr&auml;ger</text>
+            <text x="280" y="358" text-anchor="middle" font-size="8" fill="#7a7b7a">(sehr alt &mdash; F-Linie als Backup)</text>
+            <text x="280" y="372" text-anchor="middle" font-size="8" fill="#90a000" font-weight="600">Heizung nur in 1 Halle</text>
+
+            <!-- Schäumlinie F -->
+            <rect x="160" y="390" width="240" height="80" rx="3" fill="#ffffff" stroke="#2d2d2d" stroke-width="2"/>
+            <rect x="160" y="390" width="240" height="20" rx="3" fill="#2d2d2d"/>
+            <text x="280" y="404" text-anchor="middle" font-size="10" font-weight="700" fill="#ffffff">SCH&Auml;UMLINIE F</text>
+            <text x="280" y="432" text-anchor="middle" font-size="9" fill="#2d2d2d">6 Mischk&ouml;pfe | Formtr&auml;ger</text>
+            <text x="280" y="448" text-anchor="middle" font-size="8" fill="#7a7b7a">(ex Halle 3 &mdash; entlastet C-Linie)</text>
+            <text x="280" y="462" text-anchor="middle" font-size="8" fill="#90a000" font-weight="600">Redundanz bei St&ouml;rungen</text>
+
+            <!-- CO2 Area -->
+            <rect x="418" y="300" width="90" height="70" rx="3" fill="#dff0ff" stroke="#00b0e8" stroke-width="2"
+                  class="zone-hover" data-info="CO2-Bereich|Aktuell: Treibmittel f&uuml;r Sch&auml;umung|CO2-Tank auf Gel&auml;nde vorhanden|Phase B: Erweiterung f&uuml;r CO2-RA|Bedient beide Linien (C+F) gleichzeitig"/>
+            <text x="463" y="326" text-anchor="middle" font-size="11" font-weight="700" fill="#009bcc">CO2</text>
+            <text x="463" y="342" text-anchor="middle" font-size="7" fill="#555">Treibmittel</text>
+            <text x="463" y="356" text-anchor="middle" font-size="7" fill="#00b0e8" font-style="italic">Phase B: RA</text>
+
+            <!-- Trennmittel Area -->
+            <rect x="418" y="380" width="90" height="70" rx="3" fill="#f0f7e6" stroke="#b8c400" stroke-width="2"
+                  class="zone-hover" data-info="Trennmittel-Bereich|Aktuell: W&auml;ssriges Trennmittel|Spr&uuml;hstation &amp; Aufbereitung|Phase B: Umstellung auf CO2-basiert"/>
+            <text x="463" y="404" text-anchor="middle" font-size="10" font-weight="700" fill="#90a000">Trenn-</text>
+            <text x="463" y="418" text-anchor="middle" font-size="10" font-weight="700" fill="#90a000">mittel</text>
+            <text x="463" y="434" text-anchor="middle" font-size="7" fill="#555">w&auml;ssrig (akt.)</text>
+            <text x="463" y="446" text-anchor="middle" font-size="7" fill="#b8c400" font-style="italic">Phase B: CO2</text>
+
+            <!-- Dosier/Mischanlagen -->
+            <rect x="418" y="458" width="90" height="30" rx="2" fill="#fafafa" stroke="#999" stroke-width="1"/>
+            <text x="463" y="478" text-anchor="middle" font-size="8" fill="#555">Dosieranlage</text>
+
+            <!-- Entformung Zone 2 -->
+            <rect x="525" y="300" width="100" height="80" rx="2" fill="#fafafa" stroke="#999" stroke-width="1" stroke-dasharray="4,2"/>
+            <text x="575" y="335" text-anchor="middle" font-size="9" fill="#555">Entformung</text>
+            <text x="575" y="350" text-anchor="middle" font-size="9" fill="#555">&amp; QS</text>
+            <text x="575" y="368" text-anchor="middle" font-size="8" fill="#7a7b7a">Mischk&ouml;pfe</text>
+
+            <!-- Production cells Zone 2 -->
+            <rect x="525" y="392" width="80" height="55" rx="2" fill="#ffffff" stroke="#2d2d2d" stroke-width="1.5"/>
+            <text x="565" y="415" text-anchor="middle" font-size="9" font-weight="600">Box</text>
+            <text x="565" y="430" text-anchor="middle" font-size="8" fill="#7a7b7a">Zelle B1</text>
+
+            <rect x="615" y="392" width="80" height="55" rx="2" fill="#ffffff" stroke="#2d2d2d" stroke-width="1.5"/>
+            <text x="655" y="415" text-anchor="middle" font-size="9" font-weight="600">Tandem</text>
+            <text x="655" y="430" text-anchor="middle" font-size="8" fill="#7a7b7a">Zelle B2</text>
+
+            <!-- Container Stellplatz Zone 2 -->
+            <rect x="640" y="300" width="130" height="65" rx="2" fill="#f6f6f6" stroke="#bbb" stroke-width="1"/>
+            <text x="705" y="328" text-anchor="middle" font-size="9" fill="#555">Container-Stellplatz</text>
+            <text x="705" y="346" text-anchor="middle" font-size="8" fill="#7a7b7a">Fertigteile Gr. B</text>
+
+            <!-- HL Lager Zone 2 -->
+            <rect x="710" y="392" width="100" height="55" rx="2" fill="#eef6ff" stroke="#00b0e8" stroke-width="1"/>
+            <text x="760" y="415" text-anchor="middle" font-size="9" fill="#009bcc" font-weight="600">HL Lager</text>
+            <text x="760" y="432" text-anchor="middle" font-size="8" fill="#7a7b7a">Produktgruppe B</text>
+
+            <!-- Zone 2 product annotation -->
+            <rect x="790" y="300" width="60" height="22" rx="10" fill="#009bcc"/>
+            <text x="820" y="315" text-anchor="middle" font-size="9" font-weight="600" fill="#fff">Gr. B</text>
+
+            <!-- CO2 serves both lines indicator -->
+            <line x1="413" y1="340" x2="413" y2="430" stroke="#00b0e8" stroke-width="1.5" stroke-dasharray="3,3"/>
+            <text x="410" y="385" text-anchor="end" font-size="7" fill="#00b0e8" transform="rotate(-90,410,385)">CO2 bedient C+F</text>
+
+            <!-- ============================================ -->
+            <!-- PRODUCTION ZONE 3 (BOTTOM) -->
+            <!-- ============================================ -->
+            <rect x="140" y="552" width="720" height="108" rx="3" fill="#fef7e8" stroke="#e6a000" stroke-width="2.5"
+                  class="zone-hover" data-info="PRODUKTBEREICH 3|Gemischte Produktionszellen|Produktgruppe C|Anbindung an Versandbereich"/>
+
+            <!-- Zone 3 label -->
+            <rect x="148" y="558" width="200" height="22" rx="2" fill="#e6a000"/>
+            <text x="248" y="573" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">PRODUKTBEREICH 3</text>
+
+            <!-- Zone 3 machines -->
+            <rect x="160" y="590" width="80" height="55" rx="2" fill="#ffffff" stroke="#2d2d2d" stroke-width="1.5"/>
+            <text x="200" y="613" text-anchor="middle" font-size="9" font-weight="600">Box</text>
+            <text x="200" y="628" text-anchor="middle" font-size="8" fill="#7a7b7a">Zelle C1</text>
+
+            <rect x="250" y="590" width="90" height="55" rx="2" fill="#ffffff" stroke="#2d2d2d" stroke-width="1.5"/>
+            <text x="295" y="613" text-anchor="middle" font-size="9" font-weight="600">Halbautomat</text>
+            <text x="295" y="628" text-anchor="middle" font-size="8" fill="#7a7b7a">Zelle C2</text>
+
+            <rect x="350" y="590" width="80" height="55" rx="2" fill="#ffffff" stroke="#2d2d2d" stroke-width="1.5"/>
+            <text x="390" y="613" text-anchor="middle" font-size="9" font-weight="600">Box</text>
+            <text x="390" y="628" text-anchor="middle" font-size="8" fill="#7a7b7a">Zelle C3</text>
+
+            <!-- Entformung Zone 3 -->
+            <rect x="450" y="590" width="80" height="55" rx="2" fill="#fafafa" stroke="#999" stroke-width="1" stroke-dasharray="4,2"/>
+            <text x="490" y="615" text-anchor="middle" font-size="9" fill="#555">Entformung</text>
+            <text x="490" y="630" text-anchor="middle" font-size="8" fill="#7a7b7a">QS</text>
+
+            <!-- Container Stellplatz Zone 3 -->
+            <rect x="570" y="590" width="130" height="55" rx="2" fill="#f6f6f6" stroke="#bbb" stroke-width="1"/>
+            <text x="635" y="615" text-anchor="middle" font-size="9" fill="#555">Container-Stellplatz</text>
+            <text x="635" y="630" text-anchor="middle" font-size="8" fill="#7a7b7a">Fertigteile Gr. C</text>
+
+            <!-- HL Lager Zone 3 -->
+            <rect x="710" y="590" width="100" height="55" rx="2" fill="#eef6ff" stroke="#00b0e8" stroke-width="1"/>
+            <text x="760" y="615" text-anchor="middle" font-size="9" fill="#009bcc" font-weight="600">HL Lager</text>
+            <text x="760" y="632" text-anchor="middle" font-size="8" fill="#7a7b7a">Produktgruppe C</text>
+
+            <!-- Zone 3 product annotation -->
+            <rect x="790" y="558" width="60" height="22" rx="10" fill="#e6a000"/>
+            <text x="820" y="573" text-anchor="middle" font-size="9" font-weight="600" fill="#fff">Gr. C</text>
+
+            <!-- ============================================ -->
+            <!-- SOCIAL ROOMS (Bottom) -->
+            <!-- ============================================ -->
+            <rect x="140" y="672" width="580" height="58" rx="2" fill="#f6f6f6" stroke="#7a7b7a" stroke-width="1"/>
+            <text x="430" y="696" text-anchor="middle" font-size="9" fill="#555">Besprechungsraum | WC | Umkleide | Dusche</text>
+            <text x="430" y="712" text-anchor="middle" font-size="8" fill="#7a7b7a">Sozialr&auml;ume (&lt; 30 Mitarbeiter &mdash; Kapazit&auml;t ausreichend)</text>
+
+            <!-- ============================================ -->
+            <!-- RIGHT SIDE: Offices & Technical -->
+            <!-- ============================================ -->
+            <rect x="870" y="20" width="270" height="320" fill="#f9f9f9" stroke="#2d2d2d" stroke-width="1.5"/>
+
+            <!-- Büros -->
+            <rect x="880" y="30" width="120" height="50" rx="2" fill="#f0f0f0" stroke="#7a7b7a" stroke-width="1"/>
+            <text x="940" y="60" text-anchor="middle" font-size="10" font-weight="600" fill="#555">B&uuml;ro</text>
+
+            <rect x="1010" y="30" width="120" height="50" rx="2" fill="#f0f0f0" stroke="#7a7b7a" stroke-width="1"/>
+            <text x="1070" y="60" text-anchor="middle" font-size="10" font-weight="600" fill="#555">B&uuml;ro</text>
+
+            <!-- Elektro-Werkstatt -->
+            <rect x="880" y="90" width="120" height="60" rx="2" fill="#fff3e0" stroke="#e6a000" stroke-width="1"/>
+            <text x="940" y="118" text-anchor="middle" font-size="9" font-weight="600" fill="#555">Elektro-</text>
+            <text x="940" y="132" text-anchor="middle" font-size="9" font-weight="600" fill="#555">Werkstatt</text>
+
+            <!-- Aufenthaltsraum -->
+            <rect x="1010" y="90" width="120" height="60" rx="2" fill="#f0f0f0" stroke="#7a7b7a" stroke-width="1"/>
+            <text x="1070" y="118" text-anchor="middle" font-size="9" font-weight="600" fill="#555">Aufenthalts-</text>
+            <text x="1070" y="132" text-anchor="middle" font-size="9" font-weight="600" fill="#555">raum</text>
+
+            <!-- Technische Betriebe -->
+            <rect x="880" y="160" width="250" height="80" rx="2" fill="#f0f0f0" stroke="#7a7b7a" stroke-width="1"/>
+            <text x="1005" y="200" text-anchor="middle" font-size="11" font-weight="600" fill="#555">Technische Betriebe</text>
+            <text x="1005" y="218" text-anchor="middle" font-size="8" fill="#7a7b7a">Elektrik | Druckluft | Wasser</text>
+
+            <!-- Right side label -->
+            <text x="1005" y="320" text-anchor="middle" font-size="8" fill="#7a7b7a" font-style="italic">B&uuml;ros &amp; Technik</text>
+
+            <!-- ============================================ -->
+            <!-- MATERIAL FLOW ARROWS -->
+            <!-- ============================================ -->
+
+            <!-- Main flow: Top to Bottom (One-Way-Flow) -->
+            <line x1="100" y1="30" x2="100" y2="610" stroke="#b8c400" stroke-width="3" marker-end="url(#arrow)"/>
+            <text x="94" y="320" text-anchor="end" font-size="10" font-weight="700" fill="#b8c400" transform="rotate(-90,94,320)">ONE-WAY-FLOW: Rohstoff &rarr; Fertigteil &rarr; Versand</text>
+
+            <!-- Rohstoff-Anlieferung arrow -->
+            <rect x="440" y="21" width="120" height="18" rx="9" fill="#b8c400"/>
+            <text x="500" y="34" text-anchor="middle" font-size="9" font-weight="600" fill="#2d2d2d">Rohstoff-Eingang</text>
+
+            <!-- Versand arrow -->
+            <rect x="440" y="720" width="120" height="18" rx="9" fill="#b8c400"/>
+            <text x="500" y="733" text-anchor="middle" font-size="9" font-weight="600" fill="#2d2d2d">Versand / Lager</text>
+
+            <!-- Forklift direction arrows -->
+            <line x1="200" y1="238" x2="760" y2="238" stroke="#2d2d2d" stroke-width="1.5" marker-end="url(#arrow-dark)" opacity="0.5"/>
+            <line x1="760" y1="244" x2="200" y2="244" stroke="#2d2d2d" stroke-width="1.5" marker-end="url(#arrow-dark)" opacity="0.5"/>
+
+            <line x1="200" y1="526" x2="760" y2="526" stroke="#2d2d2d" stroke-width="1.5" marker-end="url(#arrow-dark)" opacity="0.5"/>
+            <line x1="760" y1="532" x2="200" y2="532" stroke="#2d2d2d" stroke-width="1.5" marker-end="url(#arrow-dark)" opacity="0.5"/>
+
+            <!-- ============================================ -->
+            <!-- HALLE 3 REFERENCE (outside) -->
+            <!-- ============================================ -->
+            <rect x="870" y="400" width="270" height="80" rx="4" fill="none" stroke="#b8c400" stroke-width="2" stroke-dasharray="6,4"/>
+            <text x="1005" y="428" text-anchor="middle" font-size="12" font-weight="700" fill="#b8c400">HALLE 3</text>
+            <text x="1005" y="446" text-anchor="middle" font-size="9" fill="#7a7b7a">Komplett frei nach Phase A</text>
+            <text x="1005" y="462" text-anchor="middle" font-size="8" fill="#90a000" font-style="italic">Strategisches Asset f&uuml;r Zukunft</text>
+
+            <!-- Phase B indicator (dashed) -->
+            <rect x="870" y="500" width="270" height="50" rx="4" fill="none" stroke="#00b0e8" stroke-width="1.5" stroke-dasharray="4,3"/>
+            <text x="1005" y="520" text-anchor="middle" font-size="9" fill="#00b0e8" font-weight="600">Phase B Optionen (separates Dokument)</text>
+            <text x="1005" y="536" text-anchor="middle" font-size="8" fill="#7a7b7a">CO2-RA | PU-Recycling | LHS-TPC | FR-PU</text>
+
+            <!-- ============================================ -->
+            <!-- NORTH ARROW -->
+            <!-- ============================================ -->
+            <g transform="translate(1090, 620)">
+                <circle cx="0" cy="0" r="22" fill="none" stroke="#2d2d2d" stroke-width="1.5"/>
+                <polygon points="0,-18 -6,6 0,0 6,6" fill="#2d2d2d"/>
+                <text x="0" y="-24" text-anchor="middle" font-size="11" font-weight="700" fill="#2d2d2d">N</text>
+            </g>
+
+            <!-- ============================================ -->
+            <!-- SCALE BAR -->
+            <!-- ============================================ -->
+            <g transform="translate(870, 580)">
+                <text x="0" y="-4" font-size="8" fill="#7a7b7a">Ma&szlig;stab (ca.)</text>
+                <line x1="0" y1="0" x2="80" y2="0" stroke="#2d2d2d" stroke-width="1.5"/>
+                <line x1="0" y1="-4" x2="0" y2="4" stroke="#2d2d2d" stroke-width="1.5"/>
+                <line x1="80" y1="-4" x2="80" y2="4" stroke="#2d2d2d" stroke-width="1.5"/>
+                <line x1="40" y1="-3" x2="40" y2="3" stroke="#2d2d2d" stroke-width="1"/>
+                <text x="40" y="14" text-anchor="middle" font-size="8" fill="#2d2d2d">~10 m</text>
+            </g>
+
+            <!-- ============================================ -->
+            <!-- LEGEND (inside SVG for print) -->
+            <!-- ============================================ -->
+            <g transform="translate(870, 660)">
+                <rect x="-6" y="-16" width="180" height="86" fill="#fff" stroke="#2d2d2d" stroke-width="1"/>
+                <text x="0" y="-2" font-size="9" font-weight="700" fill="#2d2d2d">LEGENDE</text>
+                <rect x="0" y="6" width="14" height="8" fill="#f0f7e6" stroke="#90a000" stroke-width="1"/>
+                <text x="20" y="14" font-size="8" fill="#2d2d2d">Produktbereich 1 (Gr. A)</text>
+                <rect x="0" y="19" width="14" height="8" fill="#e6f5fb" stroke="#009bcc" stroke-width="1"/>
+                <text x="20" y="27" font-size="8" fill="#2d2d2d">Produktbereich 2 (Hauptprod.)</text>
+                <rect x="0" y="32" width="14" height="8" fill="#fef7e8" stroke="#e6a000" stroke-width="1"/>
+                <text x="20" y="40" font-size="8" fill="#2d2d2d">Produktbereich 3 (Gr. C)</text>
+                <rect x="0" y="45" width="14" height="8" fill="url(#hatch)" stroke="#2d2d2d" stroke-width="1"/>
+                <text x="20" y="53" font-size="8" fill="#2d2d2d">Staplerverkehrsweg</text>
+                <rect x="0" y="58" width="14" height="8" fill="#eef6ff" stroke="#00b0e8" stroke-width="1"/>
+                <text x="20" y="66" font-size="8" fill="#2d2d2d">HL Lager (produktspezifisch)</text>
+            </g>
+
+        </svg>
+    </div>
+
+    <!-- DIN TITLE BLOCK -->
+    <div class="title-block">
+        <div class="cell company-cell">
+            <div class="brand">AUTONEUM</div>
+            <div class="tagline">MASTERING SOUND AND HEAT</div>
+        </div>
+        <div class="cell drawing-title">
+            <div class="label">Zeichnung / Drawing</div>
+            <div class="value">Halle 2 &mdash; Layoutplan Vorschlag 4</div>
+            <div class="subtitle">NVH 2030 Konsolidierung &mdash; Drei-Zonen-Layout</div>
+        </div>
+        <div class="cell">
+            <div class="label">Zeichnungsnr. / Drawing No.</div>
+            <div class="value">NVH2030-V4-LP-001</div>
+        </div>
+        <div class="cell">
+            <div class="label">Erstellt / Created</div>
+            <div class="value">26.02.2026</div>
+        </div>
+        <div class="cell">
+            <div class="label">Blatt / Sheet</div>
+            <div class="value">1 von 1</div>
+        </div>
+        <div class="cell">
+            <div class="label">Standort / Location</div>
+            <div class="value">Werk Gundernhausen, DE</div>
+        </div>
+        <div class="cell">
+            <div class="label">Projekt / Project</div>
+            <div class="value">NVH 2030</div>
+        </div>
+        <div class="cell">
+            <div class="label">Ma&szlig;stab / Scale</div>
+            <div class="value">Schematisch (nicht ma&szlig;st&auml;blich)</div>
+        </div>
+        <div class="cell">
+            <div class="label">Status</div>
+            <div class="value" style="color: #b8c400;">Phase A &mdash; Planung</div>
+        </div>
+        <div class="cell">
+            <div class="label">Budget Phase A</div>
+            <div class="value">262.000 &ndash; 460.000 &euro;</div>
+        </div>
+        <div class="cell">
+            <div class="label">&Auml;nderungsindex / Rev.</div>
+            <div class="value">A (Erstausgabe)</div>
+        </div>
+    </div>
+</div>
+
+<!-- Tooltip -->
+<div class="tooltip-box" id="tooltip"></div>
+
+<script>
+(function() {
+    const tooltip = document.getElementById('tooltip');
+    const zones = document.querySelectorAll('.zone-hover');
+
+    zones.forEach(zone => {
+        zone.style.cursor = 'pointer';
+
+        zone.addEventListener('mouseenter', function(e) {
+            const info = this.getAttribute('data-info');
+            if (!info) return;
+            const lines = info.split('|');
+            tooltip.innerHTML = '<strong>' + lines[0] + '</strong>' +
+                (lines.length > 1 ? '<br>' + lines.slice(1).join('<br>') : '');
+            tooltip.style.display = 'block';
+        });
+
+        zone.addEventListener('mousemove', function(e) {
+            tooltip.style.left = (e.clientX + 14) + 'px';
+            tooltip.style.top = (e.clientY + 14) + 'px';
+        });
+
+        zone.addEventListener('mouseleave', function() {
+            tooltip.style.display = 'none';
+        });
+    });
+})();
+</script>
+
+</body>
+</html>

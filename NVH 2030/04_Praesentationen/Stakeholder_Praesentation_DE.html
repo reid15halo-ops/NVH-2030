@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NVH 2030 — Layoutoptimierung Werk Gundernhausen — Präsentation</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: #333333;
+            background: #f6f6f6;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        .header {
+            background: linear-gradient(135deg, #2d2d2d 0%, #3a3a3a 100%);
+            color: #ffffff;
+            padding: 40px 0 0 0;
+            border-bottom: 4px solid #b8c400;
+        }
+        .header-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 40px 30px 40px;
+        }
+        .brand { font-size: 14px; color: #b8c400; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; }
+        .brand-tagline { font-size: 11px; color: #7a7b7a; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 2px; }
+        .header h1 { font-size: 28px; font-weight: 700; margin-top: 16px; }
+        .header-sub { font-size: 15px; color: #cccccc; margin-top: 8px; }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 30px 40px 60px 40px; }
+
+        /* ---- SLIDE CARDS ---- */
+        .slide {
+            background: #ffffff;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+            padding: 36px 36px 32px 36px;
+            margin: 28px 0;
+            position: relative;
+            border-top: 3px solid #b8c400;
+        }
+        .slide-number {
+            position: absolute;
+            top: -1px;
+            right: 24px;
+            background: #b8c400;
+            color: #ffffff;
+            padding: 6px 14px;
+            border-radius: 0 0 4px 4px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .slide h2 {
+            font-size: 20px;
+            color: #333333;
+            margin-bottom: 18px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #b8c400;
+        }
+        .slide h3 {
+            font-size: 16px;
+            color: #333333;
+            margin-top: 20px;
+            margin-bottom: 8px;
+        }
+
+        /* Title slide special */
+        .slide.title-slide {
+            background: linear-gradient(135deg, #2d2d2d 0%, #3a3a3a 100%);
+            color: #ffffff;
+            text-align: center;
+            padding: 60px 40px;
+            border-top: none;
+        }
+        .slide.title-slide h2 {
+            color: #ffffff;
+            font-size: 26px;
+            border-bottom: 2px solid #b8c400;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        .slide.title-slide .subtitle {
+            color: #b8c400;
+            font-size: 16px;
+            margin-top: 12px;
+            font-weight: 500;
+        }
+        .slide.title-slide .meta {
+            color: #7a7b7a;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+        .slide.title-slide .slide-number { display: none; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 14px 0;
+            font-size: 14px;
+        }
+        thead th {
+            background: #b8c400;
+            color: #ffffff;
+            padding: 10px 14px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        tbody td {
+            padding: 9px 14px;
+            border-bottom: 1px solid #e8e8e8;
+        }
+        tbody tr:nth-child(even) { background: #f6f6f6; }
+        tbody tr:nth-child(odd) { background: #ffffff; }
+        tbody tr:hover { background: #f0f4d4; }
+        tbody tr.total-row { font-weight: 700; background: #f9fbe7 !important; }
+        tbody tr.total-row td { border-top: 2px solid #b8c400; }
+        tbody tr.grand-total-row { font-weight: 700; background: #eef0c8 !important; font-size: 15px; }
+        tbody tr.grand-total-row td { border-top: 3px solid #b8c400; }
+
+        .cost-table thead th:nth-child(2),
+        .cost-table thead th:nth-child(3) { text-align: right; }
+        .cost-table tbody td:nth-child(2),
+        .cost-table tbody td:nth-child(3) { text-align: right; }
+
+        ul, ol { margin: 10px 0 10px 24px; }
+        li { margin: 5px 0; font-size: 14px; }
+
+        .callout {
+            background: linear-gradient(135deg, #fefff0 0%, #f9fbe7 100%);
+            border-left: 4px solid #b8c400;
+            padding: 14px 18px;
+            border-radius: 4px;
+            margin: 16px 0;
+            font-size: 14px;
+            color: #333333;
+        }
+
+        .decision-banner {
+            background: linear-gradient(135deg, #b8c400 0%, #90a000 100%);
+            color: #ffffff;
+            padding: 18px 24px;
+            border-radius: 4px;
+            margin: 20px 0;
+            font-size: 15px;
+            font-weight: 600;
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+        }
+
+        .badge {
+            display: inline-block;
+            background: #b8c400;
+            color: #ffffff;
+            padding: 3px 10px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .badge.blue { background: #00b0e8; }
+
+        .image-placeholder {
+            background: #f0f0f0;
+            border: 2px dashed #cccccc;
+            border-radius: 4px;
+            padding: 40px;
+            text-align: center;
+            color: #7a7b7a;
+            font-size: 14px;
+            margin: 16px 0;
+        }
+
+        .key-points {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .key-point {
+            background: #f9fbe7;
+            border-left: 3px solid #b8c400;
+            padding: 12px 14px;
+            border-radius: 0 4px 4px 0;
+            font-size: 14px;
+        }
+        .key-point .num {
+            color: #b8c400;
+            font-weight: 700;
+            font-size: 16px;
+            margin-right: 6px;
+        }
+
+        .phase-compare {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 16px 0;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+        }
+        .phase-col { padding: 20px; }
+        .phase-col.a { background: #f9fbe7; border-right: 2px solid #b8c400; }
+        .phase-col.b { background: #e0f7fa; }
+        .phase-col h4 { font-size: 15px; margin-bottom: 10px; }
+        .phase-col ul { margin-left: 18px; }
+        .phase-col li { font-size: 13px; margin: 4px 0; }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+            margin: 16px 0;
+        }
+        .summary-card {
+            background: #f6f6f6;
+            border-radius: 4px;
+            padding: 16px;
+            text-align: center;
+            border-top: 3px solid #b8c400;
+        }
+        .summary-card .label { font-size: 12px; color: #7a7b7a; text-transform: uppercase; letter-spacing: 0.5px; }
+        .summary-card .value { font-size: 20px; font-weight: 700; color: #333333; margin-top: 4px; }
+        .summary-card .sub { font-size: 11px; color: #7a7b7a; margin-top: 4px; }
+
+        .highlight-text { color: #b8c400; font-weight: 600; }
+        .highlight-blue { color: #00b0e8; font-weight: 600; }
+
+        .footer {
+            background: #2d2d2d;
+            color: #7a7b7a;
+            text-align: center;
+            padding: 24px;
+            font-size: 12px;
+            margin-top: 40px;
+        }
+        .footer strong { color: #b8c400; }
+
+        @media print {
+            body { background: #ffffff; }
+            .header { background: #2d2d2d !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .slide { box-shadow: none; border: 1px solid #e0e0e0; page-break-before: always; page-break-inside: avoid; }
+            .slide:first-of-type { page-break-before: auto; }
+            .slide.title-slide { background: #2d2d2d !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            thead th { background: #b8c400 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            tbody tr:nth-child(even) { background: #f6f6f6 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .decision-banner { background: #b8c400 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .footer { background: #2d2d2d !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .slide-number { background: #b8c400 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        }
+
+        @media (max-width: 768px) {
+            .header-inner, .container { padding-left: 20px; padding-right: 20px; }
+            .slide { padding: 24px 20px; }
+            .key-points, .phase-compare, .summary-grid { grid-template-columns: 1fr; }
+            table { font-size: 12px; }
+            thead th, tbody td { padding: 7px 8px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="header-inner">
+        <div class="brand">Autoneum</div>
+        <div class="brand-tagline">Mastering Sound and Heat</div>
+        <h1>NVH 2030 — Layoutoptimierung Werk Gundernhausen</h1>
+        <div class="header-sub">Präsentation für Werkleitung &amp; Engineering</div>
+    </div>
+</div>
+
+<div class="container">
+
+    <!-- ========== FOLIE 1: TITEL ========== -->
+    <div class="slide title-slide">
+        <div class="slide-number">Folie 1</div>
+        <h2>NVH 2030 — Layoutoptimierung Werk Gundernhausen</h2>
+        <div class="subtitle">Konsolidierung Halle 2 &nbsp;|&nbsp; Freigabe Halle 3 &nbsp;|&nbsp; Vorschlag 4 ausgewählt</div>
+        <div class="meta">
+            Datum: Februar 2026<br>
+            Zielgruppe: Werkleitung &amp; Engineering-Team
+        </div>
+    </div>
+
+    <!-- ========== FOLIE 2: AGENDA ========== -->
+    <div class="slide">
+        <div class="slide-number">Folie 2</div>
+        <h2>Agenda</h2>
+        <ol>
+            <li>Ausgangslage &amp; Zielsetzung</li>
+            <li>Maschinen zur Entfernung</li>
+            <li>Vorschlag 4 — Gewähltes Layout</li>
+            <li>Zonenkonzept &amp; Staplerverkehr</li>
+            <li>Phasenaufteilung (Phase A / Phase B)</li>
+            <li>Kostenschätzung</li>
+            <li>Implementierungsplan Phase A</li>
+            <li>Nächste Schritte</li>
+        </ol>
+    </div>
+
+    <!-- ========== FOLIE 3: AUSGANGSLAGE ========== -->
+    <div class="slide">
+        <div class="slide-number">Folie 3</div>
+        <h2>Ausgangslage</h2>
+
+        <h3>Herausforderung</h3>
+        <ul>
+            <li>Rückläufiges NVH-Geschäft → Überkapazität in Halle 2 + Halle 3</li>
+            <li>Bestehende Infrastruktur (Wasser, Druckluft, Elektrik) in Halle 2 soll weitergenutzt werden</li>
+            <li>Platz für zukünftige Technologien schaffen</li>
+        </ul>
+
+        <h3>Zielsetzung</h3>
+        <ul>
+            <li>Halle 3 vollständig freimachen</li>
+            <li>Alle verbleibende Produktion in Halle 2 konsolidieren</li>
+            <li>Platzreservierung für CO2-Trennmittel und Bio-Polyol (zukünftige Phase)</li>
+        </ul>
+
+        <h3>Eckdaten Gundernhausen</h3>
+        <table>
+            <thead>
+                <tr><th>Parameter</th><th style="text-align:left;">Wert</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Produktionsvolumen</td><td>500-1.000 t/Jahr</td></tr>
+                <tr><td>Mitarbeiter</td><td>&lt; 30</td></tr>
+                <tr><td>Aktuelle Anlagen</td><td>Gemischt (Boxen, Tandem, Halbautomaten)</td></tr>
+                <tr><td>Aktuelles Trennmittel</td><td>Wässrig (wasserbasiert)</td></tr>
+                <tr><td>CO2 vor Ort</td><td>Vorhanden — als Treibmittel beim Schäumen</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ========== FOLIE 4: MASCHINEN ZUR ENTFERNUNG ========== -->
+    <div class="slide">
+        <div class="slide-number">Folie 4</div>
+        <h2>Maschinen zur Entfernung</h2>
+        <table>
+            <thead>
+                <tr><th>Maschine</th><th style="text-align:left;">Begründung</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Tandem 172</td><td>Volumenverlust</td></tr>
+                <tr><td>Box20</td><td>Volumenverlust</td></tr>
+                <tr><td>Box21</td><td>Volumenverlust</td></tr>
+                <tr><td>Halbautomat 188</td><td>Volumenverlust</td></tr>
+                <tr><td>AUDI Q1 STW LHD</td><td>Auslauf Kundenauftrag</td></tr>
+            </tbody>
+        </table>
+        <div class="decision-banner">Ergebnis: Gesamte Halle 3 wird frei</div>
+    </div>
+
+    <!-- ========== FOLIE 5: VORSCHLAG 4 ========== -->
+    <div class="slide">
+        <div class="slide-number">Folie 5</div>
+        <h2>Vorschlag 4 — Gewähltes Layout</h2>
+
+        <div class="image-placeholder">
+            [Bild: Vorschlag 4 24-02-2026.jpg]
+        </div>
+
+        <h3>Warum Vorschlag 4</h3>
+        <div class="key-points">
+            <div class="key-point"><span class="num">1.</span> Einziger Vorschlag mit expliziter CO2- und Trennmittel-Zonenplanung</div>
+            <div class="key-point"><span class="num">2.</span> Klare Trennung der Produktbereiche durch Staplerverkehrswege</div>
+            <div class="key-point"><span class="num">3.</span> Höchste Flexibilität für zukünftige Technologien</div>
+            <div class="key-point"><span class="num">4.</span> Beste Bewertung in allen 5 Kriterien</div>
+        </div>
+    </div>
+
+    <!-- ========== FOLIE 6: ZONENKONZEPT ========== -->
+    <div class="slide">
+        <div class="slide-number">Folie 6</div>
+        <h2>Zonenkonzept &amp; Staplerverkehr</h2>
+
+        <p style="margin-bottom: 14px;"><strong>Drei Produktbereiche</strong>, getrennt durch definierte <strong>Staplerverkehrswege</strong>:</p>
+
+        <table>
+            <thead>
+                <tr><th>Bereich</th><th style="text-align:left;">Inhalt</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Produktbereich 1 (oben)</td><td>Gemischte Produktionszellen — Produktgruppe A</td></tr>
+                <tr><td>Produktbereich 2 (mitte)</td><td>Hauptproduktion — gemischte Zellen, CO2-Bereich, Trennmittel-Bereich</td></tr>
+                <tr><td>Produktbereich 3 (unten)</td><td>Gemischte Produktionszellen — Produktgruppe C</td></tr>
+            </tbody>
+        </table>
+
+        <h3>Vorteile Staplerkonzept</h3>
+        <ul>
+            <li>Stapler- und Fußgängerverkehr klar getrennt</li>
+            <li>Drei Bereiche unabhängig anfahrbar</li>
+            <li>Sicherheit: Keine Kreuzungen innerhalb der Produktbereiche</li>
+        </ul>
+
+        <h3>Nebenbereiche</h3>
+        <ul>
+            <li><strong>Links:</strong> Werkzeuginstandhaltung, Polyol-Lager, Werkstatt</li>
+            <li><strong>Rechts:</strong> Büros, Elektro-Werkstatt, Technische Betriebe</li>
+            <li><strong>Unten:</strong> Sozialräume (ausreichend für &lt; 30 MA)</li>
+        </ul>
+    </div>
+
+    <!-- ========== FOLIE 7: PHASENAUFTEILUNG ========== -->
+    <div class="slide">
+        <div class="slide-number">Folie 7</div>
+        <h2>Phasenaufteilung</h2>
+
+        <table>
+            <thead>
+                <tr><th></th><th style="text-align:left;">Phase A: Kernprojekt</th><th style="text-align:left;">Phase B: Zukunft</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>Scope</strong></td><td>Layoutumbau &amp; Konsolidierung</td><td>CO2-Trennmittel &amp; Bio-Polyol</td></tr>
+                <tr><td><strong>Inhalt</strong></td><td>Maschinenabbau, Anlagenumstellung, Infrastruktur, Halle 3 Räumung</td><td>Umstellung wässrig → CO2-RA, Bio-Polyol-Lager</td></tr>
+                <tr><td><strong>Budget</strong></td><td>282.000 - 495.000 €</td><td>283.000 - 460.000 €</td></tr>
+                <tr><td><strong>Zeitraum</strong></td><td>Q2 2026 - Q1 2027</td><td>Nach Phase A (noch offen)</td></tr>
+                <tr><td><strong>Status</strong></td><td><span class="badge">Zu budgetieren</span></td><td><span class="badge blue">Zukunftsplanung</span></td></tr>
+                <tr><td><strong>Trennmittel</strong></td><td>Wässriges System (Bestand)</td><td>CO2-basiert (neu)</td></tr>
+            </tbody>
+        </table>
+
+        <h3>Phase A liefert:</h3>
+        <ul>
+            <li>Alle Produktion in Halle 2 konsolidiert</li>
+            <li>Halle 3 vollständig geräumt</li>
+            <li>Platz für CO2-RA und Bio-Polyol <strong>reserviert</strong> (aber noch nicht installiert)</li>
+        </ul>
+    </div>
+
+    <!-- ========== FOLIE 8: KOSTEN PHASE A ========== -->
+    <div class="slide">
+        <div class="slide-number">Folie 8</div>
+        <h2>Kostenschätzung Phase A (zu budgetieren)</h2>
+
+        <table class="cost-table">
+            <thead>
+                <tr><th>Kostenblock</th><th>Min</th><th>Max</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Maschinenabbau &amp; Halle 3 Räumung</td><td>101.000 €</td><td>167.000 €</td></tr>
+                <tr><td>Anlagenumstellung Vorschlag 4</td><td>58.000 €</td><td>100.000 €</td></tr>
+                <tr><td>Allgemeine Infrastruktur Halle 2</td><td>115.000 €</td><td>210.000 €</td></tr>
+                <tr><td>Wässrige Trennmittel-Einrichtung</td><td>8.000 €</td><td>18.000 €</td></tr>
+                <tr class="grand-total-row"><td><strong>GESAMT PHASE A</strong></td><td><strong>282.000 €</strong></td><td><strong>495.000 €</strong></td></tr>
+            </tbody>
+        </table>
+
+        <div class="decision-banner">Mittelwert: ~389.000 €</div>
+    </div>
+
+    <!-- ========== FOLIE 9: KOSTEN PHASE B ========== -->
+    <div class="slide">
+        <div class="slide-number">Folie 9</div>
+        <h2>Kostenschätzung Phase B (Zukunft — zur Information)</h2>
+
+        <table class="cost-table">
+            <thead>
+                <tr><th>Kostenblock</th><th>Min</th><th>Max</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>CO2-Trennmittel-Infrastruktur</td><td>230.000 €</td><td>365.000 €</td></tr>
+                <tr><td>Bio-Polyol-Lagerinfrastruktur</td><td>53.000 €</td><td>95.000 €</td></tr>
+                <tr class="grand-total-row"><td><strong>GESAMT PHASE B</strong></td><td><strong>283.000 €</strong></td><td><strong>460.000 €</strong></td></tr>
+            </tbody>
+        </table>
+
+        <div class="callout">
+            <strong>Vorteil:</strong> CO2-Tank bereits vorhanden (aktuell Treibmittel) → Kosten reduziert<br>
+            <strong>Amortisation CO2-RA:</strong> ~4,4 Jahre (65-105k €/Jahr Einsparung basierend auf Ellzee-Erfahrung)
+        </div>
+    </div>
+
+    <!-- ========== FOLIE 10: IMPLEMENTIERUNGSPLAN ========== -->
+    <div class="slide">
+        <div class="slide-number">Folie 10</div>
+        <h2>Implementierungsplan Phase A</h2>
+
+        <table>
+            <thead>
+                <tr><th>Phase</th><th style="text-align:left;">Zeitraum</th><th style="text-align:left;">Inhalt</th><th style="text-align:center;">Max. Stillstand</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Vorbereitung</td><td>Q2-Q3 2026</td><td>Detailplanung, Ausschreibungen, Budget</td><td style="text-align:center;">Keiner</td></tr>
+                <tr><td>Maschinenabbau</td><td>Q3 2026 - Q4 2026</td><td>5 Maschinen entfernen, Halle 3 räumen</td><td style="text-align:center;">Sommerpause (2 Wo.)</td></tr>
+                <tr><td>Infrastruktur</td><td>Q4 2026 - Q1 2027</td><td>Elektro, Druckluft, Wasser anpassen</td><td style="text-align:center;">Wochenenden</td></tr>
+                <tr><td>Inbetriebnahme</td><td>Q1 2027</td><td>Anlagen aufstellen, testen, Übergabe</td><td style="text-align:center;">Keiner</td></tr>
+            </tbody>
+        </table>
+
+        <div class="summary-grid">
+            <div class="summary-card">
+                <div class="label">Gesamtdauer Phase A</div>
+                <div class="value">~10 Monate</div>
+            </div>
+            <div class="summary-card">
+                <div class="label">Kritischer Pfad</div>
+                <div class="value">Sommerpause 2026</div>
+                <div class="sub">Max. 2 Wochen für Maschinenabbau</div>
+            </div>
+            <div class="summary-card">
+                <div class="label">Detailplan</div>
+                <div class="value" style="font-size:14px;">Implementation_Gantt.html</div>
+                <div class="sub">Interaktiver Gantt-Chart</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== FOLIE 11: CO2-TRENNMITTEL ========== -->
+    <div class="slide">
+        <div class="slide-number">Folie 11</div>
+        <h2>CO2-Trennmittel — Warum zukünftig? (Phase B Info)</h2>
+
+        <h3>Erfahrung Werk Ellzee (2015-2022)</h3>
+        <table>
+            <thead>
+                <tr><th>Kennzahl</th><th style="text-align:center;">Wässrige RA (aktuell)</th><th style="text-align:center;">CO2-basierte RA (Zukunft)</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Verbrauch</td><td style="text-align:center;">Basis</td><td style="text-align:center;"><strong>-60 bis -70%</strong></td></tr>
+                <tr><td>Reinigungszyklen</td><td style="text-align:center;">Basis</td><td style="text-align:center;"><strong>-50% weniger</strong></td></tr>
+                <tr><td>VOC-Emissionen</td><td style="text-align:center;">Höher</td><td style="text-align:center;"><strong>Deutlich reduziert</strong></td></tr>
+                <tr><td>Zykluszeit</td><td style="text-align:center;">Basis</td><td style="text-align:center;"><strong>Verkürzt</strong></td></tr>
+            </tbody>
+        </table>
+
+        <div class="callout">
+            <strong>Voraussetzung:</strong> Phase A muss Platz im [CO2]- und [Trennmittel]-Bereich reservieren<br>
+            <strong>CO2-Infrastruktur:</strong> Tank vorhanden (Treibmittel), Erweiterung für RA nötig
+        </div>
+    </div>
+
+    <!-- ========== FOLIE 12: NÄCHSTE SCHRITTE ========== -->
+    <div class="slide">
+        <div class="slide-number">Folie 12</div>
+        <h2>Nächste Schritte</h2>
+        <table>
+            <thead>
+                <tr><th>#</th><th style="text-align:left;">Aktion</th><th style="text-align:left;">Verantwortlich</th><th style="text-align:left;">Termin</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>1</td><td>Vorschlag 4 formell bestätigen</td><td>Werkleitung</td><td>März 2026</td></tr>
+                <tr><td>2</td><td>Infrastruktur-Bestandsaufnahme Halle 2</td><td>Technische Betriebe</td><td>April 2026</td></tr>
+                <tr><td>3</td><td>Produktionsverlagerungsplan (welche Anlage wohin)</td><td>Engineering</td><td>April 2026</td></tr>
+                <tr><td>4</td><td>Budgetgenehmigung Phase A (~282-495k €)</td><td>Werkleitung / Finanzen</td><td>Mai 2026</td></tr>
+                <tr><td>5</td><td>Ausschreibung Maschinenabbau</td><td>Einkauf</td><td>Mai 2026</td></tr>
+                <tr><td>6</td><td>Sommerpause für kritische Umbauten nutzen</td><td>Projektleitung</td><td>Juli/Aug 2026</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ========== FOLIE 13: ANHANG ========== -->
+    <div class="slide">
+        <div class="slide-number">Folie 13</div>
+        <h2>Anhang — Referenzdokumente</h2>
+        <table>
+            <thead>
+                <tr><th>Dokument</th><th style="text-align:left;">Inhalt</th><th style="text-align:left;">Relevanz</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>EN Flex Q1 2024 Purchasing Meeting</td><td>Lieferanten-Updates (Huntsman, Dow, Wanhua)</td><td>Rohstoffstrategie</td></tr>
+                <tr><td>BIOPOL4MOTIVE</td><td>Bio-basierte PU-Schäume (35-40% Bio-Anteil)</td><td>Phase B Planung</td></tr>
+                <tr><td>Bloom Foam Project</td><td>Schaumreduktion Bloomsburg</td><td>Prozessoptimierung</td></tr>
+                <tr><td>CO2-Trennmittel (Ellzee)</td><td>CO2-RA Technologie &amp; Wirtschaftlichkeit</td><td>Phase B Planung</td></tr>
+                <tr><td>PUSH HR Genk Trial #2</td><td>Schaumsystem-Erprobung</td><td>Anlagenauslegung</td></tr>
+                <tr><td>BGEU EN Flex (Mai 2025)</td><td>Aktuelle Schaumentwicklungen</td><td>Produktportfolio</td></tr>
+            </tbody>
+        </table>
+        <div class="callout">
+            Vollständige Zusammenfassungen: → Document_Summaries_Reference.md
+        </div>
+    </div>
+
+</div>
+
+<div class="footer">
+    <strong>NVH 2030 — Werk Gundernhausen</strong><br>
+    Generiert am 26.02.2026 &nbsp;|&nbsp; Stakeholder-Präsentation Werkleitung &amp; Engineering
+</div>
+
+</body>
+</html>

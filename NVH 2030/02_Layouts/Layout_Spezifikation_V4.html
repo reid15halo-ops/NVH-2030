@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layout-Spezifikation Vorschlag 4 — NVH 2030</title>
+    <style>
+        :root {
+            --primary: #b8c400;
+            --primary-dark: #90a000;
+            --secondary: #00b0e8;
+            --secondary-dark: #009bcc;
+            --gray: #7a7b7a;
+            --dark: #2d2d2d;
+            --light-bg: #f6f6f6;
+            --white: #ffffff;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--dark);
+            background: var(--light-bg);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+            color: #fff;
+            padding: 32px 0 0 0;
+            border-bottom: 4px solid var(--primary);
+        }
+
+        .header-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 32px 28px 32px;
+        }
+
+        .brand { font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: var(--primary); font-weight: 600; }
+        .brand-tag { font-size: 11px; color: #999; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 16px; }
+
+        .header h1 { font-size: 26px; font-weight: 700; margin-bottom: 4px; }
+        .header-sub { font-size: 14px; color: #bbb; margin-top: 6px; }
+
+        .header-meta { display: flex; gap: 20px; flex-wrap: wrap; font-size: 13px; color: #ccc; margin-top: 10px; }
+        .header-meta strong { color: var(--primary); }
+
+        .main { max-width: 1000px; margin: 0 auto; padding: 28px 32px; }
+
+        .purpose-box {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--dark);
+            border-radius: 4px;
+            padding: 20px 24px;
+            margin-bottom: 24px;
+            font-weight: 600;
+        }
+
+        .purpose-box p { margin: 4px 0; font-size: 14px; }
+
+        .card {
+            background: var(--white);
+            border-radius: 4px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+            padding: 24px 28px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 14px;
+            padding-bottom: 6px;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-top: 18px;
+            margin-bottom: 8px;
+        }
+
+        h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gray);
+            margin-top: 12px;
+            margin-bottom: 6px;
+        }
+
+        p, li { font-size: 14px; }
+        p { margin-bottom: 10px; }
+
+        ul { margin: 0 0 12px 20px; }
+        li { margin-bottom: 4px; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0 16px 0;
+            font-size: 13px;
+        }
+
+        th {
+            background: var(--dark);
+            color: var(--white);
+            padding: 8px 12px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 7px 12px;
+            border-bottom: 1px solid #e8e8e8;
+        }
+
+        tr:nth-child(even) td { background: #fafafa; }
+        tr:hover td { background: #f0f7e6; }
+
+        .zone-card {
+            border-left: 4px solid var(--primary);
+            background: #fafffe;
+            padding: 16px 20px;
+            margin: 12px 0;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .zone-card.zone-1 { border-left-color: var(--primary-dark); }
+        .zone-card.zone-2 { border-left-color: var(--secondary-dark); }
+        .zone-card.zone-3 { border-left-color: #e6a000; }
+        .zone-card.corridor { border-left-color: var(--dark); background: #f9f9f9; }
+        .zone-card.phase-b { border-left-color: var(--secondary); background: #f0f8ff; }
+
+        .zone-label {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 3px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .zone-label.z1 { background: var(--primary-dark); }
+        .zone-label.z2 { background: var(--secondary-dark); }
+        .zone-label.z3 { background: #e6a000; }
+        .zone-label.corr { background: var(--dark); }
+        .zone-label.pb { background: var(--secondary); }
+
+        .flow-diagram {
+            background: #fafafa;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 20px;
+            margin: 14px 0;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            white-space: pre;
+            overflow-x: auto;
+        }
+
+        .critical {
+            background: #fff8e1;
+            border: 1px solid #e6a000;
+            border-radius: 4px;
+            padding: 12px 16px;
+            margin: 12px 0;
+            font-size: 13px;
+        }
+
+        .critical strong { color: #c48500; }
+
+        .ref-link {
+            display: inline-block;
+            padding: 4px 10px;
+            background: var(--light-bg);
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            font-size: 12px;
+            color: var(--secondary-dark);
+            text-decoration: none;
+            margin: 2px 4px 2px 0;
+        }
+
+        .ref-link:hover { background: #e6f5fb; border-color: var(--secondary); }
+
+        .cad-box {
+            background: var(--dark);
+            color: var(--white);
+            border-radius: 4px;
+            padding: 20px 24px;
+            margin: 14px 0;
+        }
+
+        .cad-box h3 { color: var(--primary); margin-top: 0; }
+
+        .cad-box table th { background: #444; }
+        .cad-box table td { border-bottom-color: #444; color: #ddd; }
+        .cad-box table tr:nth-child(even) td { background: #333; }
+        .cad-box table tr:hover td { background: #3a3a3a; }
+
+        .footer {
+            max-width: 1000px;
+            margin: 16px auto 40px auto;
+            padding: 0 32px;
+            text-align: center;
+            font-size: 12px;
+            color: var(--gray);
+            border-top: 2px solid var(--primary);
+            padding-top: 16px;
+        }
+
+        @media print {
+            body { background: #fff; font-size: 11pt; }
+            .header { background: #2d2d2d !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .card { box-shadow: none; border: 1px solid #e0e0e0; break-inside: avoid; page-break-inside: avoid; }
+            .zone-card { break-inside: avoid; }
+            .purpose-box { background: var(--primary) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .cad-box { background: #2d2d2d !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="header-inner">
+        <div class="brand">Autoneum</div>
+        <div class="brand-tag">Mastering Sound and Heat</div>
+        <h1>Layout-Spezifikation &mdash; Vorschlag 4</h1>
+        <div class="header-sub">Halle 2 Konsolidierung &mdash; Briefing f&uuml;r CAD-Abteilung / Planungsb&uuml;ro</div>
+        <div class="header-meta">
+            <span><strong>Zeichnungsnr.:</strong> NVH2030-V4-LP-001</span>
+            <span><strong>Stand:</strong> 26.02.2026</span>
+            <span><strong>Status:</strong> Phase A &mdash; Planung</span>
+        </div>
+    </div>
+</div>
+
+<div class="main">
+
+    <div class="purpose-box">
+        <p>Dieses Dokument dient als vollst&auml;ndige Spezifikation f&uuml;r die Erstellung einer ma&szlig;st&auml;blichen CAD-Zeichnung (DIN A1/A0, 1:100/1:200) des neuen Halle-2-Layouts gem&auml;&szlig; Vorschlag 4.</p>
+        <p>Referenzbild: Vorschlag 4 24-02-2026.jpg &nbsp;|&nbsp; Schematischer Plan: Halle2_Layoutplan_V4.html</p>
+    </div>
+
+    <!-- Section 1: General -->
+    <div class="card">
+        <h2>1. Allgemeine Hallenstruktur</h2>
+        <table>
+            <thead>
+                <tr><th>Parameter</th><th>Wert</th><th>Hinweis</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Geb&auml;ude</td><td>Halle 2</td><td>Bestandshalle</td></tr>
+                <tr><td>Grundriss</td><td>Rechteckig</td><td>Exakte Abmessungen vom Werksplan</td></tr>
+                <tr><td>Hauptzonen</td><td>3 Produktbereiche</td><td>Schwarz umrandet im Referenzlayout</td></tr>
+                <tr><td>Trennung</td><td>Staplerverkehrswege</td><td>Zwischen den 3 Zonen</td></tr>
+                <tr><td>Nebenbereich links</td><td>Lager, Werkstatt, Werkzeuginstandhaltung</td><td>&Uuml;ber gesamte Hallenh&ouml;he</td></tr>
+                <tr><td>Nebenbereich rechts</td><td>B&uuml;ros, Elektro-Werkstatt, Techn. Betriebe</td><td>Obere Hallenh&auml;lfte</td></tr>
+                <tr><td>Sozialr&auml;ume</td><td>Besprechung, WC, Umkleide, Dusche</td><td>Unterer Hallenrand</td></tr>
+                <tr><td>Mitarbeiter</td><td>&lt; 30 Personen</td><td>Kapazit&auml;t Sozialr&auml;ume ausreichend</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Section 2: Zone Layout -->
+    <div class="card">
+        <h2>2. Zonenaufteilung (von oben nach unten)</h2>
+
+        <div class="zone-card zone-1">
+            <span class="zone-label z1">Produktbereich 1</span>
+            <h3>2.1 Obere Zone &mdash; Produktgruppe A</h3>
+            <table>
+                <thead>
+                    <tr><th>Element</th><th>Typ</th><th>Anzahl</th><th>Platz (ca.)</th><th>Position</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Produktionszellen</td><td>Box, Halbautomat</td><td>3-4</td><td>Je 10-15 m&sup2;</td><td>Links in Zone</td></tr>
+                    <tr><td>Vollautomat</td><td>Direkt auf Formtr&auml;ger</td><td>1-2</td><td>Je 15-20 m&sup2;</td><td>Mittig</td></tr>
+                    <tr><td>Entformung/QS</td><td>Station</td><td>1</td><td>10-15 m&sup2;</td><td>Nach Produktionszellen</td></tr>
+                    <tr><td>Container-Stellplatz</td><td>Fertigteile Gr. A</td><td>1</td><td>15-20 m&sup2;</td><td>Rechts in Zone</td></tr>
+                    <tr><td>HL Lager</td><td>Halbzeuge Gr. A</td><td>1</td><td>10-15 m&sup2;</td><td>Rechts, nahe Zugang</td></tr>
+                    <tr><td>Schneidformen</td><td>Werkzeuge A</td><td>1</td><td>8-12 m&sup2;</td><td>Bei Produktionszellen</td></tr>
+                </tbody>
+            </table>
+            <p><strong>HL-Zuordnung:</strong> Nur Halbzeuge f&uuml;r Produktgruppe A &mdash; eindeutige Trennung, keine Verwechslungen.</p>
+        </div>
+
+        <div class="zone-card corridor">
+            <span class="zone-label corr">Staplerverkehrsweg 1</span>
+            <table>
+                <thead><tr><th>Parameter</th><th>Wert</th></tr></thead>
+                <tbody>
+                    <tr><td>Breite</td><td>Min. 3,5 m (gem&auml;&szlig; DGUV Vorschrift 68)</td></tr>
+                    <tr><td>Markierung</td><td>Bodenmarkierung gelb, beidseitig</td></tr>
+                    <tr><td>Absperrung</td><td>Leitplanken / physische Trennung Stapler/Fu&szlig;g&auml;nger</td></tr>
+                    <tr><td>Durchfahrt</td><td>Bidirektional</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="zone-card zone-2">
+            <span class="zone-label z2">Produktbereich 2 &mdash; Hauptproduktion</span>
+            <h3>2.3 Mittlere Zone &mdash; Sch&auml;umlinien C + F</h3>
+            <table>
+                <thead>
+                    <tr><th>Element</th><th>Detail</th><th>Platz (ca.)</th><th>Position</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>Sch&auml;umlinie C</strong></td><td>6 Mischk&ouml;pfe, Formtr&auml;ger (sehr alt)</td><td>50-70 m&sup2;</td><td>Links oben in Zone</td></tr>
+                    <tr><td><strong>Sch&auml;umlinie F</strong></td><td>6 Mischk&ouml;pfe, ex Halle 3 (Backup/Entlastung)</td><td>50-70 m&sup2;</td><td>Links unten in Zone</td></tr>
+                    <tr><td>CO2-Bereich</td><td>Treibmittel (aktuell), CO2-Tank auf Gel&auml;nde</td><td>8-12 m&sup2;</td><td>Mittig, zwischen C+F</td></tr>
+                    <tr><td>Trennmittel-Bereich</td><td>W&auml;ssrig (aktuell), Spr&uuml;hstation</td><td>8-12 m&sup2;</td><td>Mittig, neben CO2</td></tr>
+                    <tr><td>Dosieranlage</td><td>Misch- &amp; Dosieranlage</td><td>10-15 m&sup2;</td><td>Unter Trennmittel</td></tr>
+                    <tr><td>Entformung/QS</td><td>Station + Mischk&ouml;pfe</td><td>15-20 m&sup2;</td><td>Rechts der Sch&auml;umlinien</td></tr>
+                    <tr><td>Produktionszellen</td><td>Box, Tandem (2-3 St&uuml;ck)</td><td>Je 10-15 m&sup2;</td><td>Rechts in Zone</td></tr>
+                    <tr><td>Container-Stellplatz</td><td>Fertigteile Gr. B</td><td>15-20 m&sup2;</td><td>Rechts oben</td></tr>
+                    <tr><td>HL Lager</td><td>Halbzeuge Gr. B</td><td>10-15 m&sup2;</td><td>Rechts, nahe Zugang</td></tr>
+                </tbody>
+            </table>
+
+            <div class="critical">
+                <strong>Kritische Anordnung:</strong>
+                <ul style="margin-top:6px;">
+                    <li>CO2-Bereich muss <strong>beide Sch&auml;umlinien (C + F) gleichzeitig</strong> bedienen k&ouml;nnen</li>
+                    <li>Trennmittel-Bereich: Aktuell w&auml;ssrig, <strong>Platzreservierung f&uuml;r Phase B</strong> (CO2-RA) vorsehen</li>
+                    <li>Formtr&auml;gerheizung nur in Halle 2 &mdash; keine W&auml;rmeverluste durch Hallenwechsel</li>
+                    <li>F-Linie dient als Backup/Entlastung f&uuml;r C-Linie (C-Linie sehr alt)</li>
+                </ul>
+            </div>
+
+            <div class="zone-card phase-b">
+                <span class="zone-label pb">Phase B Platzreservierung</span>
+                <p style="font-size:12px;color:#555;margin-bottom:8px;">Im CAD als gestrichelte Fl&auml;che einzeichnen</p>
+                <table>
+                    <thead><tr><th>Komponente</th><th>Reservierter Platz</th><th>Position</th></tr></thead>
+                    <tbody>
+                        <tr><td>CO2-RA-Mischeinheit(en)</td><td>4-6 m&sup2;</td><td>Im/neben CO2-Bereich</td></tr>
+                        <tr><td>CO2-Hochdruckleitungstrasse</td><td>Wandtrasse</td><td>Von CO2-Zone zu Stationen</td></tr>
+                        <tr><td>Trennmittel-Aufbereitung (CO2)</td><td>8-12 m&sup2;</td><td>Im Trennmittel-Bereich</td></tr>
+                        <tr><td>K&uuml;hlung/Kompressor</td><td>8-10 m&sup2;</td><td>Nahe Hallenwand (Au&szlig;enanbindung)</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="zone-card corridor">
+            <span class="zone-label corr">Staplerverkehrsweg 2</span>
+            <p>Min. 3,5 m Breite | Bodenmarkierung gelb | Leitplanken | Bidirektional</p>
+        </div>
+
+        <div class="zone-card zone-3">
+            <span class="zone-label z3">Produktbereich 3</span>
+            <h3>2.5 Untere Zone &mdash; Produktgruppe C</h3>
+            <table>
+                <thead>
+                    <tr><th>Element</th><th>Typ</th><th>Anzahl</th><th>Platz (ca.)</th><th>Position</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Produktionszellen</td><td>Box, Halbautomat</td><td>3-4</td><td>Je 10-15 m&sup2;</td><td>Links in Zone</td></tr>
+                    <tr><td>Entformung/QS</td><td>Station</td><td>1</td><td>10-15 m&sup2;</td><td>Nach Produktionszellen</td></tr>
+                    <tr><td>Container-Stellplatz</td><td>Fertigteile Gr. C</td><td>1</td><td>15-20 m&sup2;</td><td>Rechts in Zone</td></tr>
+                    <tr><td>HL Lager</td><td>Halbzeuge Gr. C</td><td>1</td><td>10-15 m&sup2;</td><td>Rechts, nahe Zugang</td></tr>
+                </tbody>
+            </table>
+            <p><strong>Anbindung:</strong> Direkt an Versandbereich / Lager (unterer Hallenrand)</p>
+        </div>
+    </div>
+
+    <!-- Section 3: Side areas -->
+    <div class="card">
+        <h2>3. Nebenbereich Links &mdash; Lager &amp; Werkstatt</h2>
+        <p>Von oben nach unten entlang der linken Hallenwand:</p>
+        <table>
+            <thead><tr><th>Pos.</th><th>Element</th><th>Platz (ca.)</th><th>Hinweis</th></tr></thead>
+            <tbody>
+                <tr><td>1</td><td>Polyol-Lager 1</td><td>15-20 m&sup2;</td><td>Rohstoff PU-Sch&auml;umung</td></tr>
+                <tr><td>2</td><td>Polyol-Lager 2</td><td>15-20 m&sup2;</td><td>Phase B: Bio-Polyol IBC (30-50 m&sup2;)</td></tr>
+                <tr><td>3</td><td>MO 2</td><td>10-15 m&sup2;</td><td>Materialorganisation</td></tr>
+                <tr><td>4</td><td>Lager</td><td>15-20 m&sup2;</td><td>Allgemein</td></tr>
+                <tr><td>5</td><td>Lager</td><td>15-20 m&sup2;</td><td>Allgemein</td></tr>
+                <tr><td>6</td><td>Werkstatt</td><td>20-25 m&sup2;</td><td>Allgemeine Reparaturen</td></tr>
+                <tr><td>7</td><td>Werkzeuginstandhaltung</td><td>25-35 m&sup2;</td><td>Werkzeuglager + Instandhaltung</td></tr>
+                <tr><td>8</td><td>Schnittmaschine</td><td>10-15 m&sup2;</td><td>Zuschnitt Halbzeuge</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card">
+        <h2>4. Nebenbereich Rechts &mdash; B&uuml;ros &amp; Technik</h2>
+        <table>
+            <thead><tr><th>Pos.</th><th>Element</th><th>Platz (ca.)</th></tr></thead>
+            <tbody>
+                <tr><td>1</td><td>B&uuml;ro (Schichtleitung)</td><td>15-20 m&sup2;</td></tr>
+                <tr><td>2</td><td>B&uuml;ro (Qualit&auml;t)</td><td>15-20 m&sup2;</td></tr>
+                <tr><td>3</td><td>Elektro-Werkstatt</td><td>20-25 m&sup2;</td></tr>
+                <tr><td>4</td><td>Aufenthaltsraum</td><td>20-25 m&sup2;</td></tr>
+                <tr><td>5</td><td>Technische Betriebe</td><td>30-40 m&sup2;</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Section 5: Material flow -->
+    <div class="card">
+        <h2>5. Materialfluss &mdash; One-Way-Flow</h2>
+        <div class="flow-diagram">ROHSTOFF-ANLIEFERUNG (oben)
+        |
+        v
+  Polyol-Lager / HL Lager
+        |
+        v
+  PRODUKTBEREICH 1 (Gr. A)
+        |
+  ════ STAPLERWEG ════
+        |
+        v
+  PRODUKTBEREICH 2 (Hauptprod. + Sch&auml;umlinien C/F)
+        |
+  ════ STAPLERWEG ════
+        |
+        v
+  PRODUKTBEREICH 3 (Gr. C)
+        |
+        v
+  VERSAND / LAGER (unten)</div>
+        <p><strong>Prinzip:</strong> Linearer Top-Down-Flow &mdash; kein R&uuml;cktransport, kein Kreuzverkehr zwischen Hallen.</p>
+    </div>
+
+    <!-- Section 6: Infrastructure -->
+    <div class="card">
+        <h2>6. Infrastruktur-Anschl&uuml;sse</h2>
+        <p style="font-size:12px;color:#555;">Im CAD einzuzeichnen:</p>
+        <table>
+            <thead><tr><th>Medium</th><th>Anschl&uuml;sse erforderlich</th><th>Hinweis</th></tr></thead>
+            <tbody>
+                <tr><td>Elektrik</td><td>Je Produktionszelle + Sch&auml;umlinien</td><td>Umverteilung f&uuml;r konsolidierte Anlagen</td></tr>
+                <tr><td>Druckluft</td><td>Je Produktionszelle + Sch&auml;umlinien</td><td>Leitungsanpassung neue Positionen</td></tr>
+                <tr><td>Wasser</td><td>Trennmittel-Bereich + Sozialr&auml;ume</td><td>W&auml;ssrige RA (aktuell)</td></tr>
+                <tr><td>CO2</td><td>CO2-Bereich (von Au&szlig;entank)</td><td>Aktuell Treibmittel, Phase B: RA</td></tr>
+                <tr><td>Absaugung</td><td>Trennmittel-Bereich + Produktionszellen</td><td>Bel&uuml;ftung f&uuml;r w&auml;ssrige RA</td></tr>
+                <tr><td>Heizung</td><td>Formtr&auml;ger in Zone 2</td><td>Nur 1 Halle &mdash; Energieeinsparung</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Section 7: Safety -->
+    <div class="card">
+        <h2>7. Sicherheit &amp; Normen</h2>
+        <table>
+            <thead><tr><th>Anforderung</th><th>Norm / Richtlinie</th><th>Umsetzung</th></tr></thead>
+            <tbody>
+                <tr><td>Staplerverkehr</td><td>DGUV Vorschrift 68</td><td>Min. 3,5 m Fahrwegbreite, Bodenmarkierung</td></tr>
+                <tr><td>Fu&szlig;g&auml;nger/Stapler</td><td>ASR A1.8</td><td>Physische Trennung durch Leitplanken</td></tr>
+                <tr><td>Brandschutz</td><td>Landesbauordnung HE</td><td>Brandabschnitte pr&uuml;fen, Feuerl&ouml;scher</td></tr>
+                <tr><td>Fluchtwege</td><td>ASR A2.3</td><td>Min. 2 Fluchtwege je Zone, Kennzeichnung</td></tr>
+                <tr><td>Beleuchtung</td><td>ASR A3.4</td><td>Min. 300 Lux in Produktionsbereichen</td></tr>
+                <tr><td>L&auml;rm</td><td>TA L&auml;rm</td><td>Schallpegel dokumentieren</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Section 8: CAD Requirements -->
+    <div class="card">
+        <h2>8. CAD-Zeichnungsanforderungen</h2>
+        <div class="cad-box">
+            <h3>Technische Vorgaben f&uuml;r die CAD-Zeichnung</h3>
+            <table>
+                <thead><tr><th>Anforderung</th><th>Spezifikation</th></tr></thead>
+                <tbody>
+                    <tr><td>Format</td><td>DIN A1 oder A0 (Querformat)</td></tr>
+                    <tr><td>Ma&szlig;stab</td><td>1:100 oder 1:200</td></tr>
+                    <tr><td>Zeichnungsnorm</td><td>DIN ISO 5457 (Zeichnungsblatt)</td></tr>
+                    <tr><td>Schriftfeld</td><td>DIN EN ISO 7200 (Titelblock)</td></tr>
+                    <tr><td>Linienarten</td><td>DIN ISO 128</td></tr>
+                    <tr><td>Ma&szlig;eintragung</td><td>DIN 406</td></tr>
+                    <tr><td>Darstellung</td><td>Grundriss Draufsicht</td></tr>
+                    <tr><td>Einzuzeichnen</td><td>Maschinen, Medienanschl&uuml;sse, Fluchtwege, Staplerkorridore</td></tr>
+                    <tr><td>Phase B Reservierung</td><td>Gestrichelte Fl&auml;chen mit Beschriftung</td></tr>
+                    <tr><td>Nordpfeil</td><td>Oberer Zeichnungsrand</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Section 9: References -->
+    <div class="card">
+        <h2>9. Referenzdokumente</h2>
+        <table>
+            <thead><tr><th>Dokument</th><th>Datei</th></tr></thead>
+            <tbody>
+                <tr><td>Originallayout (Referenz)</td><td><a class="ref-link" href="Vorschlag 4 24-02-2026.jpg">Vorschlag 4 24-02-2026.jpg</a></td></tr>
+                <tr><td>Schematischer Layoutplan (SVG)</td><td><a class="ref-link" href="Halle2_Layoutplan_V4.html">Halle2_Layoutplan_V4.html</a></td></tr>
+                <tr><td>Layoutentscheidung (Zonendetails)</td><td><a class="ref-link" href="../03_Analysen/Layoutentscheidung_Vorschlag4.html">Layoutentscheidung_Vorschlag4.html</a></td></tr>
+                <tr><td>Argumentationspapier</td><td><a class="ref-link" href="../04_Praesentationen/Argumentationspapier_Vorschlag4.html">Argumentationspapier_Vorschlag4.html</a></td></tr>
+                <tr><td>Kostensch&auml;tzung Phase A</td><td><a class="ref-link" href="../03_Analysen/Kostenschaetzung_Vergleich.html">Kostenschaetzung_Vergleich.html</a></td></tr>
+                <tr><td>Phase B Zukunftsoptionen</td><td><a class="ref-link" href="../04_Praesentationen/Phase_B_Zukunftsoptionen.html">Phase_B_Zukunftsoptionen.html</a></td></tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<div class="footer">
+    NVH 2030 &mdash; Layout-Spezifikation V4 &nbsp;|&nbsp; Werk Gundernhausen &nbsp;|&nbsp; 26.02.2026 &nbsp;|&nbsp; Autoneum &mdash; Mastering Sound and Heat
+</div>
+
+</body>
+</html>

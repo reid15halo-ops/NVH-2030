@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>nTopology — <span>Implicit Modeling</span> for AM – Technology Factsheet</title>
+    <style>
+:root{--g:#B8C400;--dg:#99CC00;--o:#E86A10;--b:#69BBFF;--dk:#2d2d2d;--gy:#666;--lg:#DCDCDC;--vlg:#F4F4F4;--wh:#FFF;--pg:#EDF0BF}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Arial,Calibri,sans-serif;background:var(--wh);color:#000;line-height:1.6;font-size:12px}
+@media print{body{font-size:9.5px}.hero{padding:20px 25px!important}.container{padding:10px 20px!important}}
+.hero{background:linear-gradient(135deg,#1a1a1a 0%,#2d2d2d 60%,#3a3a3a 100%);color:var(--wh);padding:35px 50px;position:relative}
+.hero::before{content:'';position:absolute;top:-40%;right:-15%;width:400px;height:400px;background:radial-gradient(circle,rgba(184,196,0,.12) 0%,transparent 70%);border-radius:50%}
+.hero-tag{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--g);margin-bottom:6px}
+.hero h1{font-size:24px;font-weight:700;line-height:1.2;margin-bottom:8px}
+.hero h1 span{color:var(--g)}
+.hero-sub{font-size:12px;opacity:.85;max-width:650px;margin-bottom:10px}
+.hero-meta{display:flex;gap:12px;font-size:9px;opacity:.5;flex-wrap:wrap}
+.badge{display:inline-block;padding:2px 8px;border-radius:3px;font-size:9px;font-weight:700;margin-left:6px}
+.b-phase{background:var(--g);color:#000}
+.b-cost{background:var(--o);color:var(--wh)}
+.kn-bar{display:grid;grid-template-columns:repeat(4,1fr);background:var(--wh);border-radius:8px;box-shadow:0 3px 12px rgba(0,0,0,.07);margin:-20px 30px 18px;position:relative;z-index:10;border:1px solid var(--lg)}
+.kn{padding:14px 10px;text-align:center;border-right:1px solid var(--lg)}
+.kn:last-child{border-right:none}
+.kn .v{font-size:18px;font-weight:700;color:#000;line-height:1;margin-bottom:2px}
+.kn .v span{color:var(--g)}
+.kn .l{font-size:8px;color:var(--gy);text-transform:uppercase;letter-spacing:.5px}
+.container{max-width:960px;margin:0 auto;padding:18px 40px}
+.sh{margin-bottom:14px}
+.sh .tag{font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--g);margin-bottom:3px}
+.sh h2{font-size:18px;font-weight:700;color:var(--g)}
+.sh p{color:var(--gy);margin-top:2px;font-size:11px}
+.box{border-radius:6px;padding:16px 20px;margin-bottom:18px}
+.box h3{font-size:12px;font-weight:700;margin-bottom:6px}
+.box ul{list-style:none;padding:0}
+.box li{padding:2px 0 2px 16px;position:relative;font-size:10.5px}
+.box li::before{content:'';position:absolute;left:0;top:6px;width:7px;height:7px;border-radius:2px}
+.box-green{background:#F7F9E6;border-left:4px solid var(--g)}
+.box-green h3{color:var(--dg)}
+.box-green li::before{background:var(--g)}
+.box-dark{background:#1a1a1a;border-left:4px solid var(--g);color:#ddd}
+.box-dark h3{color:var(--g)}
+.box-dark li::before{background:var(--g)}
+.box-warn{background:#FFF5EB;border-left:4px solid var(--o)}
+.box-warn h3{color:var(--o)}
+.box-warn li::before{background:var(--o)}
+.box-blue{background:#EBF5FF;border-left:4px solid var(--b)}
+.box-blue h3{color:#2E75B6}
+.box-blue li::before{background:var(--b)}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:10px}
+th{background:var(--g);color:var(--wh);padding:6px 8px;text-align:left;font-weight:700;font-size:8.5px;text-transform:uppercase;letter-spacing:.4px}
+th:first-child{border-radius:4px 0 0 0}th:last-child{border-radius:0 4px 0 0}
+td{padding:6px 8px;border-bottom:1px solid var(--lg)}
+tr:nth-child(even){background:var(--vlg)}
+tr:hover{background:var(--pg)}
+.footer{text-align:center;padding:14px;border-top:1px solid var(--lg);margin-top:10px}
+.footer p{font-size:8px;color:var(--gy);font-style:italic}
+</style>
+</head>
+<body>
+<div class="hero">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+        <div>
+            <div class="hero-tag">Technology Factsheet 06 • Advanced Generative Design</div>
+            <h1>nTopology — <span>Implicit Modeling</span> for AM <span class="badge b-phase">PHASE 3</span> <span class="badge b-cost">€15–30k/yr</span></h1>
+        </div>
+        <div style="text-align:right;">
+            <div style="font-size:18px;font-weight:700;color:var(--g);letter-spacing:1px;">AUTONEUM</div>
+            <div style="font-size:9px;font-style:italic;color:var(--o);">- CONFIDENTIAL -</div>
+        </div>
+    </div>
+    <p class="hero-sub">Computational design platform for lattice optimization, topology optimization, and functional grading — specifically designed for additive manufacturing. Rated 5/5 AM suitability. Highly relevant for NVH acoustic structures.</p>
+    <div class="hero-meta">
+        <span>Autoneum Germany GmbH – Gundernhausen</span><span>|</span><span>March 2026</span><span>|</span><span>Annex to MJF Deep-Dive</span>
+    </div>
+</div>
+
+<div class="kn-bar">
+<div class="kn"><div class="v">5/5</div><div class="l">AM Suitability</div></div>
+<div class="kn"><div class="v">Lattice</div><div class="l">Structure Optimization</div></div>
+<div class="kn"><div class="v">NVH</div><div class="l">Acoustic Relevance</div></div>
+<div class="kn"><div class="v">STEP</div><div class="l">Production Output</div></div>
+</div>
+
+<div class="container">
+
+<div class="sh"><div class="tag">Overview</div><h2>What It Does</h2></div>
+<div class="box box-dark">
+    <h3>nTopology — Engineering Design for Additive Manufacturing</h3>
+    <ul>
+        <li>Implicit modeling platform: geometry defined by mathematical fields, not boundary meshes</li>
+        <li>Enables lattice structures, topology optimization, and functionally graded materials in a single workflow</li>
+        <li>Specifically designed for AM constraints: overhang angles, min feature sizes, build orientation</li>
+        <li><strong>NVH relevance:</strong> Lattice-optimized acoustic structures can tune sound absorption properties when printed on MJF</li>
+        <li>Used by aerospace (Lockheed Martin), automotive (Scuderia AlphaTauri), and medical industries</li>
+        <li>Output: STEP, STL, 3MF — directly to HP SmartStream for MJF printing</li>
+    </ul>
+</div>
+
+<div class="sh"><div class="tag">How It Works</div><h2>Process &amp; Principle</h2></div>
+<div class="box box-green">
+    <h3>Field-Driven Design</h3>
+    <ul>
+        <li><strong>Step 1:</strong> Import design space (CAD model) + define load cases and constraints</li>
+        <li><strong>Step 2:</strong> nTopology generates optimal topology/lattice within the design space</li>
+        <li><strong>Step 3:</strong> Apply AM-specific constraints (MJF: min wall 0.5mm, min hole 0.5mm, no support needed)</li>
+        <li><strong>Step 4:</strong> Functionally grade lattice density: dense where loads are high, open where sound absorption is needed</li>
+        <li><strong>Step 5:</strong> Export production-ready geometry → nest in HP SmartStream → print</li>
+        <li>Parametric: change load case → entire lattice regenerates automatically</li>
+    </ul>
+</div>
+
+<div class="sh"><div class="tag">Requirements</div><h2>Auxiliaries &amp; Infrastructure</h2></div>
+<div style="background:var(--wh);border-radius:8px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.05);margin-bottom:18px;border:1px solid var(--lg);">
+    <table>
+        <thead><tr><th>Auxiliary</th><th>Specification</th><th>Status at Gundernhausen</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Workstation PC</strong></td><td>GPU recommended for real-time lattice preview (NVIDIA RTX series)</td><td>May need upgrade</td></tr>
+            <tr><td><strong>FEA Validation</strong></td><td>Ansys/Abaqus for structural validation of optimized geometry</td><td>Existing or new</td></tr>
+            <tr><td><strong>CAD Environment</strong></td><td>Input models from SolidWorks, Fusion 360, CATIA, or CadQuery</td><td>Existing</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="sh"><div class="tag">Hardware</div><h2>Required Hardware</h2></div>
+<div style="background:var(--wh);border-radius:8px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.05);margin-bottom:18px;border:1px solid var(--lg);">
+    <table>
+        <thead><tr><th>Component</th><th>Model / Specification</th><th>Est. Cost</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Engineering Workstation</strong></td><td>i7/Ryzen 9 + RTX 3060+ GPU + 32GB RAM</td><td>€2–4k (if new)</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="sh"><div class="tag">Software</div><h2>Required Software</h2></div>
+<div style="background:var(--wh);border-radius:8px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.05);margin-bottom:18px;border:1px solid var(--lg);">
+    <table>
+        <thead><tr><th>Software</th><th>Function</th><th>Est. Cost</th></tr></thead>
+        <tbody>
+            <tr><td><strong>nTopology Platform</strong></td><td>Implicit modeling, lattice, topology optimization, AM design</td><td>€15–30k/yr</td></tr>
+            <tr><td><strong>Autodesk Fusion 360 (alternative)</strong></td><td>Generative Design module — simpler, cheaper, less AM-specific</td><td>€2–5k/yr</td></tr>
+            <tr><td><strong>Siemens NX + Topology (alternative)</strong></td><td>Enterprise topology optimization — if already in Siemens ecosystem</td><td>€10–20k/yr</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="sh"><div class="tag">Gundernhausen Fit</div><h2>Relevance &amp; Recommendation</h2></div>
+<div class="box box-blue">
+    <h3>Recommendation for Gundernhausen</h3>
+    <ul>
+        <li><strong>Phase 3 (Month 12+):</strong> Evaluate for lattice-optimized acoustic parts — high strategic value for Autoneum's NVH expertise</li>
+        <li><strong>Key use case:</strong> Lightweight, sound-absorbing lattice inserts printed on MJF — could become a differentiating product offering</li>
+        <li><strong>Alternative start:</strong> Fusion 360 Generative Design (€2–5k/yr) covers 80% of topology optimization at 1/5th the cost</li>
+        <li><strong>When nTopology justifies its cost:</strong> When designing parts where lattice grading directly improves NVH performance metrics</li>
+        <li><strong>Combine with:</strong> Claude + CadQuery for simple parts, nTopology for complex optimized parts</li>
+    </ul>
+</div>
+
+<div class="sh"><div class="tag">Sources</div><h2>Key References</h2></div>
+<div style="background:var(--wh);border-radius:8px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.05);margin-bottom:18px;border:1px solid var(--lg);">
+    <table>
+        <thead><tr><th>Source</th><th>Topic</th></tr></thead>
+        <tbody>
+            <tr><td><a href="https://ntopology.com" style="color:var(--b);">nTopology Platform</a></td><td>Product overview</td></tr>
+            <tr><td><a href="https://ntopology.com/additive-manufacturing/" style="color:var(--b);">nTopology for AM</a></td><td>AM-specific features</td></tr>
+        </tbody>
+    </table>
+</div>
+
+</div>
+<div class="footer">
+    <p>&copy; 2026 Autoneum Germany GmbH – Gundernhausen | - CONFIDENTIAL - | Technology Factsheet | Author: J.R.E. Glawion</p>
+</div>
+</body>
+</html>

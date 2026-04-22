@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NVH 2030 — Bewertungsmatrix Layoutvorschl&auml;ge</title>
+<style>
+  /* ===== RESET & BASE ===== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --primary: #2d2d2d;
+    --primary-light: #90a000;
+    --primary-dark: #333333;
+    --accent: #00b0e8;
+    --success: #b8c400;
+    --warning: #f0ad4e;
+    --danger: #dc3545;
+    --gray-50: #f8f9fa;
+    --gray-100: #f1f3f5;
+    --gray-200: #e9ecef;
+    --gray-300: #dee2e6;
+    --gray-400: #ced4da;
+    --gray-500: #adb5bd;
+    --gray-600: #868e96;
+    --gray-700: #495057;
+    --gray-800: #343a40;
+    --gray-900: #212529;
+    --v2-color: #2196F3;
+    --v3-color: #FF9800;
+    --v4-color: #b8c400;
+    --radius: 6px;
+    --shadow: 0 2px 8px rgba(0,0,0,0.1);
+    --shadow-lg: 0 4px 16px rgba(0,0,0,0.15);
+    --transition: 0.2s ease;
+  }
+
+  body {
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+    background: var(--gray-100);
+    color: var(--gray-900);
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+
+  /* ===== HEADER ===== */
+  .header {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: white;
+    padding: 28px 40px;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    overflow: hidden;
+    border-bottom: 4px solid #b8c400;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0;
+    width: 300px;
+    background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.05) 100%);
+    pointer-events: none;
+  }
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: relative;
+    z-index: 1;
+  }
+  .header h1 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+    margin-bottom: 4px;
+  }
+  .header .subtitle {
+    font-size: 0.95rem;
+    opacity: 0.85;
+    font-weight: 400;
+  }
+  .brand {
+    text-align: right;
+    font-size: 0.85rem;
+    opacity: 0.75;
+    line-height: 1.6;
+  }
+  .brand strong {
+    font-size: 1.1rem;
+    opacity: 1;
+    display: block;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  /* ===== DECISION BANNER ===== */
+  .decision-banner {
+    background: linear-gradient(135deg, #b8c400 0%, #90a000 100%);
+    color: white;
+    padding: 16px 40px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 1.05rem;
+    font-weight: 500;
+    box-shadow: 0 2px 6px rgba(184,196,0,0.3);
+  }
+  .decision-banner .badge {
+    background: white;
+    color: #90a000;
+    padding: 4px 14px;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  /* ===== MAIN CONTAINER ===== */
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 24px 40px 60px;
+  }
+
+  /* ===== CARDS ===== */
+  .card {
+    background: white;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 24px;
+    overflow: hidden;
+  }
+  .card-header {
+    background: var(--gray-50);
+    border-bottom: 1px solid var(--gray-200);
+    padding: 16px 24px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .card-header .icon { font-size: 1.2rem; }
+  .card-body { padding: 24px; }
+
+  /* ===== RANKING SUMMARY ===== */
+  .ranking-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .rank-card {
+    border: 2px solid var(--gray-200);
+    border-radius: var(--radius);
+    padding: 20px;
+    text-align: center;
+    transition: all var(--transition);
+    position: relative;
+    overflow: hidden;
+  }
+  .rank-card.rank-1 {
+    border-color: #ffd700;
+    background: linear-gradient(180deg, #fffdf0 0%, white 100%);
+  }
+  .rank-card.rank-2 {
+    border-color: #c0c0c0;
+    background: linear-gradient(180deg, #fafafa 0%, white 100%);
+  }
+  .rank-card.rank-3 {
+    border-color: #cd7f32;
+    background: linear-gradient(180deg, #fdf6ef 0%, white 100%);
+  }
+  .rank-badge {
+    display: inline-block;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    line-height: 36px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: white;
+    margin-bottom: 8px;
+  }
+  .rank-1 .rank-badge { background: #daa520; }
+  .rank-2 .rank-badge { background: #a0a0a0; }
+  .rank-3 .rank-badge { background: #b87333; }
+  .rank-name {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 4px;
+  }
+  .rank-score {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 8px 0 4px;
+  }
+  .rank-1 .rank-score { color: #b8860b; }
+  .rank-2 .rank-score { color: #808080; }
+  .rank-3 .rank-score { color: #a0522d; }
+  .rank-label {
+    font-size: 0.8rem;
+    color: var(--gray-600);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* ===== RADAR CHART ===== */
+  .chart-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 10px;
+  }
+  .radar-svg {
+    max-width: 520px;
+    width: 100%;
+    height: auto;
+  }
+  .chart-legend {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--gray-700);
+  }
+  .legend-dot {
+    width: 14px; height: 14px;
+    border-radius: 3px;
+  }
+
+  /* ===== EVALUATION TABLE ===== */
+  .table-wrapper { overflow-x: auto; }
+  table.eval-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+  table.eval-table thead th {
+    background: var(--primary);
+    color: white;
+    padding: 12px 14px;
+    text-align: left;
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    transition: background var(--transition);
+  }
+  table.eval-table thead th:hover {
+    background: var(--primary-light);
+  }
+  table.eval-table thead th .sort-icon {
+    margin-left: 6px;
+    font-size: 0.7rem;
+    opacity: 0.6;
+  }
+  table.eval-table thead th.sorted .sort-icon {
+    opacity: 1;
+  }
+  table.eval-table tbody td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--gray-200);
+    vertical-align: middle;
+  }
+  table.eval-table tbody tr:hover {
+    background: var(--gray-50);
+  }
+  table.eval-table tbody tr:nth-child(even) {
+    background: #fcfcfd;
+  }
+  table.eval-table tbody tr:nth-child(even):hover {
+    background: var(--gray-50);
+  }
+  .criterion-cell {
+    font-weight: 600;
+    color: var(--primary);
+    min-width: 200px;
+  }
+  .weight-cell {
+    font-weight: 600;
+    color: var(--gray-600);
+    text-align: center;
+    white-space: nowrap;
+  }
+  .score-cell {
+    text-align: center;
+    min-width: 100px;
+  }
+  .weighted-cell {
+    text-align: center;
+    font-weight: 600;
+    min-width: 90px;
+  }
+  .comment-cell {
+    min-width: 180px;
+    max-width: 280px;
+  }
+
+  /* ===== SCORE INPUT ===== */
+  .score-input-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .score-input {
+    width: 48px;
+    height: 36px;
+    text-align: center;
+    border: 2px solid var(--gray-300);
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--gray-800);
+    background: white;
+    transition: all var(--transition);
+    outline: none;
+  }
+  .score-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(0,176,232,0.15);
+  }
+  .score-input:invalid, .score-input.invalid {
+    border-color: var(--danger);
+    background: #fff5f5;
+  }
+
+  /* ===== SCORE BAR ===== */
+  .score-bar-bg {
+    width: 50px;
+    height: 8px;
+    background: var(--gray-200);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .score-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.4s ease, background 0.4s ease;
+  }
+
+  /* ===== COMMENT INPUT ===== */
+  .comment-input {
+    width: 100%;
+    padding: 6px 10px;
+    border: 1px solid var(--gray-300);
+    border-radius: 4px;
+    font-size: 0.82rem;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 32px;
+    transition: border-color var(--transition);
+    outline: none;
+  }
+  .comment-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(0,176,232,0.1);
+  }
+
+  /* ===== TOTAL ROW ===== */
+  .total-row td {
+    background: var(--gray-100) !important;
+    border-top: 3px solid var(--primary);
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 14px !important;
+  }
+  .total-score {
+    font-size: 1.25rem;
+  }
+
+  /* ===== CRITERION DESCRIPTION ===== */
+  .criterion-desc {
+    font-size: 0.78rem;
+    color: var(--gray-600);
+    font-weight: 400;
+    margin-top: 2px;
+    line-height: 1.35;
+  }
+
+  /* ===== TOOLBAR ===== */
+  .toolbar {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition);
+    font-family: inherit;
+  }
+  .btn-primary {
+    background: var(--primary);
+    color: white;
+  }
+  .btn-primary:hover {
+    background: var(--primary-light);
+  }
+  .btn-outline {
+    background: white;
+    color: var(--primary);
+    border: 1px solid var(--primary);
+  }
+  .btn-outline:hover {
+    background: var(--gray-50);
+  }
+  .btn-success {
+    background: var(--success);
+    color: white;
+  }
+  .btn-success:hover {
+    background: #90a000;
+  }
+  .btn-warning {
+    background: var(--warning);
+    color: var(--gray-800);
+  }
+  .btn-warning:hover {
+    background: #e09d3e;
+  }
+
+  /* ===== INFO BOX ===== */
+  .info-box {
+    background: #e6f7fc;
+    border-left: 4px solid var(--accent);
+    padding: 14px 18px;
+    margin-bottom: 20px;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    font-size: 0.88rem;
+    color: var(--gray-800);
+    line-height: 1.6;
+  }
+  .info-box strong {
+    color: var(--primary);
+  }
+
+  /* ===== CRITERIA DETAIL CARDS ===== */
+  .criteria-detail-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  .criteria-detail-item {
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+  }
+  .criteria-detail-item h4 {
+    color: var(--primary);
+    font-size: 0.9rem;
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .criteria-detail-item h4 .weight-tag {
+    background: var(--primary);
+    color: white;
+    font-size: 0.72rem;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 600;
+  }
+  .criteria-detail-item ul {
+    margin: 0; padding: 0;
+    list-style: none;
+    font-size: 0.8rem;
+    color: var(--gray-700);
+  }
+  .criteria-detail-item ul li {
+    padding: 2px 0;
+    padding-left: 14px;
+    position: relative;
+  }
+  .criteria-detail-item ul li::before {
+    content: '\2022';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    text-align: center;
+    padding: 20px 40px;
+    font-size: 0.8rem;
+    color: var(--gray-500);
+    border-top: 1px solid var(--gray-200);
+    background: white;
+  }
+
+  /* ===== NOTIFICATION ===== */
+  .notification {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--primary);
+    color: white;
+    padding: 12px 20px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    font-size: 0.9rem;
+    transform: translateY(80px);
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 1000;
+  }
+  .notification.show {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  /* ===== PRINT STYLES ===== */
+  @media print {
+    body { background: white; }
+    .header { padding: 16px 20px; }
+    .container { padding: 12px 20px; }
+    .toolbar, .btn, .notification { display: none !important; }
+    .card { box-shadow: none; border: 1px solid var(--gray-300); break-inside: avoid; }
+    .score-input { border: none; background: transparent; font-weight: 700; }
+    .comment-input { border: none; background: transparent; font-size: 0.75rem; resize: none; }
+    .radar-svg { max-width: 400px; }
+    .ranking-grid { gap: 10px; }
+    @page { margin: 15mm; size: landscape; }
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 900px) {
+    .header { padding: 20px; }
+    .container { padding: 16px; }
+    .ranking-grid { grid-template-columns: 1fr; }
+    .header-top { flex-direction: column; gap: 8px; }
+    .brand { text-align: left; }
+    .criteria-detail-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ===== SCORE COLOR HELPERS ===== */
+  .score-1 { color: #d32f2f; }
+  .score-2 { color: #e64a19; }
+  .score-3 { color: #f9a825; }
+  .score-4 { color: #558b2f; }
+  .score-5 { color: #2e7d32; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-top">
+    <div>
+      <h1>NVH 2030 &mdash; Bewertungsmatrix Layoutvorschl&auml;ge</h1>
+      <div class="subtitle">Standort Gundernhausen &bull; Konsolidierung Halle 2 &amp; Freigabe Halle 3 &bull; EN Flex Produktion</div>
+    </div>
+    <div class="brand">
+      <strong>Autoneum</strong>
+      Mastering Sound and Heat
+    </div>
+  </div>
+</div>
+
+<div class="decision-banner">
+  <span class="badge">Entscheidung</span>
+  <span>Vorschlag 4 wurde als Basislayout ausgew&auml;hlt &mdash; Drei-Zonen-Konzept mit expliziter CO2- und Trennmittel-Planung (26.02.2026)</span>
+</div>
+
+<!-- MAIN -->
+<div class="container">
+
+  <!-- TOOLBAR -->
+  <div class="toolbar">
+    <button class="btn btn-outline" onclick="resetScores()" title="Bewertungen zur&uuml;cksetzen">&#8635; Zur&uuml;cksetzen</button>
+    <button class="btn btn-success" onclick="exportData()" title="Daten als JSON exportieren">&#11123; Exportieren</button>
+    <button class="btn btn-warning" onclick="importData()" title="Daten aus JSON importieren">&#11121; Importieren</button>
+    <button class="btn btn-primary" onclick="window.print()" title="Druckansicht">&#9113; Drucken</button>
+  </div>
+
+  <!-- RANKING SUMMARY -->
+  <div class="card" id="ranking-card">
+    <div class="card-header"><span class="icon">&#9733;</span> Gesamtranking</div>
+    <div class="card-body">
+      <div class="ranking-grid" id="ranking-grid">
+        <!-- Filled by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- RADAR CHART -->
+  <div class="card">
+    <div class="card-header"><span class="icon">&#9678;</span> Vergleichs&uuml;bersicht &mdash; Netzdiagramm</div>
+    <div class="card-body chart-container">
+      <svg id="radar-chart" class="radar-svg" viewBox="0 0 520 480"></svg>
+      <div class="chart-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--v2-color)"></div> Vorschlag 2</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--v3-color)"></div> Vorschlag 3</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--v4-color)"></div> Vorschlag 4</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CRITERIA INFO -->
+  <div class="card">
+    <div class="card-header"><span class="icon">&#9432;</span> Bewertungskriterien &mdash; &Uuml;bersicht</div>
+    <div class="card-body">
+      <div class="info-box">
+        <strong>Bewertungsskala:</strong> 1 = unzureichend &bull; 2 = mangelhaft &bull; 3 = befriedigend &bull; 4 = gut &bull; 5 = sehr gut<br>
+        <strong>Kontext:</strong> Entfernte Maschinen: Tandem 172, Box20, Box21, Halbautomat 188, AUDI Q1 STW LHD.
+        Neue Technologien (Bio-Polyol, CO&#8322;-Trennmittel) m&uuml;ssen integriert werden.
+      </div>
+      <div class="criteria-detail-grid">
+        <div class="criteria-detail-item">
+          <h4>Materialflusseffizienz <span class="weight-tag">25 %</span></h4>
+          <ul>
+            <li>Wegl&auml;nge Rohmaterial &rarr; Produktion &rarr; Ausgang</li>
+            <li>Kreuzungspunkte &amp; Engstellen</li>
+            <li>N&auml;he RA-System zu Produktionszellen</li>
+          </ul>
+        </div>
+        <div class="criteria-detail-item">
+          <h4>Produktionskapazit&auml;t <span class="weight-tag">25 %</span></h4>
+          <ul>
+            <li>Anzahl Produktionszellen &amp; Stationen</li>
+            <li>Taktzeit-F&auml;higkeit</li>
+            <li>Maschinenzug&auml;nglichkeit</li>
+            <li>Parallelproduktionspotenzial</li>
+          </ul>
+        </div>
+        <div class="criteria-detail-item">
+          <h4>Fl&auml;chennutzung <span class="weight-tag">20 %</span></h4>
+          <ul>
+            <li>Effiziente Nutzung Halle 2</li>
+            <li>Freigegebene Fl&auml;che in Halle 3</li>
+            <li>Totzonen &amp; Gangbreiten</li>
+          </ul>
+        </div>
+        <div class="criteria-detail-item">
+          <h4>Sicherheit &amp; Ergonomie <span class="weight-tag">15 %</span></h4>
+          <ul>
+            <li>Bedienerwege &amp; Notausg&auml;nge</li>
+            <li>Gefahrstofftrennung</li>
+            <li>L&auml;rmzonen, Stapler-/Fu&szlig;g&auml;ngertrennung</li>
+          </ul>
+        </div>
+        <div class="criteria-detail-item">
+          <h4>Zukunftsflexibilit&auml;t <span class="weight-tag">15 %</span></h4>
+          <ul>
+            <li>Platz f&uuml;r Bio-Polyol-Lagerung</li>
+            <li>Neue Anlagen integrierbar</li>
+            <li>Skalierbarkeit &amp; Rekonfigurierbarkeit</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EVALUATION TABLE -->
+  <div class="card">
+    <div class="card-header"><span class="icon">&#9638;</span> Detailbewertung</div>
+    <div class="card-body">
+      <div class="table-wrapper">
+        <table class="eval-table" id="eval-table">
+          <thead>
+            <tr>
+              <th data-col="criterion" onclick="sortTable(0)">Kriterium <span class="sort-icon">&#9650;&#9660;</span></th>
+              <th data-col="weight" onclick="sortTable(1)">Gewichtung <span class="sort-icon">&#9650;&#9660;</span></th>
+              <th data-col="v2-score" colspan="1">Vorschlag 2<br><small>Bewertung</small></th>
+              <th data-col="v2-weighted">V2<br><small>Gewichtet</small></th>
+              <th data-col="v2-comment">V2 Kommentar</th>
+              <th data-col="v3-score">Vorschlag 3<br><small>Bewertung</small></th>
+              <th data-col="v3-weighted">V3<br><small>Gewichtet</small></th>
+              <th data-col="v3-comment">V3 Kommentar</th>
+              <th data-col="v4-score">Vorschlag 4<br><small>Bewertung</small></th>
+              <th data-col="v4-weighted">V4<br><small>Gewichtet</small></th>
+              <th data-col="v4-comment">V4 Kommentar</th>
+            </tr>
+          </thead>
+          <tbody id="eval-tbody">
+            <!-- Filled by JS -->
+          </tbody>
+          <tfoot id="eval-tfoot">
+            <!-- Filled by JS -->
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  Autoneum &mdash; NVH 2030 Bewertungsmatrix &bull; Erstellt am <span id="gen-date"></span> &bull; Standort Gundernhausen
+</div>
+
+<!-- NOTIFICATION -->
+<div class="notification" id="notification"></div>
+
+<!-- HIDDEN FILE INPUT -->
+<input type="file" id="file-import" accept=".json" style="display:none" onchange="handleImport(event)">
+
+<script>
+(function(){
+  'use strict';
+
+  /* ===== DATA MODEL ===== */
+  const CRITERIA = [
+    {
+      id: 'materialflow',
+      name: 'Materialflusseffizienz',
+      desc: 'Wegl\u00e4nge, Kreuzungspunkte, Engstellen, N\u00e4he RA-System',
+      weight: 0.25
+    },
+    {
+      id: 'capacity',
+      name: 'Produktionskapazit\u00e4t / Durchsatz',
+      desc: 'Produktionszellen, Taktzeit, Zug\u00e4nglichkeit, Parallelproduktion',
+      weight: 0.25
+    },
+    {
+      id: 'space',
+      name: 'Fl\u00e4chennutzung',
+      desc: 'Effizienz Halle 2, freigegebene Fl\u00e4che Halle 3, Totzonen',
+      weight: 0.20
+    },
+    {
+      id: 'safety',
+      name: 'Sicherheit & Ergonomie',
+      desc: 'Bedienerwege, Notausg\u00e4nge, Gefahrstofftrennung, L\u00e4rmzonen',
+      weight: 0.15
+    },
+    {
+      id: 'flexibility',
+      name: 'Zukunftsflexibilit\u00e4t',
+      desc: 'Bio-Polyol, neue Anlagen, Skalierbarkeit, Rekonfigurierbarkeit',
+      weight: 0.15
+    }
+  ];
+
+  const PROPOSALS = ['v2', 'v3', 'v4'];
+  const PROPOSAL_LABELS = { v2: 'Vorschlag 2', v3: 'Vorschlag 3', v4: 'Vorschlag 4' };
+  const PROPOSAL_COLORS = {
+    v2: '#2196F3',
+    v3: '#FF9800',
+    v4: '#b8c400'
+  };
+
+  /* Initial scores: [v2, v3, v4] */
+  const DEFAULT_SCORES = {
+    materialflow: [3, 3, 4],
+    capacity:     [3, 4, 4],
+    space:        [3, 3, 4],
+    safety:       [3, 3, 4],
+    flexibility:  [3, 3, 4]
+  };
+
+  const DEFAULT_COMMENTS = {
+    materialflow: [
+      'Kompakte Anordnung, mittlere Wegl\u00e4ngen',
+      '\u00c4hnlich V2, leicht optimierte Peripherie',
+      'Klare Zonierung, CO\u2082/Trennmittel gut positioniert'
+    ],
+    capacity: [
+      'Produktionsbereich definiert, beengte Zug\u00e4nglichkeit',
+      'Leicht verbesserte Maschinenzug\u00e4nglichkeit',
+      'Drei definierte Produktionszonen, gutes Parallelisierungspotenzial'
+    ],
+    space: [
+      'Halle 3 teilweise frei, einige Totzonen',
+      'Vergleichbar mit V2, \u00e4hnliche Raumausnutzung',
+      'Strukturierte Fl\u00e4chenteilung, B\u00fcro/Technik klar getrennt'
+    ],
+    safety: [
+      'Grundlegende Trennung vorhanden',
+      'Vergleichbar mit V2',
+      'Elektro-Werkstatt, WC/Umkleide klar definiert, gute Wegetrennung'
+    ],
+    flexibility: [
+      'Wenig Reservefl\u00e4che erkennbar',
+      'Etwas mehr Raum als V2',
+      'Reservefl\u00e4chen f\u00fcr Bio-Polyol und neue Anlagen eingeplant'
+    ]
+  };
+
+  let scores = {};
+  let comments = {};
+
+  function initData() {
+    const saved = localStorage.getItem('nvh2030_eval');
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        scores = parsed.scores || JSON.parse(JSON.stringify(DEFAULT_SCORES));
+        comments = parsed.comments || JSON.parse(JSON.stringify(DEFAULT_COMMENTS));
+        return;
+      } catch(e) { /* ignore, use defaults */ }
+    }
+    scores = JSON.parse(JSON.stringify(DEFAULT_SCORES));
+    comments = JSON.parse(JSON.stringify(DEFAULT_COMMENTS));
+  }
+
+  function saveData() {
+    localStorage.setItem('nvh2030_eval', JSON.stringify({ scores, comments }));
+  }
+
+  /* ===== CALCULATIONS ===== */
+  function getWeightedScore(criterionId, proposalIdx) {
+    const criterion = CRITERIA.find(c => c.id === criterionId);
+    return (scores[criterionId][proposalIdx] || 0) * criterion.weight;
+  }
+
+  function getTotalWeighted(proposalIdx) {
+    return CRITERIA.reduce((sum, c) => sum + getWeightedScore(c.id, proposalIdx), 0);
+  }
+
+  function getMaxPossible() {
+    return CRITERIA.reduce((sum, c) => sum + 5 * c.weight, 0); // always 5.0
+  }
+
+  /* ===== RENDER TABLE ===== */
+  function renderTable() {
+    const tbody = document.getElementById('eval-tbody');
+    tbody.innerHTML = '';
+
+    CRITERIA.forEach((crit, ci) => {
+      const tr = document.createElement('tr');
+      tr.dataset.criterionIdx = ci;
+
+      // Criterion name
+      const tdName = document.createElement('td');
+      tdName.className = 'criterion-cell';
+      tdName.innerHTML = crit.name + '<div class="criterion-desc">' + crit.desc + '</div>';
+      tr.appendChild(tdName);
+
+      // Weight
+      const tdWeight = document.createElement('td');
+      tdWeight.className = 'weight-cell';
+      tdWeight.textContent = (crit.weight * 100) + ' %';
+      tr.appendChild(tdWeight);
+
+      // For each proposal: score, weighted, comment
+      PROPOSALS.forEach((p, pi) => {
+        // Score
+        const tdScore = document.createElement('td');
+        tdScore.className = 'score-cell';
+        const wrapper = document.createElement('div');
+        wrapper.className = 'score-input-wrapper';
+        const input = document.createElement('input');
+        input.type = 'number';
+        input.className = 'score-input';
+        input.min = 1;
+        input.max = 5;
+        input.step = 1;
+        input.value = scores[crit.id][pi];
+        input.dataset.criterion = crit.id;
+        input.dataset.proposal = pi;
+        input.addEventListener('change', onScoreChange);
+        input.addEventListener('input', onScoreInput);
+        wrapper.appendChild(input);
+
+        // Mini bar
+        const barBg = document.createElement('div');
+        barBg.className = 'score-bar-bg';
+        const barFill = document.createElement('div');
+        barFill.className = 'score-bar-fill';
+        const val = scores[crit.id][pi];
+        barFill.style.width = (val / 5 * 100) + '%';
+        barFill.style.background = getScoreColor(val);
+        barBg.appendChild(barFill);
+        wrapper.appendChild(barBg);
+
+        tdScore.appendChild(wrapper);
+        tr.appendChild(tdScore);
+
+        // Weighted
+        const tdW = document.createElement('td');
+        tdW.className = 'weighted-cell';
+        const ws = getWeightedScore(crit.id, pi);
+        tdW.textContent = ws.toFixed(2);
+        tdW.style.color = getScoreColor(scores[crit.id][pi]);
+        tr.appendChild(tdW);
+
+        // Comment
+        const tdC = document.createElement('td');
+        tdC.className = 'comment-cell';
+        const textarea = document.createElement('textarea');
+        textarea.className = 'comment-input';
+        textarea.rows = 2;
+        textarea.value = comments[crit.id][pi] || '';
+        textarea.dataset.criterion = crit.id;
+        textarea.dataset.proposal = pi;
+        textarea.addEventListener('change', onCommentChange);
+        tdC.appendChild(textarea);
+        tr.appendChild(tdC);
+      });
+
+      tbody.appendChild(tr);
+    });
+
+    renderTotals();
+  }
+
+  function renderTotals() {
+    const tfoot = document.getElementById('eval-tfoot');
+    tfoot.innerHTML = '';
+    const tr = document.createElement('tr');
+    tr.className = 'total-row';
+
+    const tdLabel = document.createElement('td');
+    tdLabel.textContent = 'Gesamtbewertung';
+    tdLabel.style.fontSize = '1.05rem';
+    tr.appendChild(tdLabel);
+
+    const tdW = document.createElement('td');
+    tdW.className = 'weight-cell';
+    tdW.textContent = '100 %';
+    tr.appendChild(tdW);
+
+    const maxScore = getMaxPossible();
+
+    PROPOSALS.forEach((p, pi) => {
+      const total = getTotalWeighted(pi);
+      const pct = (total / maxScore * 100).toFixed(1);
+
+      const tdScore = document.createElement('td');
+      tdScore.className = 'score-cell';
+      tdScore.innerHTML = '<span class="total-score">' + pct + '%</span>';
+      tr.appendChild(tdScore);
+
+      const tdWeighted = document.createElement('td');
+      tdWeighted.className = 'weighted-cell';
+      tdWeighted.innerHTML = '<span class="total-score">' + total.toFixed(2) + '</span><br><small>von ' + maxScore.toFixed(1) + '</small>';
+      tr.appendChild(tdWeighted);
+
+      const tdEmpty = document.createElement('td');
+      tr.appendChild(tdEmpty);
+    });
+
+    tfoot.appendChild(tr);
+  }
+
+  /* ===== RENDER RANKING ===== */
+  function renderRanking() {
+    const grid = document.getElementById('ranking-grid');
+    grid.innerHTML = '';
+
+    const maxScore = getMaxPossible();
+    const results = PROPOSALS.map((p, pi) => ({
+      key: p,
+      label: PROPOSAL_LABELS[p],
+      total: getTotalWeighted(pi),
+      pct: (getTotalWeighted(pi) / maxScore * 100).toFixed(1),
+      color: PROPOSAL_COLORS[p]
+    }));
+
+    results.sort((a, b) => b.total - a.total);
+
+    results.forEach((r, i) => {
+      const div = document.createElement('div');
+      div.className = 'rank-card rank-' + (i + 1);
+      div.innerHTML =
+        '<div class="rank-badge">' + (i + 1) + '</div>' +
+        '<div class="rank-name">' + r.label + '</div>' +
+        '<div class="rank-score">' + r.pct + '%</div>' +
+        '<div class="rank-label">Gesamtbewertung: ' + r.total.toFixed(2) + ' / ' + maxScore.toFixed(1) + '</div>';
+      grid.appendChild(div);
+    });
+  }
+
+  /* ===== RADAR CHART ===== */
+  function renderRadar() {
+    const svg = document.getElementById('radar-chart');
+    svg.innerHTML = '';
+
+    const cx = 260, cy = 225, radius = 170;
+    const n = CRITERIA.length;
+    const angleStep = (2 * Math.PI) / n;
+    const startAngle = -Math.PI / 2; // top
+
+    // Concentric pentagons (grid)
+    for (let level = 1; level <= 5; level++) {
+      const r = radius * level / 5;
+      let points = '';
+      for (let i = 0; i < n; i++) {
+        const angle = startAngle + i * angleStep;
+        const x = cx + r * Math.cos(angle);
+        const y = cy + r * Math.sin(angle);
+        points += x + ',' + y + ' ';
+      }
+      const polygon = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+      polygon.setAttribute('points', points.trim());
+      polygon.setAttribute('fill', level % 2 === 0 ? '#f5f7fa' : '#edf0f5');
+      polygon.setAttribute('stroke', '#d0d5dd');
+      polygon.setAttribute('stroke-width', '0.8');
+      svg.appendChild(polygon);
+    }
+
+    // Axis lines and labels
+    CRITERIA.forEach((crit, i) => {
+      const angle = startAngle + i * angleStep;
+      const x1 = cx, y1 = cy;
+      const x2 = cx + radius * Math.cos(angle);
+      const y2 = cy + radius * Math.sin(angle);
+
+      const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      line.setAttribute('x1', x1);
+      line.setAttribute('y1', y1);
+      line.setAttribute('x2', x2);
+      line.setAttribute('y2', y2);
+      line.setAttribute('stroke', '#c0c7d0');
+      line.setAttribute('stroke-width', '0.8');
+      svg.appendChild(line);
+
+      // Label
+      const lx = cx + (radius + 28) * Math.cos(angle);
+      const ly = cy + (radius + 28) * Math.sin(angle);
+      const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      text.setAttribute('x', lx);
+      text.setAttribute('y', ly);
+      text.setAttribute('text-anchor', 'middle');
+      text.setAttribute('dominant-baseline', 'middle');
+      text.setAttribute('font-size', '11');
+      text.setAttribute('fill', '#495057');
+      text.setAttribute('font-weight', '600');
+      text.setAttribute('font-family', 'Segoe UI, sans-serif');
+
+      // Wrap long labels
+      const shortNames = [
+        'Materialfluss',
+        'Kapazit\u00e4t',
+        'Fl\u00e4che',
+        'Sicherheit',
+        'Flexibilit\u00e4t'
+      ];
+      text.textContent = shortNames[i];
+
+      // Adjust position for readability
+      if (i === 0) text.setAttribute('y', ly - 5); // top
+      svg.appendChild(text);
+
+      // Score labels on axes (1-5)
+      for (let s = 1; s <= 5; s++) {
+        if (i === 0) { // only on first axis
+          const sr = radius * s / 5;
+          const sx = cx + sr * Math.cos(angle) + 12;
+          const sy = cy + sr * Math.sin(angle) + 2;
+          const st = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+          st.setAttribute('x', sx);
+          st.setAttribute('y', sy);
+          st.setAttribute('font-size', '9');
+          st.setAttribute('fill', '#868e96');
+          st.setAttribute('font-family', 'Segoe UI, sans-serif');
+          st.textContent = s;
+          svg.appendChild(st);
+        }
+      }
+    });
+
+    // Data polygons
+    PROPOSALS.forEach((p, pi) => {
+      let points = '';
+      const coords = [];
+      CRITERIA.forEach((crit, ci) => {
+        const angle = startAngle + ci * angleStep;
+        const val = scores[crit.id][pi];
+        const r = radius * val / 5;
+        const x = cx + r * Math.cos(angle);
+        const y = cy + r * Math.sin(angle);
+        points += x + ',' + y + ' ';
+        coords.push({ x, y });
+      });
+
+      const polygon = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+      polygon.setAttribute('points', points.trim());
+      polygon.setAttribute('fill', PROPOSAL_COLORS[p] + '25');
+      polygon.setAttribute('stroke', PROPOSAL_COLORS[p]);
+      polygon.setAttribute('stroke-width', '2.5');
+      polygon.setAttribute('stroke-linejoin', 'round');
+      svg.appendChild(polygon);
+
+      // Dots
+      coords.forEach(coord => {
+        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        circle.setAttribute('cx', coord.x);
+        circle.setAttribute('cy', coord.y);
+        circle.setAttribute('r', '4');
+        circle.setAttribute('fill', PROPOSAL_COLORS[p]);
+        circle.setAttribute('stroke', 'white');
+        circle.setAttribute('stroke-width', '1.5');
+        svg.appendChild(circle);
+      });
+    });
+  }
+
+  /* ===== HELPERS ===== */
+  function getScoreColor(val) {
+    const colors = ['', '#d32f2f', '#e64a19', '#f9a825', '#558b2f', '#2e7d32'];
+    return colors[Math.max(1, Math.min(5, Math.round(val)))] || '#888';
+  }
+
+  function showNotification(msg) {
+    const el = document.getElementById('notification');
+    el.textContent = msg;
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), 2500);
+  }
+
+  /* ===== EVENT HANDLERS ===== */
+  function onScoreChange(e) {
+    let val = parseInt(e.target.value);
+    if (isNaN(val) || val < 1) val = 1;
+    if (val > 5) val = 5;
+    e.target.value = val;
+    const crit = e.target.dataset.criterion;
+    const pi = parseInt(e.target.dataset.proposal);
+    scores[crit][pi] = val;
+    saveData();
+    refresh();
+  }
+
+  function onScoreInput(e) {
+    const val = parseInt(e.target.value);
+    if (val < 1 || val > 5 || isNaN(val)) {
+      e.target.classList.add('invalid');
+    } else {
+      e.target.classList.remove('invalid');
+    }
+  }
+
+  function onCommentChange(e) {
+    const crit = e.target.dataset.criterion;
+    const pi = parseInt(e.target.dataset.proposal);
+    comments[crit][pi] = e.target.value;
+    saveData();
+  }
+
+  function refresh() {
+    renderTable();
+    renderRanking();
+    renderRadar();
+  }
+
+  /* ===== SORT ===== */
+  let sortCol = -1;
+  let sortDir = 1;
+
+  window.sortTable = function(colIdx) {
+    if (sortCol === colIdx) {
+      sortDir *= -1;
+    } else {
+      sortCol = colIdx;
+      sortDir = 1;
+    }
+
+    const order = [...Array(CRITERIA.length).keys()];
+
+    if (colIdx === 0) {
+      // Sort by name
+      order.sort((a, b) => sortDir * CRITERIA[a].name.localeCompare(CRITERIA[b].name, 'de'));
+    } else if (colIdx === 1) {
+      // Sort by weight
+      order.sort((a, b) => sortDir * (CRITERIA[a].weight - CRITERIA[b].weight));
+    }
+
+    // Reorder CRITERIA array based on sort
+    const sortedCriteria = order.map(i => CRITERIA[i]);
+    CRITERIA.splice(0, CRITERIA.length, ...sortedCriteria);
+
+    refresh();
+    showNotification('Tabelle sortiert');
+  };
+
+  /* ===== RESET ===== */
+  window.resetScores = function() {
+    if (confirm('Alle Bewertungen und Kommentare zur\u00fccksetzen?')) {
+      scores = JSON.parse(JSON.stringify(DEFAULT_SCORES));
+      comments = JSON.parse(JSON.stringify(DEFAULT_COMMENTS));
+      saveData();
+      refresh();
+      showNotification('Bewertungen zur\u00fcckgesetzt');
+    }
+  };
+
+  /* ===== EXPORT ===== */
+  window.exportData = function() {
+    const data = {
+      project: 'NVH 2030 - Bewertungsmatrix',
+      location: 'Gundernhausen',
+      exported: new Date().toISOString(),
+      scores: scores,
+      comments: comments,
+      totals: {}
+    };
+    PROPOSALS.forEach((p, pi) => {
+      data.totals[PROPOSAL_LABELS[p]] = {
+        weighted: getTotalWeighted(pi).toFixed(2),
+        percent: (getTotalWeighted(pi) / getMaxPossible() * 100).toFixed(1) + '%'
+      };
+    });
+
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'NVH2030_Bewertungsmatrix_' + new Date().toISOString().slice(0, 10) + '.json';
+    a.click();
+    URL.revokeObjectURL(url);
+    showNotification('Daten exportiert');
+  };
+
+  /* ===== IMPORT ===== */
+  window.importData = function() {
+    document.getElementById('file-import').click();
+  };
+
+  window.handleImport = function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(ev) {
+      try {
+        const data = JSON.parse(ev.target.result);
+        if (data.scores) scores = data.scores;
+        if (data.comments) comments = data.comments;
+        saveData();
+        refresh();
+        showNotification('Daten importiert');
+      } catch(err) {
+        alert('Fehler beim Importieren: ' + err.message);
+      }
+    };
+    reader.readAsText(file);
+    e.target.value = '';
+  };
+
+  /* ===== INIT ===== */
+  function init() {
+    initData();
+
+    // Set date
+    document.getElementById('gen-date').textContent = new Date().toLocaleDateString('de-DE', {
+      year: 'numeric', month: 'long', day: 'numeric'
+    });
+
+    refresh();
+  }
+
+  // Start
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gundernhausen Dual-Pillar Investment Proposal</title>
+    <style>
+        :root {
+            --atn-green: #B8C400;
+            --atn-dark-green: #99CC00;
+            --atn-med-green: #CAD340;
+            --atn-light-green: #DAE279;
+            --atn-pale-green: #EAEDB2;
+            --atn-lightest-green: #EDF0BF;
+            --atn-black: #000000;
+            --atn-white: #FFFFFF;
+            --atn-dark-grey: #666666;
+            --atn-med-grey: #858585;
+            --atn-light-grey: #DCDCDC;
+            --atn-vlight-grey: #F4F4F4;
+            --atn-orange: #E86A10;
+            --atn-light-orange: #F1A670;
+            --atn-light-blue: #69BBFF;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:Arial,Calibri,sans-serif; background:var(--atn-white); color:var(--atn-black); line-height:1.6; font-size:12px; }
+        @media print {
+            body { font-size:9.5px; }
+            .page-break { page-break-before:always; }
+            .hero { padding:25px 30px !important; }
+            .container { padding:12px 25px !important; }
+            .score-card, .card { break-inside:avoid; }
+        }
+        .classification { font-size:10px; font-style:italic; color:var(--atn-orange); font-weight:400; }
+        .hero {
+            background:linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 60%, #3a3a3a 100%);
+            color:var(--atn-white); padding:45px 65px; position:relative; overflow:hidden;
+        }
+        .hero::before {
+            content:''; position:absolute; top:-40%; right:-15%; width:500px; height:500px;
+            background:radial-gradient(circle, rgba(184,196,0,.12) 0%, transparent 70%); border-radius:50%;
+        }
+        .hero-top { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:20px; }
+        .hero-tag { font-size:10px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--atn-green); margin-bottom:8px; }
+        .hero h1 { font-size:28px; font-weight:700; line-height:1.2; margin-bottom:10px; }
+        .hero h1 span { color:var(--atn-green); }
+        .hero-sub { font-size:13px; font-weight:400; opacity:.85; max-width:720px; margin-bottom:16px; }
+        .hero-meta { display:flex; gap:14px; font-size:10px; opacity:.6; flex-wrap:wrap; }
+        .vbadge { display:inline-block; background:var(--atn-green); color:var(--atn-black); padding:2px 8px; border-radius:3px; font-size:9px; font-weight:700; margin-left:6px; vertical-align:middle; }
+
+        /* TOC */
+        .toc { background:var(--atn-vlight-grey); border:1px solid var(--atn-light-grey); border-radius:8px; padding:18px 24px; margin-bottom:22px; }
+        .toc h3 { font-size:13px; font-weight:700; color:var(--atn-green); margin-bottom:10px; }
+        .toc-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; }
+        .toc a { font-size:10px; color:var(--atn-dark-grey); text-decoration:none; padding:4px 8px; border-radius:4px; display:block; }
+        .toc a:hover { background:var(--atn-lightest-green); color:var(--atn-black); }
+        .toc a .tn { color:var(--atn-green); font-weight:700; margin-right:4px; }
+
+        /* KEY NUMBERS */
+        .key-numbers { display:grid; grid-template-columns:repeat(6,1fr); background:var(--atn-white); border-radius:8px; box-shadow:0 3px 16px rgba(0,0,0,.07); margin:-28px 45px 22px; position:relative; z-index:10; overflow:hidden; border:1px solid var(--atn-light-grey); }
+        .kn { padding:16px 10px; text-align:center; border-right:1px solid var(--atn-light-grey); }
+        .kn:last-child { border-right:none; }
+        .kn .v { font-size:20px; font-weight:700; color:var(--atn-black); line-height:1; margin-bottom:3px; }
+        .kn .v span { color:var(--atn-green); }
+        .kn .l { font-size:8.5px; color:var(--atn-dark-grey); text-transform:uppercase; letter-spacing:.6px; }
+
+        .container { max-width:1040px; margin:0 auto; padding:22px 45px; }
+
+        /* SECTION HEADERS */
+        .sh { margin-bottom:18px; }
+        .sh .tag { font-size:9px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--atn-green); margin-bottom:4px; }
+        .sh h2 { font-size:20px; font-weight:700; color:var(--atn-green); }
+        .sh p { color:var(--atn-dark-grey); margin-top:3px; font-size:11.5px; }
+
+        /* BOXES */
+        .box { border-radius:6px; padding:20px 24px; margin-bottom:22px; }
+        .box h3 { font-size:13px; font-weight:700; margin-bottom:8px; }
+        .box-warn { background:#FFF5EB; border-left:4px solid var(--atn-orange); }
+        .box-warn h3 { color:var(--atn-orange); }
+        .box-china { background:#FFFBE6; border-left:4px solid var(--atn-light-orange); }
+        .box-china h3 { color:#8D6E00; }
+        .box-green { background:#F7F9E6; border-left:4px solid var(--atn-green); }
+        .box-green h3 { color:var(--atn-dark-green); }
+        .box-dark { background:#1a1a1a; border-left:4px solid var(--atn-green); color:#ddd; }
+        .box-dark h3 { color:var(--atn-green); }
+        .box-blue { background:#EBF5FF; border-left:4px solid var(--atn-light-blue); }
+        .box-blue h3 { color:#2E75B6; }
+        .box ul { list-style:none; padding:0; }
+        .box li { padding:3px 0 3px 18px; position:relative; font-size:11px; }
+        .box li::before { content:''; position:absolute; left:0; top:7px; width:8px; height:8px; background:var(--atn-orange); border-radius:2px; }
+        .box-green li::before { background:var(--atn-green); }
+        .box-dark li::before { background:var(--atn-green); }
+        .box-blue li::before { background:var(--atn-light-blue); }
+
+        /* STAT GRIDS */
+        .stats { display:grid; gap:10px; margin-top:10px; }
+        .stats-4 { grid-template-columns:repeat(4,1fr); }
+        .stats-3 { grid-template-columns:repeat(3,1fr); }
+        .stats-5 { grid-template-columns:repeat(5,1fr); }
+        .stats-6 { grid-template-columns:repeat(6,1fr); }
+        .stat { background:var(--atn-vlight-grey); border-radius:6px; padding:12px; text-align:center; border:1px solid var(--atn-light-grey); }
+        .stat .sv { font-size:18px; font-weight:700; color:var(--atn-black); }
+        .stat .sl { font-size:8.5px; color:var(--atn-dark-grey); margin-top:2px; }
+        .box-dark .stat { background:rgba(184,196,0,.08); border-color:rgba(184,196,0,.2); }
+        .box-dark .stat .sv { color:var(--atn-green); }
+        .box-dark .stat .sl { color:#999; }
+
+        /* TABLES */
+        table { width:100%; border-collapse:collapse; margin:14px 0; font-size:10.5px; }
+        th { background:var(--atn-green); color:var(--atn-white); padding:7px 9px; text-align:left; font-weight:700; font-size:9px; text-transform:uppercase; letter-spacing:.4px; }
+        th:first-child { border-radius:4px 0 0 0; } th:last-child { border-radius:0 4px 0 0; }
+        td { padding:7px 9px; border-bottom:1px solid var(--atn-light-grey); }
+        tr:nth-child(even) { background:var(--atn-vlight-grey); }
+        tr:hover { background:var(--atn-lightest-green); }
+        .sc-h { color:var(--atn-dark-green); font-weight:700; font-size:12px; }
+        .sc-m { color:var(--atn-orange); font-weight:700; font-size:12px; }
+        .sc-l { color:var(--atn-med-grey); font-weight:700; font-size:12px; }
+
+        /* BAR CHART */
+        .bar-row { display:flex; align-items:center; margin-bottom:5px; gap:8px; }
+        .bar-lbl { width:200px; font-size:10px; font-weight:700; color:var(--atn-black); text-align:right; flex-shrink:0; }
+        .bar-track { flex:1; height:20px; background:var(--atn-vlight-grey); border-radius:3px; overflow:hidden; border:1px solid var(--atn-light-grey); }
+        .bar-fill { height:100%; border-radius:3px; display:flex; align-items:center; justify-content:flex-end; padding-right:6px; font-size:10px; font-weight:700; color:var(--atn-white); }
+        .bf-green { background:linear-gradient(90deg,var(--atn-dark-green),var(--atn-green)); }
+        .bf-blue { background:linear-gradient(90deg,var(--atn-light-blue),#4DA8E8); }
+        .bf-orange { background:linear-gradient(90deg,var(--atn-orange),var(--atn-light-orange)); }
+        .bf-grey { background:linear-gradient(90deg,var(--atn-med-grey),var(--atn-dark-grey)); }
+
+        /* SCORE CARDS */
+        .card { background:var(--atn-white); border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,.05); margin-bottom:16px; overflow:hidden; border:1px solid var(--atn-light-grey); }
+        .card-s { border-left:5px solid var(--atn-green); }
+        .card-a { border-left:5px solid var(--atn-light-blue); }
+        .card-b { border-left:5px solid var(--atn-light-grey); }
+        .ch { display:flex; align-items:center; justify-content:space-between; padding:12px 18px; border-bottom:1px solid var(--atn-light-grey); }
+        .ch .left { display:flex; align-items:center; gap:10px; }
+        .rank { width:32px; height:32px; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:var(--atn-white); }
+        .ch h3 { font-size:13px; font-weight:700; color:var(--atn-black); }
+        .ch .sub { font-size:9.5px; color:var(--atn-dark-grey); }
+        .badges { display:flex; gap:5px; align-items:center; }
+        .badge { padding:3px 8px; border-radius:8px; font-size:9.5px; font-weight:700; }
+        .b-score { background:var(--atn-black); color:var(--atn-white); }
+        .b-cert { background:var(--atn-lightest-green); color:var(--atn-dark-green); }
+        .tier { padding:3px 9px; font-size:10px; font-weight:700; border-radius:4px; }
+        .tier-s { background:var(--atn-green); color:var(--atn-black); }
+        .tier-a { background:var(--atn-light-blue); color:var(--atn-white); }
+        .tier-b { background:var(--atn-light-grey); color:var(--atn-dark-grey); }
+        .cb { padding:14px 18px; display:grid; grid-template-columns:repeat(6,1fr); gap:8px; }
+        .cm { padding:9px; background:var(--atn-vlight-grey); border-radius:4px; text-align:center; }
+        .cm .ml { font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:.7px; color:var(--atn-dark-grey); margin-bottom:2px; }
+        .cm .mv { font-size:14px; font-weight:700; color:var(--atn-black); }
+        .cm .mv.g { color:var(--atn-dark-green); }
+        .cm .md { font-size:8px; color:var(--atn-med-grey); margin-top:1px; }
+        .cp { padding:0 18px 12px; }
+        .cp h4 { font-size:8.5px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--atn-dark-grey); margin-bottom:5px; }
+        .tags { display:flex; flex-wrap:wrap; gap:4px; }
+        .tg { background:var(--atn-lightest-green); color:var(--atn-dark-green); padding:2px 7px; border-radius:3px; font-size:9.5px; font-weight:600; }
+        .tg-hot { background:var(--atn-green); color:var(--atn-black); }
+        .tg-cn { background:#FFF3CD; color:#856404; }
+        .cr { padding:0 18px 12px; font-size:10.5px; line-height:1.6; color:var(--atn-dark-grey); }
+        .cr strong { color:var(--atn-black); }
+
+        /* QUICKWIN */
+        .qw { background:linear-gradient(135deg,#2a3000,#3d4700,#4a5500); color:var(--atn-white); border-radius:8px; padding:22px; margin-bottom:16px; border:2px solid var(--atn-green); }
+        .qw h3 { font-size:14px; font-weight:700; color:var(--atn-green); margin-bottom:4px; }
+        .qw .qt { font-size:18px; font-weight:700; margin-bottom:12px; }
+        .qw-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:12px; }
+        .qw-item { background:rgba(184,196,0,.1); border:1px solid rgba(184,196,0,.25); border-radius:6px; padding:10px; text-align:center; }
+        .qw-item .qv { font-size:20px; font-weight:700; color:var(--atn-green); }
+        .qw-item .ql { font-size:8.5px; color:var(--atn-pale-green); margin-top:2px; }
+        .qw-ex { font-size:10.5px; opacity:.9; line-height:1.6; }
+
+        /* FLOW */
+        .flow { display:flex; align-items:center; justify-content:center; gap:6px; margin:12px 0; flex-wrap:wrap; }
+        .flow-box { background:var(--atn-vlight-grey); border:2px solid var(--atn-green); border-radius:6px; padding:6px 12px; font-size:9.5px; font-weight:700; color:var(--atn-black); text-align:center; min-width:100px; }
+        .flow-arrow { font-size:16px; color:var(--atn-green); font-weight:700; }
+        .flow-box.dark { background:#2d2d2d; color:var(--atn-green); }
+
+        /* CTA */
+        .cta { background:linear-gradient(135deg,#1a1a1a,#2d2d2d); border:2px solid var(--atn-green); border-radius:8px; padding:32px; text-align:center; color:var(--atn-white); margin-bottom:22px; }
+        .cta h2 { font-size:20px; font-weight:700; color:var(--atn-green); margin-bottom:8px; }
+        .cta p { font-size:12px; opacity:.85; max-width:620px; margin:0 auto 18px; }
+        .cta-stats { display:flex; justify-content:center; gap:30px; margin-top:14px; flex-wrap:wrap; }
+        .cs2 { text-align:center; }
+        .cs2 .v2 { font-size:24px; font-weight:700; color:var(--atn-green); }
+        .cs2 .l2 { font-size:9px; opacity:.7; }
+
+        .footer { text-align:center; padding:16px; border-top:1px solid var(--atn-light-grey); margin-top:10px; }
+        .footer p { font-size:8.5px; color:var(--atn-dark-grey); font-style:italic; }
+
+        /* CONFIDENCE BADGES */
+        .conf { display:inline-block; padding:1px 6px; border-radius:3px; font-size:8px; font-weight:700; letter-spacing:.3px; }
+        .conf-h { background:var(--atn-lightest-green); color:var(--atn-dark-green); }
+        .conf-m { background:#FFF3CD; color:#856404; }
+        .conf-l { background:#FFE0E0; color:#B00020; }
+    </style>
+</head>
+<body>
+
+<div class="hero">
+    <div class="hero-top">
+        <div>
+            <div class="hero-tag">Executive Investment Proposal &bull; Two Pillars, One Site</div>
+            <h1>Gundernhausen <span>Dual-Pillar</span> Strategy <span class="vbadge">DECISION PAPER</span></h1>
+        </div>
+        <div style="text-align:right;">
+            <div style="font-size:20px; font-weight:700; color:var(--atn-green); letter-spacing:1px;">AUTONEUM</div>
+            <div class="classification">- CONFIDENTIAL -</div>
+        </div>
+    </div>
+    <p class="hero-sub"><strong style="color:var(--atn-green);">Two complementary investments that transform Gundernhausen</strong> from a declining PUR foam site into Autoneum&rsquo;s European innovation hub. Pillar 1 (MJF 3D Printing) delivers fast ROI and funds Pillar 2 (EV Acoustic PET Foam) &mdash; the strategic anchor addressing a $17.6B market.</p>
+    <div style="margin-bottom:14px; padding:12px 16px; background:rgba(184,196,0,.08); border:1px solid rgba(184,196,0,.25); border-radius:6px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+            <div>
+                <div style="font-size:9px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--atn-green); opacity:.8;">Prepared by</div>
+                <div style="font-size:16px; font-weight:700; color:var(--atn-white);">Jonas Roland Erwin Glawion</div>
+                <div style="font-size:11px; color:rgba(255,255,255,.7);">Process Engineer &mdash; Autoneum Germany GmbH &ndash; Gundernhausen</div>
+            </div>
+            <div style="text-align:right;">
+                <div style="font-size:9px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--atn-green); opacity:.8;">Supporting Documents</div>
+                <div style="font-size:10px; color:rgba(255,255,255,.6);">
+                    <a href="../03_Analysen/Gundernhausen Innovation Strategies 2026.html" style="color:var(--atn-light-blue); text-decoration:none;">CEO Paper V3</a> &nbsp;|&nbsp;
+                    <a href="../03_Analysen/HP_MJF_3D_Printing_DeepDive.html" style="color:var(--atn-light-blue); text-decoration:none;">MJF Deep-Dive</a> &nbsp;|&nbsp;
+                    <a href="../03_Analysen/EV_Acoustic_PET_Foam_DeepDive.html" style="color:var(--atn-light-blue); text-decoration:none;">PET Foam Deep-Dive</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="hero-meta">
+        <span>Autoneum Germany GmbH &ndash; Gundernhausen</span><span>|</span><span>March 2026</span><span>|</span><span>Confidential</span><span>|</span><span>Author: J.R.E. Glawion</span>
+    </div>
+</div>
+
+<div class="key-numbers">
+    <div class="kn"><div class="v">&euro;2.5&ndash;4.6<span>M</span></div><div class="l">Total Investment (Both Pillars)</div></div>
+    <div class="kn"><div class="v">30&ndash;40<span>%</span></div><div class="l">Blended IRR</div></div>
+    <div class="kn"><div class="v">12&ndash;24<span>Mo</span></div><div class="l">Payback (Pillar 1: 12Mo)</div></div>
+    <div class="kn"><div class="v">$17.6<span>B</span></div><div class="l">Addressable Market</div></div>
+    <div class="kn"><div class="v">300k</div><div class="l">BYD Vehicles/yr</div></div>
+    <div class="kn"><div class="v">5,002<span>m&sup2;</span></div><div class="l">Available Space</div></div>
+</div>
+
+<div class="container">
+
+<!-- THE TWO PILLARS -->
+<div class="sh"><div class="tag">The Strategy</div><h2>Two Pillars, One Transformation</h2><p>Sequential, complementary investments that de-risk each other</p></div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:22px;">
+    <div class="card card-s">
+        <div class="ch"><div class="left"><div class="rank" style="background:var(--atn-green);">1</div><div><h3>MJF 3D Print Hub</h3><div class="sub">Quick Win &bull; Fast ROI &bull; Enabler</div></div></div><div class="badges"><span class="badge b-score">82/100</span></div></div>
+        <div class="cb" style="grid-template-columns:repeat(3,1fr);">
+            <div class="cm"><div class="ml">Invest</div><div class="mv g">&euro;520&ndash;580k</div></div>
+            <div class="cm"><div class="ml">IRR</div><div class="mv g">35&ndash;50%</div></div>
+            <div class="cm"><div class="ml">Payback</div><div class="mv g">12&ndash;18 Mo</div></div>
+        </div>
+        <div class="cr">
+            <strong>What:</strong> HP MJF 5200 printer + Print Hub serving 10+ European Autoneum plants. 3D-printed jigs, fixtures, spare parts, tooling &mdash; including tooling for PET foam production lines.<br>
+            <strong>Why first:</strong> Lowest investment, fastest payback, proves site can innovate. Revenue from Print Hub directly funds Pillar 2.
+        </div>
+        <div class="cp"><h4>Key Technologies</h4><div class="tags"><span class="tg tg-hot">HP MJF 5200</span><span class="tg">CadQuery + Claude</span><span class="tg">W&uuml;rth DIS</span><span class="tg">Zoo CAD</span></div></div>
+    </div>
+
+    <div class="card card-s">
+        <div class="ch"><div class="left"><div class="rank" style="background:var(--atn-green);">2</div><div><h3>EV Acoustic + PET Foam</h3><div class="sub">Strategic Anchor &bull; Core Competency</div></div></div><div class="badges"><span class="badge b-score">92/100</span></div></div>
+        <div class="cb" style="grid-template-columns:repeat(3,1fr);">
+            <div class="cm"><div class="ml">Invest</div><div class="mv g">&euro;2&ndash;4M</div></div>
+            <div class="cm"><div class="ml">IRR</div><div class="mv g">25&ndash;35%</div></div>
+            <div class="cm"><div class="ml">Payback</div><div class="mv g">18&ndash;24 Mo</div></div>
+        </div>
+        <div class="cr">
+            <strong>What:</strong> ANDRITZ needlepunch + thermoforming line for PET foam sandwich parts. Wheelhouse liners, underbody panels, carpets, frunk liners for BYD, Geely, Leapmotor.<br>
+            <strong>Why strategic:</strong> $17.6B market, 92/100 score (highest), proprietary technology no Chinese supplier can match.
+        </div>
+        <div class="cp"><h4>Key Technologies</h4><div class="tags"><span class="tg tg-hot">ArmaFORM PET</span><span class="tg">ANDRITZ Needlepunch</span><span class="tg">Hybrid-Acoustics</span><span class="tg">ABC Process</span></div></div>
+    </div>
+</div>
+
+<!-- WHY TOGETHER -->
+<div class="qw">
+    <h3>WHY BOTH TOGETHER &mdash; THE SYNERGY</h3>
+    <div class="qt">MJF enables PET &bull; PET justifies the site &bull; Together they transform Gundernhausen</div>
+    <div class="qw-grid">
+        <div class="qw-item"><div class="qv">MJF &rarr; PET</div><div class="ql">Print tooling/jigs for PET foam lines</div></div>
+        <div class="qw-item"><div class="qv">Fast ROI</div><div class="ql">MJF pays back in 12Mo, funds PET ramp</div></div>
+        <div class="qw-item"><div class="qv">Shared Space</div><div class="ql">MJF in Halle 3, PET in Halle 2</div></div>
+        <div class="qw-item"><div class="qv">One Team</div><div class="ql">280 employees retrained PUR &rarr; PET + AM</div></div>
+    </div>
+    <div class="qw-ex">
+        <strong>Risk mitigation:</strong> If PET foam ramp is delayed (OEM nomination cycles), MJF Print Hub generates standalone revenue. If MJF demand is lower than expected, PET foam production is the primary revenue driver. Neither investment depends entirely on the other &mdash; but together they are 40% more valuable than apart.
+    </div>
+</div>
+
+<!-- COMBINED ROADMAP -->
+<div class="page-break"></div>
+<div class="sh"><div class="tag">Roadmap</div><h2>Combined Implementation Timeline</h2></div>
+
+<div style="background:var(--atn-white); border-radius:8px; padding:18px; box-shadow:0 2px 8px rgba(0,0,0,.05); margin-bottom:22px; border:1px solid var(--atn-light-grey);">
+    <table>
+        <thead><tr><th>Month</th><th>Pillar 1: MJF Print Hub</th><th>Pillar 2: PET Foam</th><th>Cumulative Invest</th></tr></thead>
+        <tbody>
+            <tr style="background:var(--atn-lightest-green);"><td><strong>1&ndash;3</strong></td><td>HP MJF 5200 ordered + site prep (HVAC, ATEX)</td><td>ArmaFORM material qualification, BYD RFQ prepared</td><td>&euro;520&ndash;580k</td></tr>
+            <tr><td><strong>4&ndash;6</strong></td><td>First builds, Print Hub live, 10+ part types in production</td><td>ANDRITZ needlepunch line ordered, prototype tooling (MJF-printed!)</td><td>&euro;1.3&ndash;2.1M</td></tr>
+            <tr style="background:var(--atn-lightest-green);"><td><strong>7&ndash;12</strong></td><td>2nd printer (if util &gt;70%), W&uuml;rth DIS, inter-plant supply</td><td>Needlepunch installed, thermoforming line, BYD prototype parts</td><td>&euro;2.0&ndash;3.4M</td></tr>
+            <tr><td><strong>13&ndash;18</strong></td><td>Generative design, AMR evaluation, full Print Hub</td><td><strong>BYD Szeged series supply begins</strong>, Geely/Leapmotor acquisition</td><td>&euro;2.5&ndash;4.6M</td></tr>
+            <tr style="background:var(--atn-lightest-green);"><td><strong>19&ndash;24</strong></td><td>Payback achieved, Print Hub profitable</td><td><strong>PET foam payback achieved</strong>, second NP line evaluation</td><td>Payback zone</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- WHAT IF WE DON'T -->
+<div class="box box-warn">
+    <h3>What Happens If We Don&rsquo;t Invest?</h3>
+    <ul>
+        <li>PUR foam volume continues declining as ICE production shrinks &mdash; Gundernhausen becomes a cost center</li>
+        <li>BYD, Geely, Leapmotor lock in European Tier-1 supply chains in 2026 &mdash; <strong>locked out for 5&ndash;7 year vehicle lifecycle</strong></li>
+        <li>EU ELV recycled content mandate (15% in ~2031) forces OEMs to seek rPET suppliers &mdash; competitors who move first own the certified supply</li>
+        <li>5,002 m&sup2; across 3 halls sits underutilized &mdash; 280 skilled employees at risk</li>
+        <li>Autoneum loses first-mover advantage in EV acoustic + PET foam to competitors like Adler Pelzer, Grupo Antolin, IAC</li>
+    </ul>
+</div>
+
+<!-- CTA -->
+<div class="cta">
+    <h2>Decision Request: Approve Dual-Pillar Investment</h2>
+    <p>Pillar 1 (MJF) is a no-regret investment &mdash; fast payback, low risk, serves all plants. Pillar 2 (PET Foam) is the strategic bet that positions Gundernhausen as Autoneum&rsquo;s European EV acoustic hub for the next decade. Together, they transform a declining PUR foam site into a €10M+ revenue innovation center.</p>
+    <div class="cta-stats">
+        <div class="cs2"><div class="v2">&euro;2.5&ndash;4.6M</div><div class="l2">Total Investment</div></div>
+        <div class="cs2"><div class="v2">30&ndash;40%</div><div class="l2">Blended IRR</div></div>
+        <div class="cs2"><div class="v2">12 Mo</div><div class="l2">First Payback (MJF)</div></div>
+        <div class="cs2"><div class="v2">92 + 82</div><div class="l2">Combined Score</div></div>
+        <div class="cs2"><div class="v2">2026</div><div class="l2">Window Closes</div></div>
+    </div>
+</div>
+
+</div>
+<div class="footer">
+    <p>&copy; 2026 Autoneum Germany GmbH &ndash; Gundernhausen &nbsp;|&nbsp; - CONFIDENTIAL - &nbsp;|&nbsp; Dual-Pillar Investment Proposal &nbsp;|&nbsp; Author: J.R.E. Glawion &nbsp;|&nbsp; March 2026</p>
+</div>
+</body>
+</html>

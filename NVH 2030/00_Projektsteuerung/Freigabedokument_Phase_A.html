@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Freigabedokument — NVH 2030 Phase A | Autoneum</title>
+<style>
+  /* ── Reset & Base ─────────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 15px; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    color: #2d2d2d;
+    background: #f6f6f6;
+    line-height: 1.6;
+  }
+
+  /* ── Header ───────────────────────────────────────────────── */
+  .site-header {
+    background: #2d2d2d;
+    padding: 28px 48px 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .brand-block { display: flex; flex-direction: column; gap: 2px; }
+  .brand-name {
+    font-size: 2.1rem;
+    font-weight: 700;
+    letter-spacing: 0.28em;
+    color: #b8c400;
+    text-transform: uppercase;
+  }
+  .brand-tagline {
+    font-size: 0.82rem;
+    color: #aaa;
+    letter-spacing: 0.08em;
+    margin-top: 2px;
+  }
+  .header-doc-info {
+    text-align: right;
+    color: #ccc;
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
+  .header-doc-info strong { color: #00b0e8; }
+
+  /* ── Content Container ────────────────────────────────────── */
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 36px 48px 80px;
+    background: #fff;
+    min-height: calc(100vh - 200px);
+  }
+
+  /* ── Title Block ──────────────────────────────────────────── */
+  .doc-title {
+    font-size: 1.65rem;
+    font-weight: 700;
+    color: #2d2d2d;
+    margin-bottom: 20px;
+    border-bottom: 3px solid #b8c400;
+    padding-bottom: 12px;
+  }
+
+  /* ── Metadata grid ────────────────────────────────────────── */
+  .meta-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px 32px;
+    margin-bottom: 32px;
+    font-size: 0.92rem;
+  }
+  .meta-grid .label { color: #7a7b7a; }
+  .meta-grid .value { font-weight: 600; }
+
+  /* ── Section headers ──────────────────────────────────────── */
+  h2.section {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #2d2d2d;
+    margin: 36px 0 14px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid #b8c400;
+  }
+  h3.subsection {
+    font-size: 1.02rem;
+    font-weight: 600;
+    color: #2d2d2d;
+    margin: 20px 0 10px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #b8c400;
+  }
+
+  /* ── Tables ───────────────────────────────────────────────── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+  }
+  thead th {
+    background: #2d2d2d;
+    color: #fff;
+    font-weight: 600;
+    text-align: left;
+    padding: 10px 14px;
+    white-space: nowrap;
+  }
+  thead th.num-col { text-align: right; }
+  tbody td {
+    padding: 9px 14px;
+    border-bottom: 1px solid #e0e0e0;
+    vertical-align: top;
+  }
+  tbody tr:nth-child(even) { background: #fafafa; }
+  tbody tr:hover { background: #f0f5d4; }
+  td.num { text-align: right; white-space: nowrap; }
+  tr.total-row td {
+    font-weight: 700;
+    border-top: 2px solid #2d2d2d;
+    background: #f6f6f6;
+  }
+  tr.subtotal-row td {
+    color: #7a7b7a;
+    font-style: italic;
+    background: #fafafa;
+  }
+
+  /* ── Hint / Note ──────────────────────────────────────────── */
+  .hint {
+    background: #f6f6f6;
+    border-left: 4px solid #00b0e8;
+    padding: 12px 16px;
+    font-size: 0.88rem;
+    color: #555;
+    margin: 12px 0 24px;
+  }
+  .hint strong { color: #2d2d2d; }
+
+  /* ── Risk badge ───────────────────────────────────────────── */
+  .risk-badge {
+    display: inline-block;
+    background: #90a000;
+    color: #fff;
+    padding: 4px 14px;
+    border-radius: 3px;
+    font-weight: 700;
+    font-size: 0.88rem;
+    letter-spacing: 0.04em;
+    margin-bottom: 10px;
+  }
+
+  /* ── Bullet list ──────────────────────────────────────────── */
+  ul.doc-list {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0 20px;
+  }
+  ul.doc-list li {
+    padding: 5px 0 5px 20px;
+    position: relative;
+    font-size: 0.92rem;
+  }
+  ul.doc-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 13px;
+    width: 8px;
+    height: 8px;
+    background: #b8c400;
+    border-radius: 1px;
+  }
+
+  /* ── Divider ──────────────────────────────────────────────── */
+  hr.sep {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 28px 0;
+  }
+
+  /* ── Signature block ──────────────────────────────────────── */
+  .signature-table { margin-top: 12px; }
+  .signature-table thead th { font-size: 0.85rem; }
+  .signature-table tbody td {
+    padding: 18px 14px 14px;
+    border-bottom: 1px solid #ccc;
+    height: 56px;
+    vertical-align: bottom;
+  }
+  .signature-table .sig-line {
+    border-bottom: 1px solid #2d2d2d;
+    display: block;
+    min-width: 140px;
+    height: 28px;
+  }
+
+  /* ── Checkboxes ───────────────────────────────────────────── */
+  .decision-options { margin: 16px 0 24px; }
+  .decision-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    font-size: 0.95rem;
+  }
+  .decision-option input[type="checkbox"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    border: 2px solid #2d2d2d;
+    border-radius: 3px;
+    cursor: pointer;
+    flex-shrink: 0;
+    position: relative;
+    background: #fff;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .decision-option input[type="checkbox"]:checked {
+    background: #b8c400;
+    border-color: #90a000;
+  }
+  .decision-option input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 1px;
+    width: 7px;
+    height: 13px;
+    border: solid #fff;
+    border-width: 0 2.5px 2.5px 0;
+    transform: rotate(40deg);
+  }
+  .decision-option strong { color: #2d2d2d; }
+
+  /* ── Anmerkungen textarea ─────────────────────────────────── */
+  .anmerkungen-label {
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 6px;
+  }
+  .anmerkungen-area {
+    width: 100%;
+    min-height: 120px;
+    border: 1px solid #bbb;
+    border-radius: 3px;
+    padding: 12px 14px;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-size: 0.92rem;
+    resize: vertical;
+    line-height: 1.6;
+    color: #2d2d2d;
+    background: #fff;
+  }
+  .anmerkungen-area:focus {
+    outline: none;
+    border-color: #b8c400;
+    box-shadow: 0 0 0 2px rgba(184, 196, 0, 0.25);
+  }
+
+  /* ── Footer ───────────────────────────────────────────────── */
+  .site-footer {
+    background: #2d2d2d;
+    color: #999;
+    text-align: center;
+    font-size: 0.78rem;
+    padding: 16px 48px;
+    letter-spacing: 0.03em;
+  }
+
+  /* ── Print button ─────────────────────────────────────────── */
+  .print-btn {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    background: #b8c400;
+    color: #2d2d2d;
+    border: none;
+    padding: 12px 22px;
+    font-weight: 700;
+    font-size: 0.92rem;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.2);
+    z-index: 1000;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    transition: background 0.15s;
+  }
+  .print-btn:hover { background: #90a000; color: #fff; }
+
+  /* ── Print styles ─────────────────────────────────────────── */
+  @media print {
+    html { font-size: 12px; }
+    body { background: #fff; }
+    .container {
+      max-width: 100%;
+      padding: 0;
+      margin: 0;
+      box-shadow: none;
+    }
+    .site-header {
+      padding: 16px 24px 12px;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .brand-name, .brand-tagline, .header-doc-info,
+    .header-doc-info strong {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    thead th {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .risk-badge {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    ul.doc-list li::before {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    tbody tr:nth-child(even) {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    tr.total-row td, tr.subtotal-row td {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .decision-option input[type="checkbox"] {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .decision-option input[type="checkbox"]:checked {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .print-btn { display: none; }
+    .site-footer {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+    .anmerkungen-area {
+      border: 1px solid #bbb;
+      min-height: 100px;
+      background: #fff;
+    }
+    h2.section { page-break-after: avoid; }
+    table { page-break-inside: avoid; }
+    .signature-table tbody td { height: 50px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<header class="site-header">
+  <div class="brand-block">
+    <div class="brand-name">AUTONEUM</div>
+    <div class="brand-tagline">Mastering Sound and Heat</div>
+  </div>
+  <div class="header-doc-info">
+    <strong>NVH 2030</strong> — Freigabedokument Phase A<br>
+    Dokument-Nr. NVH2030-FGD-001 | Stand 27.02.2026
+  </div>
+</header>
+
+<!-- ═══ CONTENT ═══ -->
+<main class="container">
+
+  <h1 class="doc-title">Freigabedokument — NVH 2030 Phase A</h1>
+
+  <!-- Meta -->
+  <div class="meta-grid">
+    <div><span class="label">Projekt:</span></div>
+    <div class="value">NVH 2030 — Layoutumbau Vorschlag 4</div>
+    <div><span class="label">Standort:</span></div>
+    <div class="value">Werk Gundernhausen</div>
+    <div><span class="label">Dokument-Nr.:</span></div>
+    <div class="value">NVH2030-FGD-001</div>
+    <div><span class="label">Stand:</span></div>
+    <div class="value">27.02.2026</div>
+    <div><span class="label">Erstellt von:</span></div>
+    <div class="value">Projektteam NVH 2030</div>
+  </div>
+
+  <hr class="sep">
+
+  <!-- ── 1. Projektgegenstand ── -->
+  <h2 class="section">1. Projektgegenstand</h2>
+  <p style="margin-bottom:16px;">
+    Konsolidierung aller NVH-Produktion in Halle 2 (Vorschlag 4) und vollstandige Raumung von Halle 3 fur zukunftiges Geschaft.
+  </p>
+
+  <h3 class="subsection">Kern-Massnahmen</h3>
+  <table>
+    <thead>
+      <tr>
+        <th style="width:46px;">Nr.</th>
+        <th>Massnahme</th>
+        <th style="width:170px;">Zeitraum</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>Abbau von 5 Maschinen (Tandem 172, Box20, Box21, Halbautomat 188, AUDI Q1 STW LHD)</td><td>Q2-Q3 2026</td></tr>
+      <tr><td>2</td><td>Umstellung verbleibender Produktionszellen in 3 Produktbereiche (Halle 2)</td><td>Q2-Q3 2026</td></tr>
+      <tr><td>3</td><td>Einrichtung Staplerverkehrswege und Zonentrennung</td><td>Q3 2026</td></tr>
+      <tr><td>4</td><td>Infrastrukturanpassung Halle 2 (Elektrik, Druckluft, Wasser, Absaugung)</td><td>Q2-Q3 2026</td></tr>
+      <tr><td>5</td><td>Raumung und Reinigung Halle 3</td><td>Q3-Q4 2026</td></tr>
+      <tr><td>6</td><td>Verlagerung Schaumlinie F von Halle 3 nach Halle 2</td><td>KW 29-30 (Sommerpause)</td></tr>
+      <tr><td>7</td><td>Einrichtung wassriger Trennmittel-Bereich</td><td>Q3 2026</td></tr>
+    </tbody>
+  </table>
+
+  <hr class="sep">
+
+  <!-- ── 2. Budget ── -->
+  <h2 class="section">2. Budget</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Kostenblock</th>
+        <th class="num-col" style="width:140px;">Min</th>
+        <th class="num-col" style="width:140px;">Max</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>A1. Maschinenabbau &amp; Halle 3 Raumung</td>
+        <td class="num">81.000 EUR</td>
+        <td class="num">132.000 EUR</td>
+      </tr>
+      <tr>
+        <td>A2. Anlagenumstellung Vorschlag 4</td>
+        <td class="num">58.000 EUR</td>
+        <td class="num">100.000 EUR</td>
+      </tr>
+      <tr>
+        <td>A3. Allgemeine Infrastruktur Halle 2</td>
+        <td class="num">115.000 EUR</td>
+        <td class="num">210.000 EUR</td>
+      </tr>
+      <tr>
+        <td>A4. Wassrige Trennmittel-Einrichtung</td>
+        <td class="num">8.000 EUR</td>
+        <td class="num">18.000 EUR</td>
+      </tr>
+      <tr class="total-row">
+        <td>GESAMT PHASE A</td>
+        <td class="num">262.000 EUR</td>
+        <td class="num">460.000 EUR</td>
+      </tr>
+      <tr class="subtotal-row">
+        <td>Risikorucklage (15%)</td>
+        <td class="num">39.300 EUR</td>
+        <td class="num">69.000 EUR</td>
+      </tr>
+      <tr class="total-row">
+        <td>GESAMT inkl. Rucklage</td>
+        <td class="num">301.300 EUR</td>
+        <td class="num">529.000 EUR</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="hint">
+    <strong>Hinweis:</strong> Richtwerte auf Basis von Industriebenchmarks. Detailkalkulation durch Werkscontrolling und Einkauf erforderlich.
+  </div>
+
+  <hr class="sep">
+
+  <!-- ── 3. Zeitplan ── -->
+  <h2 class="section">3. Zeitplan</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Meilenstein</th>
+        <th style="width:220px;">Geplanter Termin</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Projektfreigabe</td><td>Marz 2026</td></tr>
+      <tr><td>Infrastruktur-Bestandsaufnahme Halle 2 abgeschlossen</td><td>April 2026</td></tr>
+      <tr><td>Ausschreibungen versendet</td><td>Mai 2026</td></tr>
+      <tr><td>Vorproduktion Start (Sicherheitsbestand)</td><td>KW 23 (Juni 2026)</td></tr>
+      <tr><td>Sommerpause — Kritische Umbauten</td><td>KW 29-30 (Juli 2026)</td></tr>
+      <tr><td>Wiederanlauf &amp; Erstmusterprufung</td><td>KW 31-32</td></tr>
+      <tr><td>Halle 3 komplett geraumt</td><td>Q4 2026</td></tr>
+      <tr><td>Normalbetrieb neues Layout bestatigt</td><td>Q1 2027</td></tr>
+      <tr><td>Projektabschluss</td><td>Q1 2028</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:0.92rem;color:#555;margin-bottom:8px;">
+    <strong>Gesamtdauer:</strong> ~22 Monate (Q2 2026 - Q1 2028)
+  </p>
+
+  <hr class="sep">
+
+  <!-- ── 4. Risikobewertung ── -->
+  <h2 class="section">4. Risikobewertung (Zusammenfassung)</h2>
+  <div class="risk-badge">GESAMTRISIKO: BEHERRSCHBAR (Mittel)</div>
+  <ul class="doc-list">
+    <li>Kein Risiko im kritischen Bereich (RPZ &gt;= 16)</li>
+    <li>5 Risiken mit RPZ 9-12 — alle mit klaren Massnahmen adressiert</li>
+    <li>Grosste Risiken: C-Linie Ausfall (RPZ 12), Kundenversorgung Sommerpause (RPZ 12)</li>
+    <li>Detaillierte Risikobewertung: siehe <a href="Risikobewertung_Phase_A.html" style="color:#00b0e8;">Risikobewertung_Phase_A.html</a></li>
+  </ul>
+
+  <hr class="sep">
+
+  <!-- ── 5. Voraussetzungen ── -->
+  <h2 class="section">5. Voraussetzungen &amp; Randbedingungen</h2>
+  <ul class="doc-list">
+    <li>Max. 2 Wochen Produktionsstillstand wahrend Sommerpause</li>
+    <li>Unter 30 Mitarbeiter betroffen</li>
+    <li>Jahresvolumen: 500-1.000 t</li>
+    <li>Keine Baugenehmigungen erforderlich (rein innerbetriebliche Umstellung)</li>
+    <li>Phase B (CO2-RA, PU-Recycling, etc.) ist NICHT Teil dieses Budgets</li>
+    <li>AUDI Q1 STW LHD: Auslaufdatum muss vor Maschinenabbau bestatigt werden</li>
+  </ul>
+
+  <hr class="sep">
+
+  <!-- ── 6. Referenzdokumente ── -->
+  <h2 class="section">6. Referenzdokumente</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width:46px;">Nr.</th>
+        <th>Dokument</th>
+        <th style="width:280px;">Datei</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>Layoutentscheidung Vorschlag 4</td><td><a href="Layoutentscheidung_Vorschlag4.html" style="color:#00b0e8;">Layoutentscheidung_Vorschlag4.html</a></td></tr>
+      <tr><td>2</td><td>Kostenschatzung Phase A</td><td><a href="Kostenschaetzung_Vergleich.html" style="color:#00b0e8;">Kostenschaetzung_Vergleich.html</a></td></tr>
+      <tr><td>3</td><td>Risikobewertung &amp; Kundenauswirkung</td><td><a href="Risikobewertung_Phase_A.html" style="color:#00b0e8;">Risikobewertung_Phase_A.html</a></td></tr>
+      <tr><td>4</td><td>Argumentationspapier (12 Argumente)</td><td><a href="Argumentationspapier_Vorschlag4.html" style="color:#00b0e8;">Argumentationspapier_Vorschlag4.html</a></td></tr>
+      <tr><td>5</td><td>Management Summary PPTX</td><td><a href="NVH2030_Management_Summary.pptx" style="color:#00b0e8;">NVH2030_Management_Summary.pptx</a></td></tr>
+      <tr><td>6</td><td>Schematischer Layoutplan</td><td><a href="Halle2_Layoutplan_V4.html" style="color:#00b0e8;">Halle2_Layoutplan_V4.html</a></td></tr>
+      <tr><td>7</td><td>RACI-Matrix</td><td><a href="RACI_Matrix_Phase_A.html" style="color:#00b0e8;">RACI_Matrix_Phase_A.html</a></td></tr>
+      <tr><td>8</td><td>Checkliste Sommerpause</td><td><a href="Checkliste_Sommerpause_KW29_30.html" style="color:#00b0e8;">Checkliste_Sommerpause_KW29_30.html</a></td></tr>
+    </tbody>
+  </table>
+
+  <hr class="sep">
+
+  <!-- ── 7. Freigabe ── -->
+  <h2 class="section">7. Freigabe</h2>
+  <table class="signature-table">
+    <thead>
+      <tr>
+        <th style="width:220px;">Rolle</th>
+        <th>Name</th>
+        <th style="width:120px;">Datum</th>
+        <th style="width:180px;">Unterschrift</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Projektleiter</td>
+        <td><span class="sig-line"></span></td>
+        <td><span class="sig-line"></span></td>
+        <td><span class="sig-line"></span></td>
+      </tr>
+      <tr>
+        <td>Werkleitung Gundernhausen</td>
+        <td><span class="sig-line"></span></td>
+        <td><span class="sig-line"></span></td>
+        <td><span class="sig-line"></span></td>
+      </tr>
+      <tr>
+        <td>Produktionsleitung</td>
+        <td><span class="sig-line"></span></td>
+        <td><span class="sig-line"></span></td>
+        <td><span class="sig-line"></span></td>
+      </tr>
+      <tr>
+        <td>Controlling / Finanzen</td>
+        <td><span class="sig-line"></span></td>
+        <td><span class="sig-line"></span></td>
+        <td><span class="sig-line"></span></td>
+      </tr>
+      <tr>
+        <td>Betriebsrat (Kenntnisnahme)</td>
+        <td><span class="sig-line"></span></td>
+        <td><span class="sig-line"></span></td>
+        <td><span class="sig-line"></span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <hr class="sep">
+
+  <h3 class="subsection">Freigabeentscheidung</h3>
+  <div class="decision-options">
+    <label class="decision-option">
+      <input type="checkbox" id="chk-approved">
+      <span><strong>FREIGEGEBEN</strong> — Projekt kann wie beschrieben starten</span>
+    </label>
+    <label class="decision-option">
+      <input type="checkbox" id="chk-conditional">
+      <span><strong>FREIGEGEBEN MIT AUFLAGEN</strong> — Auflagen siehe Anhang</span>
+    </label>
+    <label class="decision-option">
+      <input type="checkbox" id="chk-rejected">
+      <span><strong>NICHT FREIGEGEBEN</strong> — Begrundung siehe Anhang</span>
+    </label>
+  </div>
+
+  <div class="anmerkungen-label">Anmerkungen:</div>
+  <textarea class="anmerkungen-area" placeholder="Anmerkungen hier eingeben..."></textarea>
+
+</main>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="site-footer">
+  NVH 2030 | Freigabedokument Phase A | Werk Gundernhausen | 27.02.2026 | Autoneum
+</footer>
+
+<!-- ═══ PRINT BUTTON ═══ -->
+<button class="print-btn" onclick="window.print()">Drucken</button>
+
+<!-- ═══ Mutual-exclusion logic for decision checkboxes ═══ -->
+<script>
+(function() {
+  var boxes = document.querySelectorAll('.decision-options input[type="checkbox"]');
+  boxes.forEach(function(box) {
+    box.addEventListener('change', function() {
+      if (this.checked) {
+        boxes.forEach(function(other) {
+          if (other !== box) other.checked = false;
+        });
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

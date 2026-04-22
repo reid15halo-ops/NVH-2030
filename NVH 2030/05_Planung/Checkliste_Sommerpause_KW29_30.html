@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkliste Sommerpause KW 29-30 (2026) | NVH 2030 | Autoneum</title>
+<style>
+/* ===== BASE RESET & TYPOGRAPHY ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 14px; }
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: #f6f6f6;
+  color: #2d2d2d;
+  line-height: 1.5;
+  padding-bottom: 80px;
+}
+a { color: #00b0e8; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ===== HEADER ===== */
+.site-header {
+  background: #2d2d2d;
+  color: #fff;
+  padding: 24px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.brand { display: flex; flex-direction: column; }
+.brand-name {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 6px;
+  color: #b8c400;
+  text-transform: uppercase;
+}
+.brand-tagline {
+  font-size: 0.85rem;
+  color: #7a7b7a;
+  letter-spacing: 2px;
+  margin-top: 2px;
+}
+.header-meta {
+  text-align: right;
+  font-size: 0.82rem;
+  color: #aaa;
+  line-height: 1.7;
+}
+.header-meta strong { color: #b8c400; }
+
+/* ===== MAIN CONTAINER ===== */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 40px;
+}
+
+/* ===== DOCUMENT TITLE ===== */
+.doc-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #2d2d2d;
+  margin-bottom: 8px;
+}
+.doc-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 4px 32px;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-left: 4px solid #b8c400;
+  padding: 14px 20px;
+  border-radius: 4px;
+  margin-bottom: 32px;
+  font-size: 0.92rem;
+}
+.doc-meta-grid span { padding: 2px 0; }
+.doc-meta-grid strong { color: #2d2d2d; }
+
+/* ===== SECTION HEADERS ===== */
+h2.section-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #2d2d2d;
+  border-bottom: 3px solid #b8c400;
+  padding-bottom: 8px;
+  margin: 36px 0 18px;
+}
+
+/* ===== DAY HEADERS ===== */
+h3.day-header {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #2d2d2d;
+  background: linear-gradient(90deg, #b8c400 0%, #d4de4a 100%);
+  color: #2d2d2d;
+  padding: 10px 18px;
+  border-radius: 4px;
+  margin: 24px 0 12px;
+}
+h3.week-header {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+  background: #2d2d2d;
+  padding: 12px 18px;
+  border-left: 6px solid #b8c400;
+  border-radius: 4px;
+  margin: 32px 0 8px;
+}
+
+/* ===== TABLES ===== */
+.tbl-wrap {
+  overflow-x: auto;
+  margin-bottom: 16px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+thead th {
+  background: #2d2d2d;
+  color: #fff;
+  font-weight: 600;
+  text-align: left;
+  padding: 10px 14px;
+  white-space: nowrap;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+tbody td {
+  padding: 9px 14px;
+  border-bottom: 1px solid #eee;
+  vertical-align: top;
+}
+tbody tr:hover { background: #fafafa; }
+tbody tr.row-checked { background: #f0f7d4 !important; }
+tbody tr.row-checked td.task-text { text-decoration: line-through; color: #7a7b7a; }
+tbody tr:last-child td { border-bottom: none; }
+
+/* ===== CHECKBOXES ===== */
+input.task-cb {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: #b8c400;
+}
+
+/* ===== PROGRESS COUNTER ===== */
+.progress-bar-wrap {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+.progress-track {
+  flex: 1;
+  height: 12px;
+  background: #e0e0e0;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #b8c400, #90a000);
+  border-radius: 6px;
+  width: 0%;
+  transition: width 0.35s ease;
+}
+.progress-label {
+  font-weight: 700;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  color: #2d2d2d;
+}
+
+/* ===== GO / NO-GO INDICATOR ===== */
+.go-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin-top: 14px;
+  transition: background 0.35s, color 0.35s;
+}
+.go-indicator.nogo {
+  background: #c0392b;
+  color: #fff;
+}
+.go-indicator.go {
+  background: #b8c400;
+  color: #2d2d2d;
+}
+
+/* ===== ESKALATION COLOR CODING ===== */
+.eskalation-gelb td { background: #fff9c4; }
+.eskalation-orange td { background: #ffe0b2; }
+.eskalation-rot td { background: #ffcdd2; }
+.eskalation-kritisch td { background: #b71c1c; color: #fff; }
+
+/* ===== NOTFALL TABLE ===== */
+.notfall-table td:first-child { font-weight: 600; }
+.notfall-table .notfall-nummer { color: #c0392b; font-weight: 700; font-size: 1.1rem; }
+
+/* ===== HR ===== */
+hr.sep {
+  border: none;
+  border-top: 2px solid #e0e0e0;
+  margin: 36px 0;
+}
+
+/* ===== FOOTER ===== */
+.site-footer {
+  background: #2d2d2d;
+  color: #7a7b7a;
+  text-align: center;
+  padding: 18px 40px;
+  font-size: 0.82rem;
+  letter-spacing: 0.5px;
+}
+.site-footer span.sep { margin: 0 10px; color: #555; }
+
+/* ===== PRINT BUTTON ===== */
+.print-btn {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  background: #b8c400;
+  color: #2d2d2d;
+  border: none;
+  padding: 14px 22px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+  z-index: 1000;
+  letter-spacing: 1px;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.print-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+  body { background: #fff; padding-bottom: 0; font-size: 11px; }
+  .site-header { padding: 14px 20px; }
+  .brand-name { font-size: 1.3rem; }
+  .container { padding: 16px 20px; max-width: 100%; }
+  .print-btn { display: none !important; }
+  h2.section-title { margin: 20px 0 10px; font-size: 1.1rem; }
+  h3.day-header, h3.week-header { margin: 14px 0 6px; padding: 6px 12px; font-size: 0.95rem; }
+  table { font-size: 0.78rem; page-break-inside: avoid; }
+  thead th { padding: 6px 8px; }
+  tbody td { padding: 5px 8px; }
+  .progress-bar-wrap { margin-bottom: 8px; }
+  .tbl-wrap { overflow: visible; }
+  .go-indicator { font-size: 1rem; padding: 8px 16px; }
+  .site-footer { padding: 10px 20px; }
+  hr.sep { margin: 20px 0; }
+  @page { margin: 12mm 10mm; }
+  tbody tr.row-checked { background: #f0f7d4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .eskalation-gelb td, .eskalation-orange td, .eskalation-rot td, .eskalation-kritisch td {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ==================== HEADER ==================== -->
+<header class="site-header">
+  <div class="brand">
+    <div class="brand-name">AUTONEUM</div>
+    <div class="brand-tagline">Mastering Sound and Heat</div>
+  </div>
+  <div class="header-meta">
+    <strong>Projekt:</strong> NVH 2030 &mdash; Layoutumbau Vorschlag 4<br>
+    <strong>Standort:</strong> Werk Gundernhausen, Halle 2<br>
+    <strong>Dokument-Nr.:</strong> NVH2030-CKL-001 &nbsp;|&nbsp; <strong>Stand:</strong> 27.02.2026
+  </div>
+</header>
+
+<!-- ==================== MAIN ==================== -->
+<div class="container">
+
+<h1 class="doc-title">Checkliste Sommerpause &mdash; KW 29-30 (2026)</h1>
+<div class="doc-meta-grid">
+  <span><strong>Projekt:</strong> NVH 2030 &mdash; Layoutumbau Vorschlag 4</span>
+  <span><strong>Standort:</strong> Werk Gundernhausen, Halle 2</span>
+  <span><strong>Dokument-Nr.:</strong> NVH2030-CKL-001</span>
+  <span><strong>Stand:</strong> 27.02.2026</span>
+</div>
+
+<!-- ===== RAHMENBEDINGUNGEN ===== -->
+<h2 class="section-title">Rahmenbedingungen</h2>
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>Parameter</th><th>Wert</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Stillstandszeitraum</strong></td><td>KW 29-30 (ca. 13.-24. Juli 2026)</td></tr>
+    <tr><td><strong>Verfugbare Arbeitstage</strong></td><td>10 Tage (Mo-Fr, 2 Wochen)</td></tr>
+    <tr><td><strong>Wochenendarbeit eingeplant</strong></td><td>Samstag KW 29 + KW 30 als Puffer</td></tr>
+    <tr><td><strong>Kernteam vor Ort</strong></td><td>Technik (4-6 Personen), Externe (je Gewerk), Projektleiter</td></tr>
+    <tr><td><strong>Notfallkontakt</strong></td><td>Vertrieb (Bereitschaft), Werksleitung (Rufbereitschaft)</td></tr>
+  </tbody>
+</table>
+</div>
+
+<hr class="sep">
+
+<!-- ===== VORAUSSETZUNGEN ===== -->
+<h2 class="section-title">Voraussetzungen (MUSS vor KW 29 erledigt sein)</h2>
+<div class="progress-bar-wrap" id="prereq-progress-wrap">
+  <div class="progress-track"><div class="progress-fill" id="prereq-fill"></div></div>
+  <div class="progress-label" id="prereq-label">0 von 12 erledigt</div>
+</div>
+<div class="tbl-wrap">
+<table id="prereq-table">
+  <thead>
+    <tr><th>Nr.</th><th>Voraussetzung</th><th>Verantwortlich</th><th>Termin</th><th>Status</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>V1</td><td class="task-text">Alle Ausschreibungen vergeben, Auftrage erteilt</td><td>EK</td><td>KW 22</td><td><input type="checkbox" class="task-cb prereq-cb"></td></tr>
+    <tr><td>V2</td><td class="task-text">Externe Dienstleister terminlich bestatigt</td><td>EK / PL</td><td>KW 24</td><td><input type="checkbox" class="task-cb prereq-cb"></td></tr>
+    <tr><td>V3</td><td class="task-text">Ersatzteile Schaumlinie C gepruft und bevorratet</td><td>TK</td><td>KW 24</td><td><input type="checkbox" class="task-cb prereq-cb"></td></tr>
+    <tr><td>V4</td><td class="task-text">Vorproduktion abgeschlossen (~40-80 t Sicherheitsbestand)</td><td>PD</td><td>KW 28</td><td><input type="checkbox" class="task-cb prereq-cb"></td></tr>
+    <tr><td>V5</td><td class="task-text">Lagerflache fur Vorproduktion gesichert</td><td>LO</td><td>KW 24</td><td><input type="checkbox" class="task-cb prereq-cb"></td></tr>
+    <tr><td>V6</td><td class="task-text">Kundenkommunikation abgeschlossen (alle Kunden informiert)</td><td>VT</td><td>KW 26</td><td><input type="checkbox" class="task-cb prereq-cb"></td></tr>
+    <tr><td>V7</td><td class="task-text">AUDI Q1 STW LHD letzte Lieferung abgeschlossen</td><td>VT / PD</td><td>KW 28</td><td><input type="checkbox" class="task-cb prereq-cb"></td></tr>
+    <tr><td>V8</td><td class="task-text">Urlaubssperre Kernteam bestatigt</td><td>HR / WL</td><td>KW 20</td><td><input type="checkbox" class="task-cb prereq-cb"></td></tr>
+    <tr><td>V9</td><td class="task-text">Infrastrukturmaterial angeliefert (Kabel, Rohre, Markierung)</td><td>EK / TK</td><td>KW 27</td><td><input type="checkbox" class="task-cb prereq-cb"></td></tr>
+    <tr><td>V10</td><td class="task-text">Werkzeug und Hebezeug reserviert (Kran, Stapler)</td><td>TK / LO</td><td>KW 27</td><td><input type="checkbox" class="task-cb prereq-cb"></td></tr>
+    <tr><td>V11</td><td class="task-text">Sicherheitsunterweisung Externe durchgefuhrt</td><td>TK / PL</td><td>KW 28</td><td><input type="checkbox" class="task-cb prereq-cb"></td></tr>
+    <tr><td>V12</td><td class="task-text">Notfallplan kommuniziert (Erreichbarkeiten, Eskalation)</td><td>PL</td><td>KW 28</td><td><input type="checkbox" class="task-cb prereq-cb"></td></tr>
+  </tbody>
+</table>
+</div>
+
+<hr class="sep">
+
+<!-- ===== TAG-FUR-TAG-PLAN ===== -->
+<h2 class="section-title">Tag-fur-Tag-Plan</h2>
+
+<!-- WOCHE 1 -->
+<h3 class="week-header">WOCHE 1 &mdash; KW 29 (Mo 13. - Fr 17. Juli)</h3>
+
+<!-- Tag 1 -->
+<h3 class="day-header">Tag 1 (Montag) &mdash; Produktionsstopp &amp; Vorbereitung</h3>
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>Nr.</th><th>Aufgabe</th><th>Team</th><th>Dauer</th><th>Status</th></tr></thead>
+  <tbody>
+    <tr><td>1.1</td><td class="task-text">Letzter Produktionslauf abschliessen, Maschinen herunterfahren</td><td>PD</td><td>Vormittag</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>1.2</td><td class="task-text">Alle Maschinen stromlos schalten (Freischaltung)</td><td>TK</td><td>2h</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>1.3</td><td class="task-text">Druckluft- und Wasserleitungen absperren</td><td>TK</td><td>1h</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>1.4</td><td class="task-text">Arbeitsbereich absperren und beschildern</td><td>TK</td><td>1h</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>1.5</td><td class="task-text">Kick-off-Meeting mit Kernteam und Externen</td><td>PL</td><td>1h</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>1.6</td><td class="task-text">Material- und Werkzeugcheck (Vollstandigkeit)</td><td>TK</td><td>1h</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>1.7</td><td class="task-text">Maschinen fur Demontage vorbereiten (Medien trennen)</td><td>TK + EXT</td><td>Nachmittag</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- Tag 2 -->
+<h3 class="day-header">Tag 2 (Dienstag) &mdash; Maschinendemontage Start</h3>
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>Nr.</th><th>Aufgabe</th><th>Team</th><th>Dauer</th><th>Status</th></tr></thead>
+  <tbody>
+    <tr><td>2.1</td><td class="task-text">Demontage Tandem 172</td><td>EXT</td><td>Ganztags</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>2.2</td><td class="task-text">Demontage Box20 + Box21 (parallel)</td><td>EXT</td><td>Ganztags</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>2.3</td><td class="task-text">Elektro-Abtrennung an Demontagestellen</td><td>TK</td><td>Parallel</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>2.4</td><td class="task-text">Abtransport-Vorbereitung (Container, Spediteur)</td><td>LO</td><td>Nachmittag</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>2.5</td><td class="task-text">Statusmeeting 16:00 Uhr</td><td>PL + alle</td><td>15 Min.</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- Tag 3 -->
+<h3 class="day-header">Tag 3 (Mittwoch) &mdash; Demontage Fortsetzung &amp; Infrastruktur Start</h3>
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>Nr.</th><th>Aufgabe</th><th>Team</th><th>Dauer</th><th>Status</th></tr></thead>
+  <tbody>
+    <tr><td>3.1</td><td class="task-text">Demontage Halbautomat 188</td><td>EXT</td><td>Vormittag</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>3.2</td><td class="task-text">Demontage AUDI Q1 STW LHD Linie</td><td>EXT</td><td>Ganztags</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>3.3</td><td class="task-text">Abtransport demontierte Maschinen (Tag 2)</td><td>LO + EXT</td><td>Vormittag</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>3.4</td><td class="task-text">Elektrik-Umbau Start: Neue Verteilung fur konsolidierte Anlagen</td><td>TK + EXT</td><td>Nachmittag</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>3.5</td><td class="task-text">Bodenreinigung freie Flachen</td><td>TK</td><td>Nachmittag</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>3.6</td><td class="task-text">Statusmeeting 16:00 Uhr</td><td>PL + alle</td><td>15 Min.</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- Tag 4 -->
+<h3 class="day-header">Tag 4 (Donnerstag) &mdash; Infrastruktur-Umbau</h3>
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>Nr.</th><th>Aufgabe</th><th>Team</th><th>Dauer</th><th>Status</th></tr></thead>
+  <tbody>
+    <tr><td>4.1</td><td class="task-text">Elektrik-Umbau Fortsetzung</td><td>TK + EXT</td><td>Ganztags</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>4.2</td><td class="task-text">Druckluft-Leitungsanpassung neue Aufstellpositionen</td><td>TK + EXT</td><td>Ganztags</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>4.3</td><td class="task-text">Wasserversorgung Anpassung</td><td>TK + EXT</td><td>Halbtags</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>4.4</td><td class="task-text">Abtransport restliche Maschinen</td><td>LO + EXT</td><td>Vormittag</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>4.5</td><td class="task-text">Vorbereitung Aufstellpositionen (Fundamente, Bodenarbeiten)</td><td>TK + EXT</td><td>Nachmittag</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>4.6</td><td class="task-text">Statusmeeting 16:00 Uhr</td><td>PL + alle</td><td>15 Min.</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- Tag 5 -->
+<h3 class="day-header">Tag 5 (Freitag) &mdash; Verlagerung Start</h3>
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>Nr.</th><th>Aufgabe</th><th>Team</th><th>Dauer</th><th>Status</th></tr></thead>
+  <tbody>
+    <tr><td>5.1</td><td class="task-text">Verlagerung Produktionszellen in neue Positionen (Zone 1-3)</td><td>TK + EXT</td><td>Ganztags</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>5.2</td><td class="task-text">Elektrik-Umbau fertigstellen (Anschlusse neue Positionen)</td><td>TK + EXT</td><td>Ganztags</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>5.3</td><td class="task-text">Druckluft-Anschlusse neue Positionen</td><td>TK + EXT</td><td>Nachmittag</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>5.4</td><td class="task-text">Wochenruckblick &amp; Planung Woche 2</td><td>PL + alle</td><td>30 Min.</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- Samstag KW 29 -->
+<h3 class="day-header">Samstag KW 29 (Puffer)</h3>
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>Nr.</th><th>Aufgabe</th><th>Team</th><th>Dauer</th><th>Status</th></tr></thead>
+  <tbody>
+    <tr><td>S1</td><td class="task-text">Nacharbeiten Woche 1 (falls Ruckstand)</td><td>TK + EXT</td><td>Nach Bedarf</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>S2</td><td class="task-text">Beginn Verlagerung Schaumlinie F (Halle 3 &rarr; Halle 2)</td><td>TK + EXT</td><td>Ganztags</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- WOCHE 2 -->
+<h3 class="week-header">WOCHE 2 &mdash; KW 30 (Mo 20. - Fr 24. Juli)</h3>
+
+<!-- Tag 6 -->
+<h3 class="day-header">Tag 6 (Montag) &mdash; Schaumlinie F Verlagerung</h3>
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>Nr.</th><th>Aufgabe</th><th>Team</th><th>Dauer</th><th>Status</th></tr></thead>
+  <tbody>
+    <tr><td>6.1</td><td class="task-text">Schaumlinie F Transport und Aufstellung in Halle 2</td><td>TK + EXT</td><td>Ganztags</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>6.2</td><td class="task-text">Elektrik-Anschluss Schaumlinie F</td><td>TK + EXT</td><td>Parallel</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>6.3</td><td class="task-text">Druckluft + Wasser Anschluss F-Linie</td><td>TK + EXT</td><td>Nachmittag</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>6.4</td><td class="task-text">Statusmeeting 16:00 Uhr</td><td>PL + alle</td><td>15 Min.</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- Tag 7 -->
+<h3 class="day-header">Tag 7 (Dienstag) &mdash; Schaumlinie F Inbetriebnahme</h3>
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>Nr.</th><th>Aufgabe</th><th>Team</th><th>Dauer</th><th>Status</th></tr></thead>
+  <tbody>
+    <tr><td>7.1</td><td class="task-text">Schaumlinie F Inbetriebnahme &amp; Funktionstest</td><td>TK</td><td>Ganztags</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>7.2</td><td class="task-text">Formtragerheizung F-Linie prufen</td><td>TK</td><td>Vormittag</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>7.3</td><td class="task-text">Absaugung &amp; Beluftung Anpassung</td><td>TK + EXT</td><td>Nachmittag</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>7.4</td><td class="task-text">Staplerverkehrswege markieren (Bodenmarkierung)</td><td>TK</td><td>Nachmittag</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>7.5</td><td class="task-text">Statusmeeting 16:00 Uhr</td><td>PL + alle</td><td>15 Min.</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- Tag 8 -->
+<h3 class="day-header">Tag 8 (Mittwoch) &mdash; Zonentrennung &amp; Trennmittel</h3>
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>Nr.</th><th>Aufgabe</th><th>Team</th><th>Dauer</th><th>Status</th></tr></thead>
+  <tbody>
+    <tr><td>8.1</td><td class="task-text">Zonentrennung einrichten (Absperrungen, Leitplanken)</td><td>TK + EXT</td><td>Ganztags</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>8.2</td><td class="task-text">Trennmittel-Bereich einrichten</td><td>TK</td><td>Halbtags</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>8.3</td><td class="task-text">Spruhrausrustung umstellen und testen</td><td>TK</td><td>Nachmittag</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>8.4</td><td class="task-text">Beschilderung anbringen (Zonen, Fluchtwege, Staplerverkehr)</td><td>TK</td><td>Nachmittag</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>8.5</td><td class="task-text">Statusmeeting 16:00 Uhr</td><td>PL + alle</td><td>15 Min.</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- Tag 9 -->
+<h3 class="day-header">Tag 9 (Donnerstag) &mdash; Testlaufe &amp; Qualifizierung</h3>
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>Nr.</th><th>Aufgabe</th><th>Team</th><th>Dauer</th><th>Status</th></tr></thead>
+  <tbody>
+    <tr><td>9.1</td><td class="task-text">Testlauf Schaumlinie C am neuen Standort</td><td>TK + PD</td><td>Vormittag</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>9.2</td><td class="task-text">Testlauf Schaumlinie F am neuen Standort</td><td>TK + PD</td><td>Vormittag</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>9.3</td><td class="task-text">Testlauf alle verlagerten Produktionszellen</td><td>TK + PD</td><td>Nachmittag</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>9.4</td><td class="task-text">Erstmusterprufung (Stichproben je Linie)</td><td>QS</td><td>Nachmittag</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>9.5</td><td class="task-text">Brandschutz-Kontrolle</td><td>TK</td><td>Nachmittag</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>9.6</td><td class="task-text">Statusmeeting 16:00 Uhr</td><td>PL + alle</td><td>15 Min.</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- Tag 10 -->
+<h3 class="day-header">Tag 10 (Freitag) &mdash; Feinarbeit &amp; Wiederanlauf-Vorbereitung</h3>
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>Nr.</th><th>Aufgabe</th><th>Team</th><th>Dauer</th><th>Status</th></tr></thead>
+  <tbody>
+    <tr><td>10.1</td><td class="task-text">Nacharbeiten / Mangelbeseitigung</td><td>TK + EXT</td><td>Vormittag</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>10.2</td><td class="task-text">Finale Sicherheitsprufung (Elektrik, Druckluft, Wasser)</td><td>TK</td><td>Vormittag</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>10.3</td><td class="task-text">Reinigung aller Arbeitsbereiche</td><td>TK + PD</td><td>Vormittag</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>10.4</td><td class="task-text">Abnahmeprotokoll je Maschine ausfullen</td><td>TK + QS</td><td>Nachmittag</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>10.5</td><td class="task-text">GO/NO-GO Entscheidung fur Wiederanlauf KW 31</td><td>PL + WL + PD + TK + QS</td><td>14:00 Uhr</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>10.6</td><td class="task-text">Kommunikation an Kunden: Wiederanlauf bestatigt</td><td>VT</td><td>Nachmittag</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>10.7</td><td class="task-text">Kommunikation an Belegschaft: Normalbetrieb ab KW 31</td><td>PL / PD</td><td>Nachmittag</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- Samstag KW 30 -->
+<h3 class="day-header">Samstag KW 30 (Puffer)</h3>
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>Nr.</th><th>Aufgabe</th><th>Team</th><th>Dauer</th><th>Status</th></tr></thead>
+  <tbody>
+    <tr><td>S3</td><td class="task-text">Nacharbeiten (nur falls Tag 10 nicht abgeschlossen)</td><td>TK</td><td>Nach Bedarf</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+  </tbody>
+</table>
+</div>
+
+<hr class="sep">
+
+<!-- ===== WIEDERANLAUF ===== -->
+<h2 class="section-title">Wiederanlauf KW 31-32</h2>
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>Nr.</th><th>Aufgabe</th><th>Verantwortlich</th><th>KW</th><th>Status</th></tr></thead>
+  <tbody>
+    <tr><td>W1</td><td class="task-text">Produktionsstart mit reduzierter Geschwindigkeit</td><td>PD</td><td>KW 31</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>W2</td><td class="task-text">Erhohte QS-Prasenz (100%-Prufung erste Chargen)</td><td>QS</td><td>KW 31</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>W3</td><td class="task-text">SPC-Monitoring starten</td><td>QS</td><td>KW 31</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>W4</td><td class="task-text">Tgliches Statusmeeting (15 Min.)</td><td>PL</td><td>KW 31-32</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>W5</td><td class="task-text">Erstmusterprufung alle Produkte abschliessen</td><td>QS</td><td>KW 32</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>W6</td><td class="task-text">Vollproduktion freigeben</td><td>PD + QS</td><td>KW 32</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>W7</td><td class="task-text">Kundenkommunikation: Normalbetrieb bestatigt</td><td>VT</td><td>KW 32</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+    <tr><td>W8</td><td class="task-text">Pufferbestand sukzessive abbauen</td><td>LO</td><td>KW 32-34</td><td><input type="checkbox" class="task-cb day-cb"></td></tr>
+  </tbody>
+</table>
+</div>
+
+<hr class="sep">
+
+<!-- ===== NOTFALLKONTAKTE ===== -->
+<h2 class="section-title">Notfallkontakte wahrend Sommerpause</h2>
+<div class="tbl-wrap">
+<table class="notfall-table">
+  <thead><tr><th>Rolle</th><th>Name</th><th>Telefon</th><th>Erreichbarkeit</th></tr></thead>
+  <tbody>
+    <tr><td>Projektleiter</td><td>_____________</td><td>_____________</td><td>07:00-20:00, Rufbereitschaft</td></tr>
+    <tr><td>Werkleitung</td><td>_____________</td><td>_____________</td><td>Rufbereitschaft</td></tr>
+    <tr><td>Technik (Schichtleiter)</td><td>_____________</td><td>_____________</td><td>Vor Ort</td></tr>
+    <tr><td>Vertrieb (Key Account)</td><td>_____________</td><td>_____________</td><td>08:00-17:00</td></tr>
+    <tr><td>Feuerwehr / Notruf</td><td class="notfall-nummer">112</td><td>&mdash;</td><td>24/7</td></tr>
+    <tr><td>Werkschutz</td><td>_____________</td><td>_____________</td><td>24/7</td></tr>
+  </tbody>
+</table>
+</div>
+
+<hr class="sep">
+
+<!-- ===== ESKALATIONSSTUFEN ===== -->
+<h2 class="section-title">Eskalationsstufen</h2>
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>Stufe</th><th>Trigger</th><th>Aktion</th><th>Entscheider</th></tr></thead>
+  <tbody>
+    <tr class="eskalation-gelb"><td><strong>1 &mdash; Gelb</strong></td><td>Einzelaufgabe &gt; 4h Verzug</td><td>Nacharbeit planen, ggf. Samstag nutzen</td><td>Projektleiter</td></tr>
+    <tr class="eskalation-orange"><td><strong>2 &mdash; Orange</strong></td><td>Kritischer Pfad betroffen (&gt; 1 Tag Verzug)</td><td>Zusatzliche Ressourcen, Nachtschicht erwagen</td><td>Projektleiter + Werkleitung</td></tr>
+    <tr class="eskalation-rot"><td><strong>3 &mdash; Rot</strong></td><td>Wiederanlauf KW 31 gefahrdet</td><td>Entscheidung: Teilweiser Wiederanlauf oder Verlangerung</td><td>Werkleitung</td></tr>
+    <tr class="eskalation-kritisch"><td><strong>4 &mdash; Kritisch</strong></td><td>Unvorhergesehenes Sicherheitsrisiko</td><td>Sofortiger Baustopp, Begehung durch Fachkraft</td><td>Werkleitung + Sicherheitsfachkraft</td></tr>
+  </tbody>
+</table>
+</div>
+
+<hr class="sep">
+
+<!-- ===== ABSCHLUSS-CHECKLISTE ===== -->
+<h2 class="section-title">Abschluss-Checkliste (vor GO/NO-GO Tag 10)</h2>
+<div class="progress-bar-wrap" id="final-progress-wrap">
+  <div class="progress-track"><div class="progress-fill" id="final-fill"></div></div>
+  <div class="progress-label" id="final-label">0 von 16 erledigt</div>
+</div>
+<div class="tbl-wrap">
+<table id="final-table">
+  <thead><tr><th>Nr.</th><th>Prufpunkt</th><th>OK</th><th>Anmerkung</th></tr></thead>
+  <tbody>
+    <tr><td>A1</td><td class="task-text">Alle Maschinen am neuen Standort aufgestellt</td><td><input type="checkbox" class="task-cb final-cb"></td><td></td></tr>
+    <tr><td>A2</td><td class="task-text">Elektrik-Anschlusse gepruft und freigegeben</td><td><input type="checkbox" class="task-cb final-cb"></td><td></td></tr>
+    <tr><td>A3</td><td class="task-text">Druckluft-Anschlusse gepruft und dicht</td><td><input type="checkbox" class="task-cb final-cb"></td><td></td></tr>
+    <tr><td>A4</td><td class="task-text">Wasserversorgung angeschlossen und gepruft</td><td><input type="checkbox" class="task-cb final-cb"></td><td></td></tr>
+    <tr><td>A5</td><td class="task-text">Absaugung funktionsfahig</td><td><input type="checkbox" class="task-cb final-cb"></td><td></td></tr>
+    <tr><td>A6</td><td class="task-text">Schaumlinie C Testlauf erfolgreich</td><td><input type="checkbox" class="task-cb final-cb"></td><td></td></tr>
+    <tr><td>A7</td><td class="task-text">Schaumlinie F Testlauf erfolgreich</td><td><input type="checkbox" class="task-cb final-cb"></td><td></td></tr>
+    <tr><td>A8</td><td class="task-text">Alle Produktionszellen Testlauf erfolgreich</td><td><input type="checkbox" class="task-cb final-cb"></td><td></td></tr>
+    <tr><td>A9</td><td class="task-text">Staplerverkehrswege markiert und freigegeben</td><td><input type="checkbox" class="task-cb final-cb"></td><td></td></tr>
+    <tr><td>A10</td><td class="task-text">Zonentrennung eingerichtet</td><td><input type="checkbox" class="task-cb final-cb"></td><td></td></tr>
+    <tr><td>A11</td><td class="task-text">Trennmittel-Bereich eingerichtet und getestet</td><td><input type="checkbox" class="task-cb final-cb"></td><td></td></tr>
+    <tr><td>A12</td><td class="task-text">Beschilderung vollstandig</td><td><input type="checkbox" class="task-cb final-cb"></td><td></td></tr>
+    <tr><td>A13</td><td class="task-text">Brandschutz-Prufung bestanden</td><td><input type="checkbox" class="task-cb final-cb"></td><td></td></tr>
+    <tr><td>A14</td><td class="task-text">Erstmuster-Stichproben i.O.</td><td><input type="checkbox" class="task-cb final-cb"></td><td></td></tr>
+    <tr><td>A15</td><td class="task-text">Keine offenen Sicherheitsmangel</td><td><input type="checkbox" class="task-cb final-cb"></td><td></td></tr>
+    <tr><td>A16</td><td class="task-text">Reinigung abgeschlossen</td><td><input type="checkbox" class="task-cb final-cb"></td><td></td></tr>
+  </tbody>
+</table>
+</div>
+<div style="text-align:center;">
+  <div class="go-indicator nogo" id="go-indicator">NO-GO &mdash; Offene Punkte vorhanden</div>
+</div>
+
+</div><!-- /.container -->
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="site-footer">
+  NVH 2030<span class="sep">|</span>Checkliste Sommerpause KW 29-30<span class="sep">|</span>Werk Gundernhausen<span class="sep">|</span>27.02.2026<span class="sep">|</span>Autoneum
+</footer>
+
+<!-- ==================== PRINT BUTTON ==================== -->
+<button class="print-btn" onclick="window.print()">Drucken</button>
+
+<!-- ==================== JAVASCRIPT ==================== -->
+<script>
+(function() {
+  'use strict';
+
+  // --- Generic row-toggle on checkbox change ---
+  function bindCheckboxRow(cb) {
+    cb.addEventListener('change', function() {
+      var row = this.closest('tr');
+      if (!row) return;
+      if (this.checked) {
+        row.classList.add('row-checked');
+      } else {
+        row.classList.remove('row-checked');
+      }
+    });
+  }
+
+  // Bind all checkboxes for row highlighting
+  var allCbs = document.querySelectorAll('.task-cb');
+  for (var i = 0; i < allCbs.length; i++) {
+    bindCheckboxRow(allCbs[i]);
+  }
+
+  // --- Voraussetzungen progress ---
+  var prereqCbs = document.querySelectorAll('.prereq-cb');
+  var prereqFill = document.getElementById('prereq-fill');
+  var prereqLabel = document.getElementById('prereq-label');
+  var prereqTotal = prereqCbs.length; // 12
+
+  function updatePrereqProgress() {
+    var done = 0;
+    for (var i = 0; i < prereqCbs.length; i++) {
+      if (prereqCbs[i].checked) done++;
+    }
+    var pct = prereqTotal > 0 ? Math.round((done / prereqTotal) * 100) : 0;
+    prereqFill.style.width = pct + '%';
+    prereqLabel.textContent = done + ' von ' + prereqTotal + ' erledigt';
+  }
+
+  for (var i = 0; i < prereqCbs.length; i++) {
+    prereqCbs[i].addEventListener('change', updatePrereqProgress);
+  }
+  updatePrereqProgress();
+
+  // --- Abschluss-Checkliste progress + GO/NO-GO ---
+  var finalCbs = document.querySelectorAll('.final-cb');
+  var finalFill = document.getElementById('final-fill');
+  var finalLabel = document.getElementById('final-label');
+  var goIndicator = document.getElementById('go-indicator');
+  var finalTotal = finalCbs.length; // 16
+
+  function updateFinalProgress() {
+    var done = 0;
+    for (var i = 0; i < finalCbs.length; i++) {
+      if (finalCbs[i].checked) done++;
+    }
+    var pct = finalTotal > 0 ? Math.round((done / finalTotal) * 100) : 0;
+    finalFill.style.width = pct + '%';
+    finalLabel.textContent = done + ' von ' + finalTotal + ' erledigt';
+
+    if (done === finalTotal) {
+      goIndicator.className = 'go-indicator go';
+      goIndicator.textContent = 'GO \u2014 Alle ' + finalTotal + ' Prufpunkte bestanden';
+    } else {
+      goIndicator.className = 'go-indicator nogo';
+      goIndicator.textContent = 'NO-GO \u2014 ' + (finalTotal - done) + ' offene Punkte';
+    }
+  }
+
+  for (var i = 0; i < finalCbs.length; i++) {
+    finalCbs[i].addEventListener('change', updateFinalProgress);
+  }
+  updateFinalProgress();
+
+})();
+</script>
+</body>
+</html>

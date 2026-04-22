@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phase B — Zukunftsoptionen Halle 3 | NVH 2030</title>
+<style>
+  :root {
+    --primary: #b8c400;
+    --primary-dark: #90a000;
+    --secondary: #00b0e8;
+    --secondary-dark: #009bcc;
+    --dark: #2d2d2d;
+    --gray: #7a7b7a;
+    --light-bg: #f6f6f6;
+    --white: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--light-bg);
+    color: var(--dark);
+    line-height: 1.6;
+  }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(135deg, var(--dark) 0%, #1a1a1a 100%);
+    color: var(--white);
+    padding: 40px 60px;
+    position: relative;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary), var(--primary));
+  }
+  .header h1 { font-size: 2rem; font-weight: 300; margin-bottom: 6px; }
+  .header h1 strong { color: var(--primary); font-weight: 700; }
+  .header .subtitle { font-size: 1rem; color: #aaa; }
+  .header .meta { display: flex; gap: 30px; margin-top: 14px; font-size: 0.85rem; color: #ccc; }
+
+  /* DISCLAIMER */
+  .disclaimer-banner {
+    background: repeating-linear-gradient(45deg, #fff3e0, #fff3e0 10px, #fff8e1 10px, #fff8e1 20px);
+    border: 2px solid #ffb74d;
+    color: #e65100;
+    text-align: center;
+    padding: 14px 30px;
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 30px 40px; }
+
+  .intro-box {
+    background: var(--white);
+    border-left: 5px solid var(--primary);
+    padding: 25px 30px;
+    margin-bottom: 35px;
+    border-radius: 0 8px 8px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    font-size: 1rem;
+    color: #444;
+  }
+
+  /* OPTION CARDS */
+  .option-section { margin-bottom: 50px; }
+
+  .option-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid var(--primary);
+  }
+
+  .option-number {
+    width: 50px; height: 50px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: var(--dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .option-header h2 { font-size: 1.35rem; font-weight: 600; }
+  .option-header .trl-badge {
+    margin-left: auto;
+    background: var(--light-bg);
+    border: 1px solid #ddd;
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--gray);
+    white-space: nowrap;
+  }
+
+  .card {
+    background: var(--white);
+    border-radius: 8px;
+    padding: 22px 28px;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  }
+
+  .card h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--dark);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card h3 .icon { font-size: 1.1rem; }
+
+  .card ul { margin: 0 0 8px 20px; color: #555; font-size: 0.92rem; }
+  .card ul li { margin-bottom: 4px; }
+
+  .card p { font-size: 0.92rem; color: #555; }
+
+  .detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .detail-grid .card { margin-bottom: 0; }
+
+  /* KEY FACTS TABLE */
+  .facts-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+  .facts-table td { padding: 8px 12px; border-bottom: 1px solid #eee; }
+  .facts-table td:first-child { font-weight: 600; color: var(--dark); width: 40%; }
+  .facts-table tr:last-child td { border-bottom: none; }
+
+  /* COMMENT THREAD */
+  .comment-thread {
+    background: var(--light-bg);
+    border-radius: 8px;
+    padding: 18px 22px;
+    margin-top: 14px;
+    border: 1px solid #e0e0e0;
+  }
+  .comment-thread h4 {
+    font-size: 0.85rem;
+    color: var(--gray);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .comment {
+    background: var(--white);
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    border-left: 3px solid var(--primary);
+    font-size: 0.88rem;
+    color: #444;
+  }
+  .comment:last-child { margin-bottom: 0; }
+  .comment .author { font-weight: 600; color: var(--dark); }
+  .comment .role { font-size: 0.78rem; color: var(--gray); }
+
+  /* STRATEGIC VALUE */
+  .strategic-value {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: var(--dark);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-top: 8px;
+  }
+
+  /* CO2 RA SECTION */
+  .co2-section {
+    border: 2px dashed var(--gray);
+    border-radius: 12px;
+    padding: 30px;
+    margin-bottom: 50px;
+    opacity: 0.85;
+    position: relative;
+  }
+  .co2-section::before {
+    content: 'UNTER VORBEHALT';
+    position: absolute;
+    top: -12px; left: 30px;
+    background: var(--light-bg);
+    padding: 0 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--gray);
+    letter-spacing: 1px;
+  }
+
+  /* COST TABLE */
+  table.cost-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--white);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    margin-top: 14px;
+  }
+  .cost-table thead th {
+    background: var(--dark);
+    color: var(--white);
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 0.85rem;
+  }
+  .cost-table tbody td {
+    padding: 8px 14px;
+    border-bottom: 1px solid #eee;
+    font-size: 0.88rem;
+  }
+  .cost-table tbody tr:last-child td { border-bottom: none; }
+  .cost-table .total-row td { font-weight: 700; background: #f9fbe7; }
+
+  /* COMPARISON MATRIX */
+  .comparison-section { margin-top: 40px; }
+  .comparison-section h2 {
+    font-size: 1.3rem;
+    margin-bottom: 18px;
+    padding-bottom: 8px;
+    border-bottom: 3px solid var(--primary);
+  }
+
+  table.comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--white);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .comparison-table thead th {
+    background: var(--dark);
+    color: var(--white);
+    padding: 10px 14px;
+    text-align: center;
+    font-size: 0.85rem;
+  }
+  .comparison-table thead th:first-child { text-align: left; }
+  .comparison-table tbody td {
+    padding: 10px 14px;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+    font-size: 0.88rem;
+  }
+  .comparison-table tbody td:first-child { text-align: left; font-weight: 600; }
+  .comparison-table tbody tr:hover { background: var(--light-bg); }
+
+  .dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; }
+  .dot-green { background: var(--primary); }
+  .dot-yellow { background: #ffb74d; }
+  .dot-red { background: #ef5350; }
+  .dot-gray { background: #bdbdbd; }
+
+  /* CONCLUSION */
+  .conclusion {
+    margin-top: 40px;
+    background: linear-gradient(135deg, var(--dark), #1a1a1a);
+    color: var(--white);
+    border-radius: 12px;
+    padding: 35px 40px;
+    position: relative;
+  }
+  .conclusion::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+  }
+  .conclusion h2 { font-size: 1.3rem; margin-bottom: 15px; color: var(--primary); }
+  .conclusion p { font-size: 1rem; line-height: 1.7; color: #ccc; margin-bottom: 10px; }
+  .conclusion strong { color: var(--white); }
+
+  .footer {
+    text-align: center;
+    padding: 20px;
+    color: var(--gray);
+    font-size: 0.8rem;
+    border-top: 1px solid #ddd;
+    margin-top: 40px;
+  }
+
+  @media print {
+    body { background: white; }
+    .option-section { break-inside: avoid; }
+    .conclusion { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Phase B &mdash; <strong>Zukunftsoptionen Halle 3</strong></h1>
+  <div class="subtitle">Strategische Geschaeftsmoeglichkeiten nach Konsolidierung in Halle 2</div>
+  <div class="meta">
+    <span>Standort: Gundernhausen</span>
+    <span>Projekt: NVH 2030</span>
+    <span>Datum: 26.02.2026</span>
+    <span>Status: Exploration / R&amp;D Pipeline</span>
+  </div>
+</div>
+
+<div class="disclaimer-banner">
+  HINWEIS: Alle Optionen in diesem Dokument sind Explorationen aus der Autoneum R&amp;D-Pipeline.
+  Keine dieser Optionen ist fuer Gundernhausen bestaetigt oder budgetiert.
+</div>
+
+<div class="container">
+
+  <div class="intro-box">
+    Durch die Konsolidierung aller NVH-Produktion in Halle 2 (Vorschlag 4, Phase A) wird
+    <strong>Halle 3 vollstaendig frei</strong>. Diese Flaeche ist kein &bdquo;leerer Raum&rdquo;, sondern ein
+    <strong>strategisches Asset</strong>. Dieses Dokument stellt vier potenzielle Zukunftsoptionen vor,
+    die aus Autoneums aktiver R&amp;D- und Innovationspipeline stammen.
+  </div>
+
+  <!-- ===== OPTION 1: CO2 RELEASE AGENT ===== -->
+  <div class="co2-section">
+    <div class="option-section" style="margin-bottom: 0;">
+      <div class="option-header">
+        <div class="option-number" style="background: var(--gray); color: var(--white);">1</div>
+        <div>
+          <h2>CO2-Trennmittel-Umstellung</h2>
+          <div style="font-size: 0.85rem; color: var(--gray);">Basierend auf Ellzee-Erfahrung &mdash; unter Vorbehalt</div>
+        </div>
+        <span class="trl-badge">TRL 6-7 | Ellzee validiert</span>
+      </div>
+
+      <div class="card">
+        <h3>Konzept</h3>
+        <ul>
+          <li>Umstellung von waessrigen auf CO2-basierte Trennmittel in der Schaeumproduktion</li>
+          <li>CO2-Tank bereits auf dem Gelaende vorhanden (aktuell als Treibmittel)</li>
+          <li>Erfahrungswerte aus Ellzee-Werk verfuegbar</li>
+          <li>CO2-Dosierung kann beide Schaeumlinien (C + F) gleichzeitig bedienen</li>
+        </ul>
+      </div>
+
+      <div class="detail-grid">
+        <div class="card">
+          <h3>Geschaetzte Investition</h3>
+          <table class="facts-table">
+            <tr><td>CO2-System Erweiterung</td><td>20.000 - 35.000 EUR</td></tr>
+            <tr><td>Kuehlkompressor</td><td>35.000 - 50.000 EUR</td></tr>
+            <tr><td>Mischeinheiten (2x)</td><td>60.000 - 90.000 EUR</td></tr>
+            <tr><td>Hochdruckleitungen</td><td>30.000 - 50.000 EUR</td></tr>
+            <tr><td>Spruehausruestung</td><td>40.000 - 70.000 EUR</td></tr>
+            <tr><td>Installation</td><td>30.000 - 45.000 EUR</td></tr>
+            <tr><td><strong>Gesamt CO2-RA</strong></td><td><strong>230.000 - 365.000 EUR</strong></td></tr>
+          </table>
+        </div>
+        <div class="card">
+          <h3>Einsparungspotenzial</h3>
+          <table class="facts-table">
+            <tr><td>Trennmittelverbrauch</td><td>35.000 - 50.000 EUR/Jahr</td></tr>
+            <tr><td>Weniger Reinigungszyklen</td><td>15.000 - 25.000 EUR/Jahr</td></tr>
+            <tr><td>Zykluszeit-Verkuerzung</td><td>10.000 - 20.000 EUR/Jahr</td></tr>
+            <tr><td>Reduzierter Ausschuss</td><td>5.000 - 10.000 EUR/Jahr</td></tr>
+            <tr><td><strong>Gesamt/Jahr</strong></td><td><strong>65.000 - 105.000 EUR</strong></td></tr>
+            <tr><td><strong>Amortisation</strong></td><td><strong>~4,4 Jahre</strong></td></tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 14px;">
+        <h3>Bio-Polyol Lagerinfrastruktur (Zusatzoption)</h3>
+        <table class="facts-table">
+          <tr><td>Temperaturkontrollierter IBC-Lagerbereich</td><td>20.000 - 35.000 EUR</td></tr>
+          <tr><td>Mischstation (Ruehrwerk)</td><td>15.000 - 25.000 EUR</td></tr>
+          <tr><td>Ringleitung &amp; Anschluesse</td><td>10.000 - 20.000 EUR</td></tr>
+          <tr><td>Spuelsystem (Lehre aus Genk)</td><td>8.000 - 15.000 EUR</td></tr>
+          <tr><td><strong>Gesamt Bio-Polyol</strong></td><td><strong>53.000 - 95.000 EUR</strong></td></tr>
+        </table>
+      </div>
+
+      <div class="strategic-value">Amortisation ~4,4 Jahre | CO2-Tank vorhanden | Ellzee-Erfahrung uebertragbar</div>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2: PU CHEMICAL RECYCLING ===== -->
+  <div class="option-section">
+    <div class="option-header">
+      <div class="option-number">2</div>
+      <div>
+        <h2>PU-Chemisches Recycling &mdash; Selective Polymer-Retention</h2>
+        <div style="font-size: 0.85rem; color: var(--gray);">Dual-Acid Recycling fuer Mischfaser-Automobiltextilien</div>
+      </div>
+      <span class="trl-badge">TRL 3-4 | Lab validiert</span>
+    </div>
+
+    <div class="card">
+      <h3>Konzept</h3>
+      <ul>
+        <li>Neuartiges Dual-Saeure-Verfahren bei 216&deg;C zur Trennung von Mischfaser-Textilien</li>
+        <li>Polyester-Matrix loest sich in 5 Minuten vollstaendig auf &mdash; Baumwollfasern bleiben intakt</li>
+        <li><strong>Output:</strong> 100% intakte Baumwollfasern + 97% reines PET-Monomer (volle Polymerkettenintegritaet)</li>
+        <li>Ermoeglicht echte Kreislaufwirtschaft (Textil-zu-Textil) statt Downcycling</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Relevante Autoneum-Produkte</h3>
+      <ul>
+        <li><strong>Flexi-Light PET</strong> (Nachfolger Flexi-Loft) &mdash; 100% PET, EOL-Recycling bei Kontamination</li>
+        <li><strong>Propylat</strong> &mdash; PP-basierte Composites mit PET/Baumwolle/Naturfasern</li>
+        <li><strong>Hybrid-Acoustics ECO+</strong> &mdash; Baumwoll-basierte Monomaterialien</li>
+        <li>Anwendungen: Ultra-Silent Tune, Needlepunch Carpets, Theta-Fiber Encapsulations</li>
+        <li>Wachsende Abfallstroeme: BEV Front Trunk, Battery Protection, Under Battery Shields</li>
+      </ul>
+    </div>
+
+    <div class="detail-grid">
+      <div class="card">
+        <h3>Geschaetzte Investition</h3>
+        <table class="facts-table">
+          <tr><td>Labor (Uni-Partnerschaft)</td><td>Minimal</td></tr>
+          <tr><td>Pilotanlage</td><td>~500k - 1M CHF</td></tr>
+          <tr><td>Industrielinie (nach Validierung)</td><td>&gt;5M CHF</td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <h3>Potenzielle Partner (Deutschland)</h3>
+        <table class="facts-table">
+          <tr><td>Eeden (Muenster)</td><td>Pilotanlage Cellulose/PET-Trennung</td></tr>
+          <tr><td>Fraunhofer IAP (Potsdam)</td><td>Depolymerisation Mischfasern</td></tr>
+          <tr><td>DITF Denkendorf (Stuttgart)</td><td>Solvolyse, OEM-Specs</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 14px;">
+      <h3>Technischer Game-Changer: Kinetische Selektivitaet</h3>
+      <ul>
+        <li><strong>Geschwindigkeit:</strong> 5 Minuten vs. Stunden bei traditioneller Hydrolyse &mdash; keine Polymerkettenzerst&ouml;rung</li>
+        <li><strong>Strukturelle Integritaet:</strong> Feste Baumwolle (mechanisch intakt) + fluessiges Monomer (chemisch rein)</li>
+        <li><strong>Prozessfenster:</strong> &bdquo;Flash Separation&ldquo; (hohe Temp, kurze Zeit) statt Hochdruck/Langzeit</li>
+        <li><strong>Kritische Herausforderung:</strong> Loesungsmittelrueckgewinnung (&gt;95% erforderlich fuer Business Case)</li>
+      </ul>
+    </div>
+
+    <div class="card" style="margin-top: 14px;">
+      <h3>EHS &amp; Offene Fragen</h3>
+      <ul>
+        <li>Handling mit Saeuren bei &gt;200&deg;C &mdash; geschlossenes Kreislaufsystem mit Dampfrueckgewinnung erforderlich</li>
+        <li>Kompatibilitaet mit Bikomponenten-Bindefasern und Phenolharzen pruefen</li>
+        <li>Prozesskosten pro kg noch nicht bestimmbar &mdash; wirtschaftlicher Treiber sind zukuenftige CO2-/ASR-Steuern</li>
+        <li>&bdquo;Die Chemie funktioniert. Die Herausforderung ist das Engineering der Loesungsmittelrueckgewinnung.&ldquo;</li>
+      </ul>
+    </div>
+
+    <div class="comment-thread">
+      <h4>Auszuege aus der Autoneum Innovation Platform</h4>
+      <div class="comment">
+        <span class="author">Jonas Glawion</span> <span class="role">B.Eng. Plastics Engineering &mdash; Ideengeber</span>
+        <p style="margin-top: 6px;">Strategischer Technologie-Scout fuer Probleme, die mechanisches Recycling nicht loesen kann (EOL und Mischfasern). Die Kosten sind heute hoch, aber ab 2030 werden Regulierungen (CBAM, ASR-Steuern) mechanisches Recycling an seine Grenzen bringen.</p>
+      </div>
+      <div class="comment">
+        <span class="author">Maurizio Mantovani</span> <span class="role">R&amp;T Review</span>
+        <p style="margin-top: 6px;">R&amp;T-Experten verfolgen chemisches Recycling seit laengerem &mdash; Kosten waren bisher zu hoch. Wenn dies etwas grundlegend anderes ist, wird die Idee an Laura weitergeleitet.</p>
+      </div>
+      <div class="comment">
+        <span class="author">Philippe Godano</span> <span class="role">Review</span>
+        <p style="margin-top: 6px;">Oekonomisch sinnvoller waere ggf. Baumwolle aufzuloesen und PET-Fasern zu gewinnen. Beides evaluieren.</p>
+      </div>
+    </div>
+
+    <div class="strategic-value">Erster Zulieferer mit &quot;Virgin-Quality&quot; Recyclingmaterial | EU Green Deal Compliance</div>
+  </div>
+
+  <!-- ===== OPTION 3: LHS-TPC ===== -->
+  <div class="option-section">
+    <div class="option-header">
+      <div class="option-number">3</div>
+      <div>
+        <h2>Lightweight Hollow Structure Thermoplastic Composite Panel (LHS-TPC)</h2>
+        <div style="font-size: 0.85rem; color: var(--gray);">PP-GF UD Tapes + Hohlrippenstruktur &mdash; IboComb-Nachfolger</div>
+      </div>
+      <span class="trl-badge">TRL 4-5 | Intern validiert</span>
+    </div>
+
+    <div class="card">
+      <h3>Konzept</h3>
+      <ul>
+        <li>Zweistufiger Kaltpressvorgang fuer leichtgewichtige Hohlstruktur-Paneele</li>
+        <li><strong>Schritt 1:</strong> PP-GF UD-Tapes + kurzglasfaserverstaerktes PP fliesst in die Hohlrippenstruktur (bis 65% GF-Anteil)</li>
+        <li><strong>Schritt 2:</strong> Klebefilm + UD-Lagen im Kontaktheizer (~30s), dann Kuehlung unter Druck</li>
+        <li>Ergebnis: Vollstaendig gebundenes, konsolidiertes thermoplastisches Hohlpaneel</li>
+        <li>100% recycelbares Monomaterial-System (thermoplastisch statt duroplastisch)</li>
+      </ul>
+    </div>
+
+    <div class="detail-grid">
+      <div class="card">
+        <h3>Vorteile vs. Duroplast</h3>
+        <ul>
+          <li>Echte Recycelbarkeit (re-melt, re-form, reuse)</li>
+          <li>Hoechstes Steifigkeits-Gewichts-Verhaeltnis</li>
+          <li>Schnelle Zykluszeiten</li>
+          <li>Geringe Materialkosten bei einfachem Werkzeug</li>
+          <li>Reduzierter Produktionsabfall</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Anwendungen</h3>
+        <ul>
+          <li>Ersatz IboComb-Set fuer Ladeboeden</li>
+          <li>Unterbodenschutz (IPP)</li>
+          <li>Battery Protection Plates</li>
+          <li>IPP 500 mit Crush-Elementen (Zigzag-Geometrie fuer Energieabsorption)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 14px;">
+      <h3>Offene Punkte</h3>
+      <ul>
+        <li>Patentsituation pruefen (Kautex hat aehnliches Konzept fuer Rivian R1 entwickelt)</li>
+        <li>Mechanische Performance bei erhoehter Temperatur validieren</li>
+        <li>Dicken- und Gleichmaessigkeitskontrolle bei komplexen Geometrien</li>
+        <li>Frueherer Versuch in Winterthur (2022) zeigte UD-Sagging-Probleme &mdash; Klebefilm-Ansatz loest dies</li>
+      </ul>
+    </div>
+
+    <div class="comment-thread">
+      <h4>Auszuege aus der Autoneum Innovation Platform</h4>
+      <div class="comment">
+        <span class="author">Alexander Papadimas</span> <span class="role">Ideengeber</span>
+        <p style="margin-top: 6px;">127 Views, 9 Likes, 20 Kommentare &mdash; hoechstes Community-Interesse aller Ideen. Werkzeug von 2022 in Winterthur vorhanden. Klebefilm-Ansatz loest das UD-Sagging-Problem.</p>
+      </div>
+      <div class="comment">
+        <span class="author">Philippe Godano</span> <span class="role">Review</span>
+        <p style="margin-top: 6px;">Grosses Potenzial als Ersatz fuer IboComb-Set fuer Ladeboeden &mdash; wenn Freedom of Practice und Performance bei erhoehter Temperatur gegeben.</p>
+      </div>
+      <div class="comment">
+        <span class="author">Sebastian Bienert</span> <span class="role">Technik</span>
+        <p style="margin-top: 6px;">Kautex hat aehnliches Konzept fuer Rivian R1 Protection Plate entwickelt (GMT + UD/Alu). Patentsituation pruefen.</p>
+      </div>
+    </div>
+
+    <div class="strategic-value">127 Views | 9 Likes | Hoechstes Community-Interesse | Potenzial fuer IboComb-Abloesung</div>
+  </div>
+
+  <!-- ===== OPTION 4: INTEGRATED FR-PU ===== -->
+  <div class="option-section">
+    <div class="option-header">
+      <div class="option-number">4</div>
+      <div>
+        <h2>Integriertes FR-PU-Verfahren fuer Batterieschutz</h2>
+        <div style="font-size: 0.85rem; color: var(--gray);">In-Tool Flammschutz-PU auf thermoplastischen Teilen</div>
+      </div>
+      <span class="trl-badge">TRL 4-5 | Teilvalidiert</span>
+    </div>
+
+    <div class="card">
+      <h3>Problemstellung</h3>
+      <ul>
+        <li>BEV-Batterien: Thermal Runaway kann &gt;600&deg;C erreichen</li>
+        <li>Bestehende Mica-Shields: unvollstaendige Abdeckung, sproede, brechempfindlich, aufwaendige Klebemontage</li>
+        <li>Multi-Step-Fertigung: Material herstellen, zuschneiden, manuell aufkleben &mdash; teuer und fehleranfaellig</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Loesung: In-Press FR-PU Beschichtung</h3>
+      <ul>
+        <li>Trockene Glasfasermatte auf thermoplastisches Teil legen</li>
+        <li>Flammschutz-PU direkt im Werkzeug aufspruehen &mdash; haertet unter Druck aus</li>
+        <li>Vollflaeachige Abdeckung bei komplexen Geometrien (Kavitaeten, tiefe Zuege)</li>
+        <li>Eliminiert separate Shields, Kleber, Zuschnitt</li>
+        <li>Ein Arbeitsschritt statt drei &mdash; weniger Handling, kuerzere Taktzeit, weniger Ausschuss</li>
+      </ul>
+    </div>
+
+    <div class="detail-grid">
+      <div class="card">
+        <h3>Vorteile</h3>
+        <ul>
+          <li>100% Oberflaechenabdeckung (vs. Luecken bei Mica-Shields)</li>
+          <li>Ready-to-install Bauteil fuer OEM</li>
+          <li>Konsistente Dicke und Haftung</li>
+          <li>Reduzierte Variabilitaet und Nacharbeit</li>
+          <li>PU-Spruehtechnologie in Genk bereits im Einsatz</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Zielmarkt</h3>
+        <ul>
+          <li>UD-DLFT IPP (Ersatz Mica-Shields)</li>
+          <li>BEV Battery Protection Plates</li>
+          <li>Front Trunk Solutions (Frunk)</li>
+          <li>Under Battery Shields</li>
+          <li>Steigender BEV-Marktanteil = wachsender Bedarf</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="comment-thread">
+      <h4>Auszuege aus der Autoneum Innovation Platform</h4>
+      <div class="comment">
+        <span class="author">Alexander Papadimas</span> <span class="role">Ideengeber</span>
+        <p style="margin-top: 6px;">Kern-Kompetenz vorhanden: Thermoplast-Formgebung + PU-Spruehtechnologie (Genk). GF-Matten-Integration bereits auf kleinen Teilen intern validiert.</p>
+      </div>
+      <div class="comment">
+        <span class="author">Urban Cotic</span> <span class="role">Business Development</span>
+        <p style="margin-top: 6px;">Wachsender Marktbedarf fuer Flammschutz an Battery-Pack-Unterseite. Technologie auf UD-LFT IPP anwendbar.</p>
+      </div>
+    </div>
+
+    <div class="strategic-value">Next-Gen Flammschutz | BEV-Wachstumsmarkt | Kern-Kompetenz vorhanden (Genk)</div>
+  </div>
+
+  <!-- ===== COMPARISON MATRIX ===== -->
+  <div class="comparison-section">
+    <h2>Vergleichsmatrix aller Zukunftsoptionen</h2>
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th>Kriterium</th>
+          <th>1. CO2-RA</th>
+          <th>2. PU-Recycling</th>
+          <th>3. LHS-TPC</th>
+          <th>4. FR-PU</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>TRL (Technology Readiness)</td>
+          <td>6-7 <span class="dot dot-green"></span></td>
+          <td>3-4 <span class="dot dot-yellow"></span></td>
+          <td>4-5 <span class="dot dot-yellow"></span></td>
+          <td>4-5 <span class="dot dot-yellow"></span></td>
+        </tr>
+        <tr>
+          <td>Investition (Pilot)</td>
+          <td>230-365k EUR</td>
+          <td>500k-1M CHF</td>
+          <td>Noch offen</td>
+          <td>Noch offen</td>
+        </tr>
+        <tr>
+          <td>Amortisation</td>
+          <td>~4,4 Jahre <span class="dot dot-green"></span></td>
+          <td>Abhaengig von Regulierung <span class="dot dot-yellow"></span></td>
+          <td>Abhaengig von Volumen <span class="dot dot-yellow"></span></td>
+          <td>Abhaengig von BEV-Volumen <span class="dot dot-yellow"></span></td>
+        </tr>
+        <tr>
+          <td>Bestaetigter Business Case</td>
+          <td>Ellzee-Daten <span class="dot dot-green"></span></td>
+          <td>Nein <span class="dot dot-red"></span></td>
+          <td>Nein <span class="dot dot-red"></span></td>
+          <td>Nein <span class="dot dot-red"></span></td>
+        </tr>
+        <tr>
+          <td>Standort-Relevanz Gundernhausen</td>
+          <td>Direkt (Schaeumanlagen) <span class="dot dot-green"></span></td>
+          <td>Neue Kompetenz <span class="dot dot-yellow"></span></td>
+          <td>Neue Kompetenz <span class="dot dot-yellow"></span></td>
+          <td>Neue Kompetenz <span class="dot dot-yellow"></span></td>
+        </tr>
+        <tr>
+          <td>Bestehende Infrastruktur nutzbar</td>
+          <td>CO2-Tank vorhanden <span class="dot dot-green"></span></td>
+          <td>Minimal <span class="dot dot-red"></span></td>
+          <td>Presswerk moeglich <span class="dot dot-yellow"></span></td>
+          <td>PU-Know-how (Genk) <span class="dot dot-yellow"></span></td>
+        </tr>
+        <tr>
+          <td>Strategischer Markttrend</td>
+          <td>Nachhaltigkeits-KPI <span class="dot dot-green"></span></td>
+          <td>EU Green Deal / CBAM <span class="dot dot-green"></span></td>
+          <td>E-Mobility Leichtbau <span class="dot dot-green"></span></td>
+          <td>BEV Battery Safety <span class="dot dot-green"></span></td>
+        </tr>
+        <tr>
+          <td>Community-Interesse (HYPE)</td>
+          <td>n/a</td>
+          <td>90 Views, 5 Likes</td>
+          <td><strong>127 Views, 9 Likes</strong></td>
+          <td>99 Views, 5 Likes</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CONCLUSION -->
+  <div class="conclusion">
+    <h2>Strategische Bewertung</h2>
+    <p>
+      Die vier Zukunftsoptionen sind <strong>nicht alternativ, sondern komplementaer</strong>:
+      CO2-RA optimiert das bestehende NVH-Geschaeft, waehrend PU-Recycling, LHS-TPC und FR-PU
+      neue Geschaeftsfelder eroeffnen, die auf den Megatrends <strong>E-Mobilitaet</strong>,
+      <strong>Kreislaufwirtschaft</strong> und <strong>Leichtbau</strong> aufbauen.
+    </p>
+    <p>
+      <strong>Halle 3 als strategisches Asset:</strong> Die freigewordene Flaeche ermoeglicht es Gundernhausen,
+      sich vom reinen NVH-Produktionsstandort zum <strong>Innovationsstandort</strong> zu entwickeln &mdash;
+      mit Pilotlinien fuer Technologien, die 2028-2030 serienreif werden koennten.
+    </p>
+    <p>
+      <strong>Empfehlung:</strong> Phase A (Layoutumbau, 262-460k EUR) unabhaengig von Phase B entscheiden.
+      Die Investition in Phase A rechnet sich allein durch operative Einsparungen.
+      Halle 3 bleibt verfuegbar &mdash; welche Option dort realisiert wird, kann spaeter entschieden werden.
+    </p>
+  </div>
+
+</div>
+
+<div class="footer">
+  Autoneum &mdash; NVH 2030 Phase B Zukunftsoptionen &mdash; Gundernhausen &mdash; 26.02.2026
+  &mdash; Quellen: Autoneum HYPE Innovation Platform, interne R&amp;D-Dokumentation
+</div>
+
+</body>
+</html>

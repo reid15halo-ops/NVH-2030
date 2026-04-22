@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Workshop-Protokoll NVH Verdichten — 01.04.2026</title>
+<style>
+:root{--g:#B8C400;--dg:#99CC00;--o:#E86A10;--b:#69BBFF;--dk:#2d2d2d;--gy:#666;--lg:#DCDCDC;--vlg:#F4F4F4;--wh:#FFF;--pg:#EDF0BF;--red:#CC3333}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Arial,Calibri,sans-serif;background:var(--wh);color:#000;line-height:1.55;font-size:16px}
+@media print{body{font-size:12px}.hero{padding:18px 22px!important}.container{padding:8px 18px!important}.no-print{display:none!important}}
+
+.hero{background:linear-gradient(135deg,#1a1a1a 0%,#2d2d2d 60%,#3a3a3a 100%);color:var(--wh);padding:30px 45px;position:relative}
+.hero::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--g)}
+.hero-tag{font-size:14px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--g);margin-bottom:4px}
+.hero h1{font-size:28px;font-weight:700;line-height:1.2;margin-bottom:6px}
+.hero h1 span{color:var(--g)}
+.hero-sub{font-size:16px;opacity:.85;max-width:700px;margin-bottom:8px}
+.hero-meta{display:flex;gap:10px;font-size:13px;opacity:.5;flex-wrap:wrap}
+.brand{text-align:right}
+.brand-name{font-size:22px;font-weight:700;color:var(--g);letter-spacing:1px}
+.brand-class{font-size:12px;font-style:italic;color:var(--o)}
+
+.kn-bar{display:grid;grid-template-columns:repeat(5,1fr);background:var(--wh);border-radius:8px;box-shadow:0 3px 10px rgba(0,0,0,.06);margin:-18px 25px 16px;position:relative;z-index:10;border:1px solid var(--lg)}
+.kn{padding:14px 10px;text-align:center;border-right:1px solid var(--lg)}
+.kn:last-child{border-right:none}
+.kn .v{font-size:24px;font-weight:700;color:#000;line-height:1;margin-bottom:2px}
+.kn .v span{color:var(--g)}
+.kn .l{font-size:12px;color:var(--gy);text-transform:uppercase;letter-spacing:.4px}
+
+.container{max-width:1100px;margin:0 auto;padding:14px 35px}
+.sh{margin-bottom:10px;margin-top:18px}
+.sh .tag{font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--g);margin-bottom:2px}
+.sh h2{font-size:22px;font-weight:700;color:var(--g)}
+
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:14px}
+th{background:var(--g);color:var(--wh);padding:8px 10px;text-align:left;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.3px}
+th:first-child{border-radius:4px 0 0 0}th:last-child{border-radius:0 4px 0 0}
+td{padding:7px 10px;border-bottom:1px solid var(--lg);vertical-align:top}
+tr:nth-child(even){background:var(--vlg)}
+tr:hover{background:var(--pg)}
+
+.status{display:inline-block;width:24px;height:24px;border-radius:50%;text-align:center;line-height:24px;font-size:14px;font-weight:700;color:var(--wh)}
+.s-g{background:#4CAF50}
+.s-y{background:#FFC107;color:#000}
+.s-r{background:var(--red)}
+
+.box{border-radius:6px;padding:16px 20px;margin-bottom:14px}
+.box h3{font-size:16px;font-weight:700;margin-bottom:5px}
+.box ul{list-style:none;padding:0}
+.box li{padding:3px 0 3px 18px;position:relative;font-size:14px}
+.box li::before{content:'';position:absolute;left:0;top:8px;width:8px;height:8px;border-radius:2px}
+.box-green{background:#F7F9E6;border-left:4px solid var(--g)}
+.box-green h3{color:var(--dg)}
+.box-green li::before{background:var(--g)}
+.box-warn{background:#FFF5EB;border-left:4px solid var(--o)}
+.box-warn h3{color:var(--o)}
+.box-warn li::before{background:var(--o)}
+.box-blue{background:#EBF5FF;border-left:4px solid var(--b)}
+.box-blue h3{color:#2E75B6}
+.box-blue li::before{background:var(--b)}
+.box-dark{background:#1e1e1e;border-left:4px solid var(--g);color:#ddd}
+.box-dark h3{color:var(--g)}
+.box-dark li::before{background:var(--g)}
+
+.cost-bar{display:flex;align-items:center;gap:10px;margin:5px 0}
+.cost-bar .label{width:140px;font-size:14px;text-align:right;color:var(--gy)}
+.cost-bar .track{flex:1;height:28px;background:var(--vlg);border-radius:4px;position:relative;overflow:hidden}
+.cost-bar .fill{height:100%;border-radius:4px;display:flex;align-items:center;padding-left:8px;font-size:13px;font-weight:700;color:var(--wh)}
+.fill-v{background:linear-gradient(90deg,var(--g),var(--dg))}
+.fill-3s{background:linear-gradient(90deg,var(--b),#4A90D9)}
+.fill-2s{background:linear-gradient(90deg,var(--o),#F09040)}
+
+.teilnehmer{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0}
+.tn{background:var(--vlg);border-radius:5px;padding:10px 12px;border-left:3px solid var(--g)}
+.tn .name{font-size:15px;font-weight:700;color:var(--dk)}
+.tn .role{font-size:13px;color:var(--gy)}
+.tn .items{font-size:13px;color:var(--o);margin-top:2px}
+
+.footer{text-align:center;padding:14px;border-top:1px solid var(--lg);margin-top:14px}
+.footer p{font-size:12px;color:var(--gy);font-style:italic}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+        <div>
+            <div class="hero-tag">Besprechungsprotokoll</div>
+            <h1>Workshop NVH <span>Verdichten</span></h1>
+            <p class="hero-sub">Prozesskostenanalyse &amp; Aktionsplanung zur Konsolidierung der NVH-Produktion am Standort Gundernhausen. Reduktion von 7 auf 4 Anlagen.</p>
+        </div>
+        <div class="brand">
+            <div class="brand-name">AUTONEUM</div>
+            <div class="brand-class">- CONFIDENTIAL -</div>
+        </div>
+    </div>
+    <div class="hero-meta">
+        <span>Autoneum Germany GmbH &mdash; Gundernhausen</span><span>|</span>
+        <span>01.04.2026</span><span>|</span>
+        <span>Projekt: NVH Verdichten</span><span>|</span>
+        <span>PM: Christian Dietzel</span><span>|</span>
+        <span>Protokoll: Jonas Glawion</span>
+    </div>
+</div>
+
+<!-- KPI BAR -->
+<div class="kn-bar">
+    <div class="kn"><div class="v">7 <span>&rarr;</span> 4</div><div class="l">Anlagen IST &rarr; SOLL</div></div>
+    <div class="kn"><div class="v">6</div><div class="l">Offene Punkte</div></div>
+    <div class="kn"><div class="v">3</div><div class="l">Szenarien bewertet</div></div>
+    <div class="kn"><div class="v" style="color:var(--g);">G</div><div class="l">Projektstatus</div></div>
+    <div class="kn"><div class="v">16.04.</div><div class="l">N&auml;chster Meilenstein</div></div>
+</div>
+
+<div class="container">
+
+<!-- TEILNEHMER -->
+<div class="sh"><div class="tag">Teilnehmer</div><h2>Workshop-Team</h2></div>
+<div class="teilnehmer">
+    <div class="tn"><div class="name">Christian Dietzel</div><div class="role">Projektleiter</div></div>
+    <div class="tn" style="border-left-color:var(--o);"><div class="name">Jonas Glawion</div><div class="role">Prozessingenieur</div><div class="items">3 Aktionen</div></div>
+    <div class="tn"><div class="name">Tim Benien</div><div class="role">Anlagentechnik</div><div class="items">1 Aktion</div></div>
+    <div class="tn"><div class="name">Hannes Meister</div><div class="role">Energie / Technik</div><div class="items">1 Aktion</div></div>
+    <div class="tn"><div class="name">Uwe Orth</div><div class="role">Produktionsplanung</div><div class="items">1 Aktion</div></div>
+    <div class="tn"><div class="name">Damir Bektasevic</div><div class="role">Produktion</div></div>
+    <div class="tn"><div class="name">Andreas</div><div class="role">Logistik / Material</div></div>
+    <div class="tn"><div class="name">Annika Schneider</div><div class="role">Projektteam</div></div>
+</div>
+
+<!-- AGENDA / ERGEBNISSE -->
+<div class="sh"><div class="tag">1 &bull; Kernergebnis</div><h2>Entscheidung: Konsolidierung 7 &rarr; 4 Anlagen</h2></div>
+
+<div class="box box-dark">
+    <h3>Zielzustand nach Verdichtung</h3>
+    <ul>
+        <li><strong>Entfallende Anlagen:</strong> Halbautomat 188 (Halle 2), Tandem 172, Box 20/21 &mdash; 3 Anlagen abbauen</li>
+        <li><strong>Verbleibende Anlagen:</strong> Vollautomat 187 (Marzola), Halbautomat 189 (Halle 3), Tandem 133, Tandem 105</li>
+        <li><strong>Verlagerungen:</strong> UKL II auf Marzola (187), alle Halbaut.-Produkte auf 189, R&uuml;ckwand A223 auf Tandem 133, Fondsitze auf Tandem 105</li>
+        <li><strong>Hauptvorteile:</strong> Energieeinsparung, weniger Wartung, k&uuml;rzere Transportwege, Fl&auml;chenfreigabe f&uuml;r Phase B</li>
+    </ul>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+    <div class="box box-green" style="margin-bottom:0;">
+        <h3>Vorteile</h3>
+        <ul>
+            <li>Anlagenzahl reduziert: <strong>7 &rarr; 4</strong></li>
+            <li>Energiekosten sinken (3 Anlagen entfallen)</li>
+            <li>Weniger Anlagen zu warten</li>
+            <li>Lange Transportwege Schaum &rarr; T172 entfallen</li>
+            <li>Halbautomat Halle 2: wartungsintensiv, geringe Ausbringung &mdash; wird eliminiert</li>
+        </ul>
+    </div>
+    <div class="box box-warn" style="margin-bottom:0;">
+        <h3>Nachteile / Risiken</h3>
+        <ul>
+            <li><strong>H&ouml;here R&uuml;stwechsel-H&auml;ufigkeit</strong> &mdash; Losgr&ouml;&szlig;en m&uuml;ssen definiert werden (Uwe Orth)</li>
+            <li><strong>Produktivit&auml;t?</strong> &mdash; offener Punkt, muss validiert werden</li>
+            <li>UKL II schneller als Marzola &mdash; <strong>PE muss Performance verbessern</strong></li>
+            <li>UKL II Werkzeugrahmen muss neu geschwei&szlig;t werden</li>
+        </ul>
+    </div>
+</div>
+
+<!-- AKTIONSLISTE -->
+<div class="sh"><div class="tag">2 &bull; Aktionsliste</div><h2>Offene Punkte (LOP)</h2></div>
+
+<table>
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Aktion</th>
+            <th>Anlage / Bereich</th>
+            <th>Teil-Nr.</th>
+            <th>N&auml;chster Schritt</th>
+            <th>Verantwortlich</th>
+            <th>Ziel</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td><strong>Werkzeugverlagerung UKL II auf Marzola</strong></td>
+            <td>Vollautomat 187</td>
+            <td>85H 864 602A</td>
+            <td>Termindefinition, Werkzeugrahmen anpassen</td>
+            <td><strong>Jonas Glawion</strong></td>
+            <td>16.04.2026</td>
+            <td><span class="status s-g">G</span></td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td><strong>Alle Produkte Halbaut. 188 &rarr; 189</strong></td>
+            <td>Halbautomat 189</td>
+            <td>&mdash;</td>
+            <td>Abstimmung Logistik: ab sofort nur Halle 3 tiefziehen, Lagerfl&auml;chen Halbteile definieren</td>
+            <td><strong>Jonas Glawion</strong></td>
+            <td>16.04.2026</td>
+            <td><span class="status s-g">G</span></td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td><strong>R&uuml;ckwand A223 auf Tandem 133</strong></td>
+            <td>Tandem 133</td>
+            <td>A223 682 1205/9705</td>
+            <td>Mit Logistik Umsetzung terminieren (Produkt lief bereits auf der Anlage)</td>
+            <td><strong>Jonas Glawion</strong></td>
+            <td>16.04.2026</td>
+            <td><span class="status s-g">G</span></td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td><strong>Fondsitze A223 auf Tandem 105</strong></td>
+            <td>Tandem 105</td>
+            <td>A223 682 4101/4201</td>
+            <td>Pr&uuml;fen ob WJ-Programm erstellt, Umsetzung planen</td>
+            <td><strong>Tim Benien</strong></td>
+            <td>16.04.2026</td>
+            <td><span class="status s-g">G</span></td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td><strong>Energiekosten berechnen</strong></td>
+            <td>3 entfallende Anlagen</td>
+            <td>&mdash;</td>
+            <td>Hannes nach R&uuml;ckkehr aus Elternzeit</td>
+            <td><strong>Hannes Meister</strong></td>
+            <td>16.04.2026</td>
+            <td><span class="status s-g">G</span></td>
+        </tr>
+        <tr>
+            <td>12</td>
+            <td><strong>Losgr&ouml;&szlig;en &amp; R&uuml;stwechsel definieren</strong></td>
+            <td>Alle 4 Zielanlagen</td>
+            <td>&mdash;</td>
+            <td>Losgr&ouml;&szlig;en und R&uuml;stwechsel pro Anlage definieren</td>
+            <td><strong>Uwe Orth</strong></td>
+            <td>23.04.2026</td>
+            <td><span class="status s-g">G</span></td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- PROZESSKOSTENANALYSE -->
+<div class="sh"><div class="tag">3 &bull; Prozesskostenanalyse</div><h2>Szenarienvergleich</h2></div>
+
+<div class="box box-blue">
+    <h3>Bewertungsmethodik</h3>
+    <ul>
+        <li>63 Kostenfaktoren in 7 Kategorien (Personal, Material, Maschinen, Layout, Qualit&auml;t, Projekt, IT) bewertet</li>
+        <li>Skala 1&ndash;5 pro Faktor (1 = gering, 5 = sehr hoch), gewichtet mit Faktor 1&ndash;2</li>
+        <li>3 Szenarien: <strong>Verdichten</strong> (NVH Konsolidierung), <strong>Fechern 3-Schicht</strong>, <strong>Fechern 2-Schicht</strong></li>
+    </ul>
+</div>
+
+<div style="background:var(--wh);border-radius:8px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.05);margin-bottom:16px;border:1px solid var(--lg);">
+    <h3 style="font-size:16px;font-weight:700;color:var(--g);margin-bottom:10px;">Gesamtpunktzahl nach Szenario</h3>
+    <div class="cost-bar">
+        <div class="label"><strong>Verdichten</strong></div>
+        <div class="track"><div class="fill fill-v" style="width:78.5%;">157 Punkte</div></div>
+    </div>
+    <div class="cost-bar">
+        <div class="label">Fechern 3-Schicht</div>
+        <div class="track"><div class="fill fill-3s" style="width:73%;">146 Punkte</div></div>
+    </div>
+    <div class="cost-bar">
+        <div class="label">Fechern 2-Schicht</div>
+        <div class="track"><div class="fill fill-2s" style="width:69.5%;">139 Punkte</div></div>
+    </div>
+    <p style="font-size:13px;color:var(--gy);margin-top:8px;font-style:italic;">H&ouml;here Punktzahl = h&ouml;here Umstellungskosten. Verdichten ist das aufw&auml;ndigste Szenario, bietet aber die gr&ouml;&szlig;ten strategischen Vorteile.</p>
+</div>
+
+<!-- TOP KOSTENTREIBER -->
+<div style="background:var(--wh);border-radius:8px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.05);margin-bottom:16px;border:1px solid var(--lg);">
+    <h3 style="font-size:16px;font-weight:700;color:var(--o);margin-bottom:10px;">Top Kostentreiber beim Verdichten (Score 4&ndash;5)</h3>
+    <table>
+        <thead>
+            <tr><th>Kostenfaktor</th><th>Score Verdichten</th><th>Score 3S</th><th>Score 2S</th><th>Verantwortlich</th><th>Handlungsbedarf</th></tr>
+        </thead>
+        <tbody>
+            <tr style="background:#FFF5EB;">
+                <td><strong>Materialbereitstellung / Intralogistik</strong></td>
+                <td style="color:var(--red);font-weight:700;">5</td><td>3</td><td>3</td>
+                <td>Andreas</td><td>Materialfluss neu planen, Kitting-Konzept</td>
+            </tr>
+            <tr style="background:#FFF5EB;">
+                <td><strong>Optimierung Anlagenauslastung</strong></td>
+                <td style="color:var(--red);font-weight:700;">5</td><td>3</td><td>3</td>
+                <td>Damir</td><td>Auslastungsberechnung 4 verbleibende Anlagen</td>
+            </tr>
+            <tr>
+                <td><strong>Wartung &amp; Instandhaltung</strong></td>
+                <td style="font-weight:700;">4</td><td>3</td><td>3</td>
+                <td>Tim</td><td>IH-Strategie f&uuml;r h&ouml;her belastete Anlagen</td>
+            </tr>
+            <tr>
+                <td><strong>Energieverbrauch</strong></td>
+                <td style="font-weight:700;">4</td><td>3</td><td>2</td>
+                <td>Hannes</td><td>Einsparung quantifizieren (3 Anlagen entfallen)</td>
+            </tr>
+            <tr>
+                <td><strong>Ausschuss</strong></td>
+                <td style="font-weight:700;">4</td><td>3</td><td>2</td>
+                <td>Jonas</td><td>Ausschussrate nach Verlagerung &uuml;berwachen</td>
+            </tr>
+            <tr>
+                <td><strong>Prozess&auml;nderungen &rarr; Materialverbrauch</strong></td>
+                <td style="font-weight:700;">4</td><td>3</td><td>2</td>
+                <td>Andreas</td><td>Materialverbrauch Vorher/Nachher tracken</td>
+            </tr>
+            <tr>
+                <td><strong>Versetzungen / Umplatzierungen Personal</strong></td>
+                <td style="font-weight:700;">4</td><td>3</td><td>3</td>
+                <td>Andreas</td><td>Personalkapazit&auml;tsplanung abstimmen</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- VORHER-NACHHER: entfernt — Daten in Excel waren nur Beispielwerte, keine Workshop-Ergebnisse -->
+
+<!-- OFFENE PROZESSDATEN -->
+<div class="sh"><div class="tag">4 &bull; Offene Aufgaben</div><h2>Prozessdaten noch zu erheben</h2></div>
+
+<div class="box box-warn">
+    <h3>Prozessdaten-Templates angelegt, aber nicht bef&uuml;llt</h3>
+    <ul>
+        <li><strong>Tiefziehproduktion 01:</strong> Volumen, Auslastung, Bearbeitungszeit, R&uuml;stzeit, Transportzeit, Wartezeit, Stillstandszeit, Menge</li>
+        <li><strong>Sch&auml;umen 02:</strong> Alle Felder offen</li>
+        <li><strong>Hintersch&auml;umen 03:</strong> Alle Felder offen</li>
+        <li><strong>Tandemproduktion 04:</strong> Alle Felder offen</li>
+    </ul>
+</div>
+
+<table>
+    <thead><tr><th>Kategorie</th><th>Checkpunkt</th><th>Status</th></tr></thead>
+    <tbody>
+        <tr><td>Personalkosten</td><td>Personalkapazit&auml;ten analysiert</td><td style="color:var(--o);">Offen</td></tr>
+        <tr><td>Personalkosten</td><td>Qualifizierungsbedarf bewertet</td><td style="color:var(--o);">Offen</td></tr>
+        <tr><td>Personalkosten</td><td>Kosten f&uuml;r Schichtmodelle gepr&uuml;ft</td><td style="color:var(--o);">Offen</td></tr>
+        <tr><td>Materialkosten</td><td>Materialverf&uuml;gbarkeit gepr&uuml;ft</td><td style="color:var(--o);">Offen</td></tr>
+        <tr><td>Materialkosten</td><td>Ausschuss- &amp; Nacharbeitskosten bewertet</td><td style="color:var(--o);">Offen</td></tr>
+        <tr><td>Maschinen/Anlagen</td><td>Maschinenstundensätze hinterlegt</td><td style="color:var(--o);">Offen</td></tr>
+        <tr><td>Maschinen/Anlagen</td><td>Energieverbrauch analysiert</td><td style="color:var(--o);">Offen</td></tr>
+        <tr><td>Layout &amp; Logistik</td><td>Transportwege bewertet</td><td style="color:var(--o);">Offen</td></tr>
+        <tr><td>Layout &amp; Logistik</td><td>Materialfluss optimiert</td><td style="color:var(--o);">Offen</td></tr>
+        <tr><td>Finanzen</td><td>ROI &amp; Payback berechnet</td><td style="color:var(--o);">Offen</td></tr>
+        <tr><td>Finanzen</td><td>F&ouml;rderm&ouml;glichkeiten gepr&uuml;ft</td><td style="color:var(--o);">Offen</td></tr>
+    </tbody>
+</table>
+
+<!-- NÄCHSTE SCHRITTE -->
+<div class="sh"><div class="tag">5 &bull; N&auml;chste Schritte</div><h2>Priorit&auml;ten bis 23.04.2026</h2></div>
+
+<div class="box box-green">
+    <h3>Sofortma&szlig;nahmen (bis 16.04.2026)</h3>
+    <ul>
+        <li><strong>Jonas:</strong> Termin mit Logistik f&uuml;r Halbaut. 188 &rarr; 189 Verlagerung — ab sofort nur noch Halle 3 tiefziehen</li>
+        <li><strong>Jonas:</strong> Werkzeugrahmen UKL II vermessen, Anpassungsbedarf f&uuml;r Marzola definieren</li>
+        <li><strong>Jonas:</strong> R&uuml;ckwand A223 &rarr; Tandem 133 mit Logistik terminieren</li>
+        <li><strong>Tim:</strong> WJ-Programm Fondsitze f&uuml;r Tandem 105 pr&uuml;fen / erstellen</li>
+        <li><strong>Hannes:</strong> Energiekostenberechnung nach R&uuml;ckkehr Elternzeit</li>
+    </ul>
+</div>
+
+<div class="box box-blue">
+    <h3>Mittelfristig (bis 23.04.2026)</h3>
+    <ul>
+        <li><strong>Uwe / Harald:</strong> Losgr&ouml;&szlig;en und R&uuml;stwechsel pro Anlage definieren &mdash; <em>kritisch f&uuml;r Produktivit&auml;tsvalidierung</em></li>
+        <li><strong>Andreas:</strong> Materialfluss-Neuplanung f&uuml;r konsolidiertes Layout, Kitting-Konzept</li>
+        <li><strong>Damir:</strong> Auslastungsberechnung f&uuml;r 4 verbleibende Anlagen</li>
+        <li><strong>Team:</strong> Prozessdaten f&uuml;r alle 4 Prozesse (Tiefzieh, Sch&auml;umen, Hintersch&auml;umen, Tandem) erheben</li>
+    </ul>
+</div>
+
+<div class="box box-warn">
+    <h3>Offene Risiken</h3>
+    <ul>
+        <li><strong>Produktivit&auml;tsverlust UKL II &rarr; Marzola:</strong> UKL II ist schneller als Marzola. PE muss Performance-Verbesserung liefern, sonst wird der Engpass verschoben.</li>
+        <li><strong>R&uuml;stwechsel-H&auml;ufigkeit:</strong> Bei 4 statt 7 Anlagen steigen die R&uuml;stwechsel. Ohne definierte Losgr&ouml;&szlig;en (Uwe) kann die Wirtschaftlichkeit nicht validiert werden.</li>
+        <li><strong>UKL II Werkzeugrahmen:</strong> Muss geschwei&szlig;t werden &mdash; Termin und Kosten noch offen.</li>
+    </ul>
+</div>
+
+</div>
+
+<div class="footer">
+    <p>&copy; 2026 Autoneum Germany GmbH &mdash; Gundernhausen | - CONFIDENTIAL - | Workshop-Protokoll NVH Verdichten 01.04.2026 | Erstellt: Jonas Glawion</p>
+</div>
+
+</body>
+</html>
