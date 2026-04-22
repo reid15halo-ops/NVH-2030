@@ -647,6 +647,130 @@
     color: #555;
     font-weight: 700;
   }
+
+  /* ============================================ */
+  /* SLIDES 3 & 4 — Technology Quick-Profile      */
+  /* ============================================ */
+  .tp-body { padding: 22px 52px 28px; }
+
+  .tp-section-tag {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gy);
+    margin-bottom: 10px;
+  }
+  .tp-section-tag.mjf { color: #6B7A00; }
+  .tp-section-tag.pet { color: var(--pet-blue); }
+
+  .tp-products {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 22px;
+  }
+  .tp-prod {
+    border-radius: 8px;
+    padding: 16px 18px;
+    background: var(--vlg);
+    border: 1px solid var(--lg);
+    border-top: 4px solid var(--g);
+  }
+  .tp-prod.pet { border-top-color: var(--b); background: #EBF5FF; border-color: #c5dff5; }
+  .tp-prod h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 4px;
+  }
+  .tp-prod p {
+    font-size: 11px;
+    color: var(--gy);
+    line-height: 1.45;
+  }
+
+  .tp-flow {
+    background: #fafafa;
+    border: 1px solid var(--lg);
+    border-radius: 8px;
+    padding: 16px 22px;
+    margin-bottom: 22px;
+  }
+  .tp-flow-steps {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    margin-top: 8px;
+  }
+  .tp-step-box {
+    flex: 1;
+    text-align: center;
+    background: var(--wh);
+    border: 1px solid var(--lg);
+    border-radius: 6px;
+    padding: 10px 6px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #000;
+  }
+  .tp-step-box.mjf { border-bottom: 3px solid var(--g); }
+  .tp-step-box.pet { border-bottom: 3px solid var(--b); }
+  .tp-arrow-mid {
+    color: var(--gy);
+    font-size: 18px;
+    font-weight: 700;
+  }
+  .tp-flow-note {
+    font-size: 11px;
+    color: #333;
+    line-height: 1.5;
+  }
+  .tp-flow-note strong.mjf { color: #6B7A00; }
+  .tp-flow-note strong.pet { color: var(--pet-blue); }
+
+  .tp-kpi-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  .tp-kpi {
+    border-radius: 8px;
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 2px solid var(--lg);
+    background: var(--wh);
+  }
+  .tp-kpi.mjf { border-color: var(--g); background: #F7F9E6; }
+  .tp-kpi.pet { border-color: var(--b); background: #EBF5FF; }
+  .tp-kpi .tp-kpi-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--gy);
+    margin-bottom: 3px;
+  }
+  .tp-kpi .tp-kpi-val {
+    font-size: 26px;
+    font-weight: 700;
+    color: #000;
+    line-height: 1;
+  }
+  .tp-kpi.mjf .tp-kpi-val { color: #6B7A00; }
+  .tp-kpi.pet .tp-kpi-val { color: var(--pet-blue); }
+  .tp-kpi .tp-kpi-sub {
+    font-size: 10px;
+    color: var(--gy);
+    margin-top: 4px;
+  }
+  .tp-kpi-icon {
+    font-size: 32px;
+    opacity: .35;
+  }
 </style>
 </head>
 <body>
@@ -666,7 +790,7 @@
 
     <h1>Gundernhausen: <span>Consolidate</span> Hall 2, build the <span>automation platform</span>, stay ready for <span class="blue">OEM-driven PET demand</span>.</h1>
     <div class="subtitle">
-      Workshop consensus (T. Benien et al.): <em>&ldquo;Automation is the only way to stay competitive long-term.&rdquo;</em> Hall 2 consolidation is <strong>independent</strong> of any strategy decision &mdash; it stands on its own. <strong>Keep investment low, free up floor space, preserve workforce competence, stay flexible</strong> (workshop principle). Benchmark: Katja &amp; Genk. PET-foam pull is OEM-driven: <strong>BMW, Mercedes-Benz, VW Group, Volvo &amp; Stellantis have all published 30-50% recycled-content targets by 2030</strong> &mdash; Volvo already uses PET foam in NVH today.
+      Workshop consensus (T. Benien et al.): <em>&ldquo;Automation is the only way to stay competitive long-term.&rdquo;</em> Hall 2 consolidation is <strong>independent</strong> of any strategy decision &mdash; it stands on its own. <strong>Keep investment low, free up floor space, preserve workforce competence, stay flexible</strong> (workshop principle). Benchmark: Genk &amp; Katowice. PET-foam pull is OEM-driven: <strong>BMW, Mercedes-Benz, VW Group, Volvo &amp; Stellantis have all published 30-50% recycled-content targets by 2030</strong> &mdash; Volvo already uses PET foam in NVH today.
     </div>
 
     <div class="phase-cards">
@@ -683,10 +807,10 @@
       <div class="ph-card ph2">
         <div class="ph-badge">Mid-term &mdash; Automate</div>
         <h3>Competitiveness Through Automation</h3>
-        <p><em>&ldquo;Automation is the only way to stay competitive long-term&rdquo;</em> (workshop). Benchmark: <strong>Katja &amp; Genk</strong> &mdash; automated processes, significant PCCS savings. Reduces operator demand at rising utilization.</p>
+        <p><em>&ldquo;Automation is the only way to stay competitive long-term&rdquo;</em> (workshop). Benchmark: <strong>Genk &amp; Katowice</strong> &mdash; automated processes, significant PCCS savings. Reduces operator demand at rising utilization.</p>
         <div class="ph-kpis">
-          <div class="ph-kpi"><div class="v">Katja</div><div class="l">Benchmark</div></div>
-          <div class="ph-kpi"><div class="v">Genk</div><div class="l">Reference</div></div>
+          <div class="ph-kpi"><div class="v">Genk</div><div class="l">Benchmark</div></div>
+          <div class="ph-kpi"><div class="v">Katowice</div><div class="l">PCCS Ref.</div></div>
           <div class="ph-kpi"><div class="v">PCCS&darr;</div><div class="l">Savings</div></div>
         </div>
       </div>
@@ -713,7 +837,7 @@
       </div>
       <div class="fomo-box">
         <h4>Workshop principle: Benchmark</h4>
-        <p>Compare against <strong>Katja &amp; Genk</strong> (automation), <strong>Katowice</strong> (PCCS validation). Map VW &amp; Volvo PET-foam use (action: Speaker 7).</p>
+        <p>Compare against <strong>Genk</strong> (automation reference), <strong>Katowice</strong> (PCCS validation, action: Speakers 6, 9). Map VW &amp; Volvo PET-foam use (action: Speaker 7).</p>
       </div>
     </div>
 
@@ -766,7 +890,7 @@
         <h3>Mid-term &mdash; Automate</h3>
         <ul>
           <li><em>&ldquo;Automation = the only path&rdquo;</em> (workshop consensus)</li>
-          <li><strong>Benchmark Katja &amp; Genk</strong> &mdash; significant cost savings</li>
+          <li><strong>Benchmark Genk</strong> &mdash; automated NVH lines, significant cost savings</li>
           <li><strong>Reduce operator demand</strong> at rising utilization</li>
           <li><strong>Investment amortizes</strong> via labor &amp; efficiency gains</li>
           <li><strong>New tools / equipment</strong> partially required</li>
@@ -801,12 +925,12 @@
         <div class="kl">Layout-Ready</div>
       </div>
       <div class="kpi">
-        <div class="kv"><span class="g">Katja</span></div>
-        <div class="kl">Benchmark</div>
+        <div class="kv"><span class="g">Genk</span></div>
+        <div class="kl">Auto. Benchmark</div>
       </div>
       <div class="kpi">
-        <div class="kv"><span class="g">Genk</span></div>
-        <div class="kl">Reference</div>
+        <div class="kv"><span class="g">Katowice</span></div>
+        <div class="kl">PCCS Reference</div>
       </div>
       <div class="kpi">
         <div class="kv"><span class="bl">5 OEMs</span></div>
@@ -827,27 +951,65 @@
 <!-- ================================================================ -->
 <div class="slide">
   <div class="s2-header">
-    <div class="tag">Slide 3 &bull; Technologie-Kurzprofil</div>
-    <h2><span class="g">HP Multi Jet Fusion 5200</span> &mdash; Print Hub</h2>
+    <div class="tag">Slide 3 &bull; Technologie-Kurzprofil &middot; MJF</div>
+    <h2><span class="g">HP Multi Jet Fusion 5200</span> &mdash; Print Hub Gundernhausen</h2>
   </div>
-  <div class="s2-body">
-    <div class="decision-grid" style="grid-template-columns: 1fr 1fr; margin-top:0;">
-      <div class="d-box d-act">
-        <h3>Produktideen & Herstellkonzept</h3>
-        <ul>
-          <li><strong>Produktideen:</strong> Vorrichtungen (Jigs), Werkzeugeinsätze, Betriebsmittel &amp; leichte Serienteile</li>
-          <li><strong>Technologie:</strong> Industrieller Pulverbett-3D-Druck (PA12) ohne Stützstrukturen</li>
-          <li><strong>Konzept:</strong> Zentraler "Print Hub" für Europa ("Lights-out" Betrieb über Nacht)</li>
-        </ul>
+  <div class="tp-body">
+
+    <div class="tp-section-tag mjf">Produktideen</div>
+    <div class="tp-products">
+      <div class="tp-prod">
+        <h4>Vorrichtungen &amp; Jigs</h4>
+        <p>Mess-, Spann- und Pr&uuml;fvorrichtungen f&uuml;r interne Linien &mdash; in Tagen statt Wochen.</p>
       </div>
-      <div class="d-box d-risk" style="border-color: #ccc; background: #fafafa;">
-        <h3 style="color: #333;">Rahmendaten</h3>
-        <ul>
-          <li><strong>Investkosten:</strong> ca. 480 &ndash; 550 k&euro; (Phase 1, inkl. kompletter Peripherie)</li>
-          <li><strong>Flächenbedarf:</strong> ca. 75 &ndash; 85 m&sup2;</li>
-        </ul>
+      <div class="tp-prod">
+        <h4>Werkzeugeinsätze</h4>
+        <p>Form- und Schnitteinsätze, Inserts f&uuml;r Thermoform- und Beschnittwerkzeuge.</p>
+      </div>
+      <div class="tp-prod">
+        <h4>Leichte Serienteile</h4>
+        <p>Kleine Klein- und Anbauteile in PA12 &mdash; Lights-out, Nachtschicht ohne Operator.</p>
       </div>
     </div>
+
+    <div class="tp-section-tag mjf">Herstellkonzept</div>
+    <div class="tp-flow">
+      <p class="tp-flow-note">
+        <strong class="mjf">Industrieller Pulverbett-3D-Druck (PA12)</strong> &mdash; keine St&uuml;tzstrukturen, kein Werkzeugbau. Zentraler &bdquo;Print Hub&ldquo; f&uuml;r europ&auml;ische Autoneum-Werke, Nachtbetrieb ohne Personal.
+      </p>
+      <div class="tp-flow-steps">
+        <div class="tp-step-box mjf">CAD-Datei</div>
+        <div class="tp-arrow-mid">&rarr;</div>
+        <div class="tp-step-box mjf">Pulverbett-Druck</div>
+        <div class="tp-arrow-mid">&rarr;</div>
+        <div class="tp-step-box mjf">K&uuml;hlen &amp; Auspacken</div>
+        <div class="tp-arrow-mid">&rarr;</div>
+        <div class="tp-step-box mjf">Nachbearbeitung</div>
+        <div class="tp-arrow-mid">&rarr;</div>
+        <div class="tp-step-box mjf">Versand</div>
+      </div>
+    </div>
+
+    <div class="tp-section-tag mjf">Rahmendaten</div>
+    <div class="tp-kpi-row">
+      <div class="tp-kpi mjf">
+        <div>
+          <div class="tp-kpi-label">Investkosten</div>
+          <div class="tp-kpi-val">~ 480&ndash;550 k&euro;</div>
+          <div class="tp-kpi-sub">Drucker + 2 Build Units + Peripherie</div>
+        </div>
+        <div class="tp-kpi-icon">&euro;</div>
+      </div>
+      <div class="tp-kpi mjf">
+        <div>
+          <div class="tp-kpi-label">Flächenbedarf</div>
+          <div class="tp-kpi-val">~ 75&ndash;85 m&sup2;</div>
+          <div class="tp-kpi-sub">Komplette Zelle &mdash; Halle 3 verf&uuml;gbar</div>
+        </div>
+        <div class="tp-kpi-icon">&#9633;</div>
+      </div>
+    </div>
+
   </div>
   <div class="footer-bar"></div>
   <div class="slide-num">3 / 5</div>
@@ -858,32 +1020,67 @@
 <!-- ================================================================ -->
 <div class="slide">
   <div class="s2-header">
-    <div class="tag">Slide 4 &bull; Technologie-Kurzprofil</div>
-    <h2><span class="bl">EV Acoustic + PET Foam</span> &mdash; Sandwich-Konzept</h2>
+    <div class="tag">Slide 4 &bull; Technologie-Kurzprofil &middot; PET Schaum</div>
+    <h2><span class="bl">PET-Schaum Sandwich</span> &mdash; EV Acoustic Parts</h2>
   </div>
-  <div class="s2-body">
-    <style>
-      .d-pet-box { background: #EBF5FF; border: 2px solid var(--b); }
-      .d-pet-box h3 { color: #2E75B6; }
-      .d-pet-box li::before { background: var(--b); content: ''; position: absolute; left: 0; top: 6px; width: 7px; height: 7px; border-radius: 2px; }
-    </style>
-    <div class="decision-grid" style="grid-template-columns: 1fr 1fr; margin-top:0;">
-      <div class="d-box d-pet-box">
-        <h3>Produktideen & Herstellkonzept</h3>
-        <ul>
-          <li><strong>Produktideen:</strong> Radhausauskleidungen, Unterboden, Tür-/Frunk-Dämmung (fokussiert auf E-Fahrzeuge)</li>
-          <li><strong>Technologie:</strong> Leichtbau-Sandwich aus PET Schaumkern + Vlies (100% Monomaterial, komplett recycelbar)</li>
-          <li><strong>Konzept:</strong> Thermoumformen von Halbfabrikaten. Beginn mit Zukauf des Kerns, später In-House Schaumextrusion.</li>
-        </ul>
+  <div class="tp-body">
+
+    <div class="tp-section-tag pet">Produktideen (E-Fahrzeug-fokussiert)</div>
+    <div class="tp-products">
+      <div class="tp-prod pet">
+        <h4>Radhausauskleidungen</h4>
+        <p>Akustik &amp; Steinschlagschutz &mdash; 30&ndash;40 % leichter als PUR-basierte Pendants.</p>
       </div>
-      <div class="d-box d-risk" style="border-color: #ccc; background: #fafafa;">
-        <h3 style="color: #333;">Rahmendaten</h3>
-        <ul>
-          <li><strong>Investkosten:</strong> ca. 2,0 &ndash; 4,0 Mio. &euro; (für vollintegrierte Extrusions- &amp; Fertigungsanlage)</li>
-          <li><strong>Flächenbedarf:</strong> ca. 500 &ndash; 800 m&sup2;</li>
-        </ul>
+      <div class="tp-prod pet">
+        <h4>Unterboden / Schweller</h4>
+        <p>Aerodynamik- und D&auml;mmpaneele f&uuml;r Battery-EV-Plattformen.</p>
+      </div>
+      <div class="tp-prod pet">
+        <h4>Tür- &amp; Frunk-Dämmung</h4>
+        <p>Innenraum- und Frunk-Liner aus 100 % PET &mdash; voll recyclingf&auml;hig (EU-ELV ready).</p>
       </div>
     </div>
+
+    <div class="tp-section-tag pet">Herstellkonzept</div>
+    <div class="tp-flow">
+      <p class="tp-flow-note">
+        <strong class="pet">Leichtbau-Sandwich:</strong> Vlies + PET-Schaumkern + Vlies, monomateriell.
+        <strong class="pet">Phase 1:</strong> Schaumkern zugekauft (Armacell ArmaFORM) als Br&uuml;cke.
+        <strong class="pet">Phase 2:</strong> Eigene PET-Schaumextrusion &mdash; volle Marge &amp; IP im Werk.
+      </p>
+      <div class="tp-flow-steps">
+        <div class="tp-step-box pet">PET-Schaumkern</div>
+        <div class="tp-arrow-mid">+</div>
+        <div class="tp-step-box pet">Vlies-Skins</div>
+        <div class="tp-arrow-mid">&rarr;</div>
+        <div class="tp-step-box pet">Lamination</div>
+        <div class="tp-arrow-mid">&rarr;</div>
+        <div class="tp-step-box pet">Thermoumformen</div>
+        <div class="tp-arrow-mid">&rarr;</div>
+        <div class="tp-step-box pet">Beschnitt</div>
+      </div>
+    </div>
+
+    <div class="tp-section-tag pet">Rahmendaten</div>
+    <div class="tp-kpi-row">
+      <div class="tp-kpi pet">
+        <div>
+          <div class="tp-kpi-label">Investkosten</div>
+          <div class="tp-kpi-val">~ 2,0&ndash;4,0 Mio. &euro;</div>
+          <div class="tp-kpi-sub">Vollintegriert: Extrusion + Lamination + Thermoform</div>
+        </div>
+        <div class="tp-kpi-icon">&euro;</div>
+      </div>
+      <div class="tp-kpi pet">
+        <div>
+          <div class="tp-kpi-label">Flächenbedarf</div>
+          <div class="tp-kpi-val">~ 500&ndash;800 m&sup2;</div>
+          <div class="tp-kpi-sub">Halle 2 verf&uuml;gbar (nach Konsolidierung)</div>
+        </div>
+        <div class="tp-kpi-icon">&#9633;</div>
+      </div>
+    </div>
+
   </div>
   <div class="footer-bar"></div>
   <div class="slide-num">4 / 5</div>
@@ -918,7 +1115,7 @@
         <div class="tl-label">Mid-term</div>
         <div class="tl-dot tl-dot-g"></div>
         <div class="tl-title">Automation</div>
-        <div class="tl-desc">Tools / equipment for automation. Benchmark Katja &amp; Genk. Amortize via labor &amp; efficiency.</div>
+        <div class="tl-desc">Tools / equipment for automation. Benchmark Genk &amp; Katowice. Amortize via labor &amp; efficiency.</div>
         <div class="tl-cost tl-cost-g">Stepwise</div>
       </div>
       <div class="tl-step">
@@ -949,7 +1146,7 @@
         <h3>What the Workshop Consensus Delivers</h3>
         <ul>
           <li><strong>Stability:</strong> C-Line problems structurally solved via Hall 2 consolidation</li>
-          <li><strong>Competitiveness:</strong> automation-ready layouts &mdash; Katja / Genk path</li>
+          <li><strong>Competitiveness:</strong> automation-ready layouts &mdash; Genk reference path</li>
           <li><strong>Flexibility:</strong> free space &amp; preserved competence to react to the market</li>
           <li><strong>Optionality:</strong> PET option space tracks OEM 2030 targets &mdash; no lock-in today</li>
           <li><strong>Discipline:</strong> short &amp; long-term decided separately &mdash; no strategic risk in Phase 1</li>
@@ -971,7 +1168,7 @@
     <div class="ceo-ask">
       <div class="left">
         <h3>The Ask &mdash; Workshop-grounded</h3>
-        <p>Hall 2 consolidation is <strong>independent &amp; standalone</strong> (workshop consensus) &mdash; please shield it from strategic cross-dependencies. <strong>Endorse the automation roadmap</strong> as the BG Europe path (Katja / Genk reference). Release <strong>PCCS validation vs. Katowice</strong> as a joint BG action. Preserve the PET option space &mdash; <strong>no CAPEX ask today</strong>, investment case follows after competitor mapping &amp; strategy paper.</p>
+        <p>Hall 2 consolidation is <strong>independent &amp; standalone</strong> (workshop consensus) &mdash; please shield it from strategic cross-dependencies. <strong>Endorse the automation roadmap</strong> as the BG Europe path (Genk reference). Release <strong>PCCS validation vs. Katowice</strong> as a joint BG action. Preserve the PET option space &mdash; <strong>no CAPEX ask today</strong>, investment case follows after competitor mapping &amp; strategy paper.</p>
       </div>
       <div class="right">
         <div class="amounts">
